@@ -1,0 +1,24 @@
+.svg-icon {
+	display: inline-block;
+	height: 100vh;
+}
+
+.search-icon {
+	width: 20px;
+	height: 20px;
+}
+
+.right-arrow {
+	width: 32px;
+	height: 22px;
+}
+
+.like-button{
+	width: 55px;
+	height: 50px;	
+	padding-top: 5px;
+}
+
+.like-button:hover .like-button-path {
+	stroke: var(--color-red);
+}

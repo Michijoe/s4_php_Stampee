@@ -1,0 +1,81 @@
+/* dm-serif-display-regular - latin */
+@font-face {
+	font-display: swap;
+	font-family: 'DM Serif Display';
+	font-style: normal;
+	font-weight: 400;
+	src: url('../fonts/dm-serif-display-v12-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+/* open-sans-regular - latin */
+@font-face {
+	font-display: swap;
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: 400;
+	src: url('../fonts/open-sans-v35-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+/* open-sans-italic - latin */
+@font-face {
+	font-display: swap;
+	font-family: 'Open Sans';
+	font-style: italic;
+	font-weight: 400;
+	src: url('../fonts/open-sans-v35-latin-italic.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+:root {
+	--gap: 1.5rem;
+	--spacing-double: 3rem;
+	--spacing-thin: 1rem;
+	--column: 280px;
+	--color-royal-blue: #062a78;
+	--color-light-blue: #647CA4;
+	--color-golden: #D1A617;
+	--color-red: #95190C;
+	--color-white: #F7F8FF;
+	--font-family-heading: 'DM Serif Display', serif;
+	--font-family-body: 'Open Sans', sans-serif;
+	--fa-border-width:40px;
+	--fa-border-color: rgb(39, 147, 0);
+}
+
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+picture {
+	display: block;
+}
+
+a, a:visited {
+	color: inherit;
+}
+
+:not(p, span, strong, em)>a {
+	text-decoration: none;
+}
+
+i {
+	color: black;
+}
+
+ul {
+	list-style: none;
+}
+
+li {
+	display: inline;
+}
+
+p:not(.no-padding-bottom) {
+	padding-bottom: var(--spacing-thin);
+}

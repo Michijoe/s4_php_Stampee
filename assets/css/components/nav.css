@@ -1,0 +1,124 @@
+.nav-logo {
+	width: clamp(200px, 230px, 260px);
+	flex-grow: 1;
+	flex-shrink: 0;
+	z-index: 2;
+	background-color: white;
+}
+
+.nav-wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: var(--gap);
+	justify-content: flex-end;
+	flex-grow: 2;
+}
+
+.nav-top {
+	display: flex;
+	flex-direction: row;
+	gap: var(--gap);
+	justify-content: flex-end;
+	color: var(--color-royal-blue);
+	padding: 0.5rem;
+}
+
+.nav-top-language select {
+	border: none;
+	color: inherit;
+	font-size: inherit;
+	font-family: inherit;
+}
+
+.nav-top-login {
+	display: flex;
+	gap: calc(var(--gap) / 2);
+	align-items: center;
+}
+
+.nav-top-login > * + *:before {
+	content: '|';
+	padding-right: calc(var(--gap) / 2);
+}
+
+.nav-main {
+	display: flex;
+	gap: calc(var(--gap) * 2);
+	justify-content: flex-end;
+}
+
+.nav-main-dropdown {
+	position: relative;
+}
+
+.nav-main-dropdown-content {
+	position: absolute; 
+	top: 100%;
+	width: max-content;
+	max-width: 22ch;
+	font-size: 1.3rem;
+	text-transform: none;
+	padding: 15px;
+	background-color: white;
+}
+
+.nav-main a:hover {
+	color: var(--color-red);
+}
+
+.nav-main-dropdown:not(:hover) > .nav-main-dropdown-content {
+	pointer-events: none;
+	opacity: 0;
+}
+
+.nav-main-dropdown:hover, .nav-main-dropdown-content:hover {
+	z-index: 2;
+}
+
+/* burger menu */
+.nav-burger{
+    display: none;
+    cursor: pointer;
+}
+
+.nav-toggle{
+    display: none; 
+}
+
+.nav-burger > span{
+    position: absolute;
+    left: 0;
+    background-color: black;
+    height: 2px;
+    width: 60%;
+    transition: all 0.4s ease;
+}
+
+.nav-burger > span::before,
+.nav-burger > span::after{
+    content: '';
+    position: absolute;
+    top: -10px;
+    background-color: black;
+    height: 2px;
+    width: 100%;
+    transition: all 0.4s ease;
+}
+
+.nav-burger > span::after{
+    top: 10px;
+}
+
+.nav-toggle:checked + .nav-burger > span{
+    background-color: white;
+}
+
+.nav-toggle:checked + .nav-burger > span::before{
+    top: 0;
+    transform: rotate(45deg);
+}
+
+.nav-toggle:checked + .nav-burger > span::after{
+    top: 0;
+    transform: rotate(-45deg);
+}

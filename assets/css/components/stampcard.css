@@ -1,0 +1,109 @@
+.stampcard {
+	position: relative;
+	top: 0;
+	padding: var(--gap);
+	border-radius: 6px;
+	overflow: clip;
+	max-width: var(--column);
+}
+
+.stampcard-list {
+	display: grid;
+	gap: calc(var(--gap) / 2);
+	align-content: start;
+	grid-template-columns: repeat(auto-fit, minmax(calc(var(--column) + 3rem), 1fr));
+	grid-auto-rows: auto 1fr;
+	justify-content: stretch;
+	max-width: none;
+}
+
+.stampcard h3 {
+	text-align: left;
+	overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.stampcard picture {
+	display: flex;
+	height: 200px;
+}
+
+.stampcard picture>*:not(img) {
+	display: contents;
+}
+
+.stampcard img {
+	margin: auto;
+}
+
+.stampcard > div {
+	display: flex;
+	flex-direction: column;
+	gap: var(--spacing-thin);
+	padding-top: var(--spacing-thin);
+}
+
+.stampcard-info-wrapper{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.stampcard-info > span {
+	display: block;
+
+}
+
+.stampcard footer {
+	display: flex;
+	flex-grow: 1;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.stampcard-button-cta {
+	flex: 3;
+	padding: 10px;
+	border: 1px solid var(--color-golden);
+	border-radius: 8px;
+	text-align: center;
+}
+
+.stampcard-button-cta:hover {
+	color: white;
+	background-color: var(--color-golden);
+}
+
+.stampcard-button-like {
+	opacity: 0;
+	position: absolute;
+	border-radius: 50%;
+	background-color: rgba(255, 255, 255, 0.8);
+}
+
+.grid .stampcard-button-like{
+	right: var(--gap);
+}
+
+.carrousel .stampcard-button-like{
+	right: var(--gap);
+}
+
+.stampcard-list .stampcard-button-like {
+	left: calc(var(--gap) / 2);
+	top: 7px;
+}
+
+.stampcard:hover .stampcard-button-like{
+	opacity: 1;
+}
+
+.stampcard:hover {
+    box-shadow: 0 0 3px 0 rgba(0,0,0,.3);
+}
+
+.stampcard:hover h3 {
+	color: var(--color-red);
+}

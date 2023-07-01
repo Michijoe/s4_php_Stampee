@@ -1,0 +1,67 @@
+.filter {
+	display: flex;
+	flex-direction: column;
+}
+
+.filter-item {
+	overflow: hidden;
+	padding: calc(var(--gap) / 2) 0;
+}
+
+.filter-item:not(:last-of-type) {
+	border-bottom: 1px solid #d3d9dfd4;
+}
+
+.filter-name {
+	display: flex;
+	justify-content: space-between;
+	padding: calc(var(--gap) / 2) 0;
+	cursor: pointer;
+}
+
+.filter-name::after {
+	content: "❯";
+	width: 1em;
+    height: 1em;
+	align-self: baseline;
+    transition: all 0.3s ease-out 0s;
+}
+
+input:checked + .filter-name::after {
+    transform: translate(2px, 8px) rotate(90deg);
+}
+
+.filter-country-checkbox > input {
+	display: inline;
+	width: fit-content;
+	margin-right: 10px;
+}
+
+.filter-price-wrapper {
+	display: flex;
+	gap: calc(var(--gap) / 2);
+}
+
+.filter-price-field {
+	display: flex;
+	gap: calc(var(--gap) / 3);
+}
+
+.filter-form > footer {
+	padding: calc(var(--gap) / 2) 0;
+}
+
+/* accordeon */
+.filter-item > input[type=checkbox] {
+    position: absolute;
+    cursor: pointer;
+    width: 100%;
+    height: 0;
+}
+  
+.filter-item > input[type=checkbox]:checked ~ div {
+    margin-top: 0;
+    max-height: 0;
+    opacity: 0;
+    transform: translate(0, 50%);
+  }

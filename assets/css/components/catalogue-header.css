@@ -1,0 +1,22 @@
+.catalogue-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+}
+
+.catalogue-header li + li::before {
+	content: "/";
+	margin-right: 8px;
+}
+
+.catalogue-header li {
+	margin-right: 8px;
+}
+
+.catalogue-header-ariane-active {
+	font-weight: lighter;
+}
+
+.catalogue-header a:hover {
+	font-weight: bold;
+}

@@ -1,0 +1,48 @@
+nav {
+	display: flex;
+	padding: 0 var(--spacing-double);
+	max-width: 1250px;
+	max-height: 160px;
+	margin: auto;
+}
+
+nav > * {
+	padding: var(--gap);
+}
+
+body > div {
+	max-width: 100%;
+	justify-content: center;
+}
+
+main > section {
+	padding: var(--spacing-double) 0 var(--gap) 5vw;
+}
+
+.container-catalogue {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--spacing-double);
+	padding: var(--gap) 5vw;
+}
+
+.aside-catalogue {
+	flex-grow: 1;
+	flex-basis: 30ch;
+}
+
+.main-catalogue {
+	flex-basis: 50ch;
+	flex-grow: 5;
+}
+
+body > footer {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding: var(--spacing-double);
+	gap: var(--spacing-double);
+	background-color: var(--color-royal-blue);
+	color: var(--color-white);
+}

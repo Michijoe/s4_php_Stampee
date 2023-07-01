@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Johanna Penet">
+    <meta name="description" content="Maquette Accueil Stampee">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/composition.css">
+    <link rel="stylesheet" href="assets/css/font.css">
+    <link rel="stylesheet" href="assets/css/form.css">
+    <link rel="stylesheet" href="assets/css/components/nav.css">
+    <link rel="stylesheet" href="assets/css/components/herobanner.css">
+    <link rel="stylesheet" href="assets/css/components/cta.css">
+    <link rel="stylesheet" href="assets/css/components/stampcard.css">
+    <link rel="stylesheet" href="assets/css/components/footer.css">
+    <link rel="stylesheet" href="assets/css/icons.css">
+    <link rel="stylesheet" href="assets/css/utilities.css">
+    <link rel="stylesheet" href="assets/css/media-query.css" media="screen and (max-width: 900px)">
+    <title>Stampee | Accueil</title>
+</head>
+
+<body>
+    <header>
+        <!-- menus -->
+        <nav>
+            <!-- logo -->
+            <div class="nav-logo"><a href="index.html"><img src="assets/logo/logo_fonce.webp" alt="Logo Stampee"></a>
+            </div>
+            <!-- menu burger -->
+            <input class="nav-toggle" type="checkbox" id="nav-burger">
+            <label aria-label="bouton menu reponsive" class="nav-burger" for="nav-burger">
+                <span></span>
+            </label>
+            <div class="nav-wrapper">
+                <!-- menu secondaire -->
+                <div class="nav-top">
+                    <div class="nav-top-language">
+                        <select aria-label="langue" name="langue">
+                            <option value="en">English</option>
+                            <option value="fr" selected>Français</option>
+                        </select>
+                    </div>
+                    <div class="nav-top-login">
+                        <a href="#">Connexion</a>
+                        <a href="#">Inscription</a>
+                    </div>
+                </div>
+                <!-- menu principale -->
+                <div class="nav-main h2 uppercase" role="menubar">
+                    <a href="index.html" role="menuitem" aria-haspopup="false">Accueil</a>
+                    <div class="nav-main-dropdown">
+                        <a href="#" role="menuitem" aria-haspopup="true">Enchères</a>
+                        <div class="nav-main-dropdown-content" role="menu">
+                            <a href="catalogue.html" role="menuitem" aria-haspopup="false">Enchères en cours</a>
+                            <a href="#" role="menuitem" aria-haspopup="false">Enchères archivées</a>
+                            <a href="#" role="menuitem" aria-haspopup="false">Enchères à venir</a>
+                        </div>
+                    </div>
+                    <div class="nav-main-dropdown">
+                        <a href="#" role="menuitem" aria-haspopup="true">Actualités</a>
+                        <div class="nav-main-dropdown-content" role="menu">
+                            <a href="#" role="menuitem" aria-haspopup="false">Timbres</a>
+                            <a href="#" role="menuitem" aria-haspopup="false">Enchères</a>
+                            <a href="#" role="menuitem" aria-haspopup="false">Bridge</a>
+                        </div>
+                    </div>
+                    <div class="nav-main-dropdown">
+                        <a href="#" role="menuitem" aria-haspopup="true">À propos</a>
+                        <div class="nav-main-dropdown-content" role="menu">
+                            <a href="#" role="menuitem" aria-haspopup="false">Lord Reginald Stampee III</a>
+                            <a href="#" role="menuitem" aria-haspopup="false">Historique familial</a>
+                            <a href="#" role="menuitem" aria-haspopup="false">La philatélie</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <div class="herobanner">
+            <img src="assets/img/herobanner1.webp" alt="">
+            <div class="herobanner-text max-width60">
+                <h1>La valeur sûre des enchères de timbres en ligne</h1>
+                <p>Avec déjà plus de 100 000 timbres vendus, Stampee est la maison d'enchères de timbres la plus
+                    populaire auprès des collectionneurs depuis 1949. Découvrez les collections uniques du lord Stampee
+                    et partez à la recherche de vos nouvelles
+                    acquisitions.</p>
+                <!-- barre de recherche -->
+                <div class="herobanner-searchbar">
+                    <svg role="img" class="svg-icon search-icon" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 19.9 19.7">
+                        <title>Search Icon</title>
+                        <desc>A magnifying glass icon.</desc>
+                        <g class="search-path" fill="none" stroke="#000" stroke-width="2px">
+                            <path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4" />
+                            <circle cx="8" cy="8" r="7" />
+                        </g>
+                    </svg>
+                    <input aria-label="search-bar" type="search" placeholder="Recherchez un timbre">
+                </div>
+            </div>
+        </div>
+    </header>
+    <div>
+        <main>
+            <!-- carrousel nouveautés et à venir -->
+            <section>
+                <h2>
+                    <a href="#">Nos nouvelles enchères
+                        <svg class="svg-icon right-arrow" role="img" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 19.9 19.7">
+                            <title>Right Arrow</title>
+                            <desc>Right Arrow</desc>
+                            <g class="right-arrow" fill="none" stroke="#000" stroke-width="2.5px" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <polyline class="cls-1" points="17 6 23 12 17 18" />
+                                <line class="cls-1" x1="23" x2="1" y1="12" y2="12" />
+                            </g>
+                        </svg>
+                    </a>
+                </h2>
+                <div class="carrousel">
+                    <article class="stampcard">
+                        <a aria-label="button-like" class="stampcard-button-like" href="#">
+                            <svg class="svg-icon like-button" role="img" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24">
+                                <title>Like Button</title>
+                                <desc>Like Button</desc>
+                                <g fill="none">
+                                    <path class="like-button-path" stroke="#000" stroke-width="1.5px"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        d="M12,9.05,10.88,7.93a3.16,3.16,0,0,0-4.48,0h0a3.17,3.17,0,0,0,0,4.47L12,18l5.6-5.6a3.17,3.17,0,0,0,0-4.47h0a3.16,3.16,0,0,0-4.48,0Z" />
+                                </g>
+                            </svg>
+                        </a>
+                        <!-- image -->
+                        <a href="#">
+                            <picture>
+                                <img src="assets/img/timbre-1.webp" alt="Timbre 1">
+                            </picture>
+                        </a>
+                        <div>
+                            <!-- titre -->
+                            <h3>
+                                <a href="#">Canada - Artifact Definitives # 917 - 922 M/NH - Set of Six</a>
+                            </h3>
+                            <!-- metadonnees mises -->
+                            <div class="stampcard-info-wrapper">
+                                <div class="stampcard-info">
+                                    <span>Nombre de mises: 12</span>
+                                    <span>Temps restant: 1h 20m</span>
+                                </div>
+                            </div>
+                            <!-- boutons enchérir -->
+                            <footer>
+                                <a class="stampcard-button-cta" href="#">Enchérir 91$</a>
+                            </footer>
+                        </div>
+                    </article>
+                    <article class="stampcard">
+                        <a aria-label="bouton-like" class="stampcard-button-like" href="#"><svg
+                                class="svg-icon like-button" role="img" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24">
+                                <title>Like Button</title>
+                                <desc>Like Button</desc>
+                                <g fill="none">
+                                    <path class="like-button-path" stroke="#000" stroke-width="1.5px"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        d="M12,9.05,10.88,7.93a3.16,3.16,0,0,0-4.48,0h0a3.17,3.17,0,0,0,0,4.47L12,18l5.6-5.6a3.17,3.17,0,0,0,0-4.47h0a3.16,3.16,0,0,0-4.48,0Z" />
+                                </g>
+                            </svg></a>
+                        <a href="#">
+                            <picture>
+                                <img src="assets/img/timbre-2.webp" alt="Timbre 1">
+                            </picture>
+                        </a>
+                        <div>
+                            <h3>
+                                <a href="#">Dominica #676-77 (1980 Queen Mother set in sheets of nine) VFMNH CV</a>
+                            </h3>
+                            <div class="stampcard-info-wrapper">
+                                <div class="stampcard-info">
+                                    <span>Nombre de mises : 14</span>
+                                    <span>Temps restant : 4h 53m</span>
+                                </div>
+                            </div>
+                            <footer>
+                                <a class="stampcard-button-cta" href="#">Enchérir 55$</a>
+
+                            </footer>
+                        </div>
+                    </article>
+                    <article class="stampcard">
+                        <a aria-label="bouton-like" class="stampcard-button-like" href="#"><svg
+                                class="svg-icon like-button" role="img" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24">
+                                <title>Like Button</title>
+                                <desc>Like Button</desc>
+                                <g fill="none">
+                                    <path class="like-button-path" stroke="#000" stroke-width="1.5px"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        d="M12,9.05,10.88,7.93a3.16,3.16,0,0,0-4.48,0h0a3.17,3.17,0,0,0,0,4.47L12,18l5.6-5.6a3.17,3.17,0,0,0,0-4.47h0a3.16,3.16,0,0,0-4.48,0Z" />
+                                </g>
+                            </svg></a>
+                        <a href="#">
+                            <picture>
+                                <img src="assets/img/timbre-3.webp" alt="Timbre 1">
+                            </picture>
+                        </a>
+                        <div>
+                            <h3>
+                                <a href="#">Vatican. Mi # 1 pages mostly used</a>
+                            </h3>
+                            <div class="stampcard-info-wrapper">
+                                <div class="stampcard-info">
+                                    <span>Nombre de mises : 23</span>
+                                    <span>Temps restant : 10h 25m</span>
+                                </div>
+                            </div>
+                            <footer>
+                                <a class="stampcard-button-cta" href="#">Enchérir 87$</a>
+                            </footer>
+                        </div>
+                    </article>
+                    <article class="stampcard">
+                        <a aria-label="bouton-like" class="stampcard-button-like" href="#"><svg
+                                class="svg-icon like-button" role="img" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24">
+                                <title>Like Button</title>
+                                <desc>Like Button</desc>
+                                <g fill="none">
+                                    <path class="like-button-path" stroke="#000" stroke-width="1.5px"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        d="M12,9.05,10.88,7.93a3.16,3.16,0,0,0-4.48,0h0a3.17,3.17,0,0,0,0,4.47L12,18l5.6-5.6a3.17,3.17,0,0,0,0-4.47h0a3.16,3.16,0,0,0-4.48,0Z" />
+                                </g>
+                            </svg></a>
+                        <a href="#">
+                            <picture>
+                                <img src="assets/img/timbre-4.webp" alt="Timbre 1">
+                            </picture>
+                        </a>
+                        <div>
+                            <h3>
+                                <a href="#">2017 Sierra Leone 8535-8538KL Marine fauna - Sea Shells 11,00 €</a>
+                            </h3>
+                            <div class="stampcard-info-wrapper">
+                                <div class="stampcard-info">
+                                    <span>Nombre de mises : 14</span>
+                                    <span>Temps restant : 20h 25m</span>
+                                </div>
+                            </div>
+                            <footer>
+                                <a class="stampcard-button-cta" href="#">Enchérir 36$</a>
+                            </footer>
+                        </div>
+                    </article>
+                    <article class="stampcard">
+                        <a aria-label="bouton-like" class="stampcard-button-like" href="#"><svg
+                                class="svg-icon like-button" role="img" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24">
+                                <title>Like Button</title>
+                                <desc>Like Button</desc>
+                                <g fill="none">
+                                    <path class="like-button-path" stroke="#000" stroke-width="1.5px"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        d="M12,9.05,10.88,7.93a3.16,3.16,0,0,0-4.48,0h0a3.17,3.17,0,0,0,0,4.47L12,18l5.6-5.6a3.17,3.17,0,0,0,0-4.47h0a3.16,3.16,0,0,0-4.48,0Z" />
+                                </g>
+                            </svg></a>
+                        <a href="#">
+                            <picture>
+                                <img src="assets/img/timbre-5.webp" alt="Timbre 1">
+                            </picture>
+                        </a>
+                        <div>
+                            <h3>
+                                <a href="#">Italy-Austrian Occupation Scott NE1-NE2 Unused HOG - 1918 Bosnia
+                                    Surcharges</a>
+                            </h3>
+                            <div class="stampcard-info-wrapper">
+                                <div class="stampcard-info">
+                                    <span>Nombre de mises : 3</span>
+                                    <span>Temps restant : 1j 10h 25m</span>
+                                </div>
+                            </div>
+                            <footer>
+                                <a class="stampcard-button-cta" href="#">Enchérir 16$</a>
+                            </footer>
+                        </div>
+                    </article>
+                    <article class="stampcard">
+                        <a aria-label="bouton-like" class="stampcard-button-like" href="#"><svg
+                                class="svg-icon like-button" role="img" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24">
+                                <title>Like Button</title>
+                                <desc>Like Button</desc>
+                                <g fill="none">
+                                    <path class="like-button-path" stroke="#000" stroke-width="1.5px"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        d="M12,9.05,10.88,7.93a3.16,3.16,0,0,0-4.48,0h0a3.17,3.17,0,0,0,0,4.47L12,18l5.6-5.6a3.17,3.17,0,0,0,0-4.47h0a3.16,3.16,0,0,0-4.48,0Z" />
+                                </g>
+                            </svg></a>
+                        <a href="#">
+                            <picture>
+                                <img src="assets/img/timbre-6.webp" alt="Timbre 1">
+                            </picture>
+                        </a>
+                        <div>
+                            <h3>
+                                <a href="#">Bahamas Unused Hinged Scott 49</a>
+                            </h3>
+                            <div class="stampcard-info-wrapper">
+                                <div class="stampcard-info">
+                                    <span>Nombres de mises : 3</span>
+                                    <span>Temps restant : 1j 20h 25m</span>
+                                </div>
+                            </div>
+                            <footer>
+                                <a class="stampcard-button-cta" href="#">Enchérir 5$</a>
+                            </footer>
+                        </div>
+                    </article>
+                    <article class="stampcard">
+                        <a aria-label="bouton-like" class="stampcard-button-like" href="#"><svg
+                                class="svg-icon like-button" role="img" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24">
+                                <title>Like Button</title>
+                                <desc>Like Button</desc>
+                                <g fill="none">
+                                    <path class="like-button-path" stroke="#000" stroke-width="1.5px"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        d="M12,9.05,10.88,7.93a3.16,3.16,0,0,0-4.48,0h0a3.17,3.17,0,0,0,0,4.47L12,18l5.6-5.6a3.17,3.17,0,0,0,0-4.47h0a3.16,3.16,0,0,0-4.48,0Z" />
+                                </g>
+                            </svg></a>
+                        <a href="#">
+                            <picture>
+                                <img src="assets/img/timbre-7.webp" alt="Timbre 1">
+                            </picture>
+                        </a>
+                        <div>
+                            <h3>
+                                <a href="#">Bahamas Unused Hinged Scott 60</a>
+                            </h3>
+                            <div class="stampcard-info-wrapper">
+                                <div class="stampcard-info">
+                                    <span>Nombre de mises : 2</span>
+                                    <span>Temps restant : 2j 10h 25m</span>
+                                </div>
+                            </div>
+                            <footer>
+                                <a class="stampcard-button-cta" href="#">Enchérir 10$</a>
+                            </footer>
+                        </div>
+                    </article>
+                    <article class="stampcard">
+                        <a aria-label="bouton-like" class="stampcard-button-like" href="#"><svg
+                                class="svg-icon like-button" role="img" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24">
+                                <title>Like Button</title>
+                                <desc>Like Button</desc>
+                                <g fill="none">
+                                    <path class="like-button-path" stroke="#000" stroke-width="1.5px"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        d="M12,9.05,10.88,7.93a3.16,3.16,0,0,0-4.48,0h0a3.17,3.17,0,0,0,0,4.47L12,18l5.6-5.6a3.17,3.17,0,0,0,0-4.47h0a3.16,3.16,0,0,0-4.48,0Z" />
+                                </g>
+                            </svg></a>
+                        <a href="#">
+                            <picture>
+                                <img src="assets/img/timbre-8.webp" alt="Timbre 1">
+                            </picture>
+                        </a>
+                        <div>
+                            <h3>
+                                <a href="#">Canada #359 (1956 Hockey issue) addressed OPS cachet FDC</a>
+                            </h3>
+                            <div class="stampcard-info-wrapper">
+                                <div class="stampcard-info">
+                                    <span>Nombres de mises : 3</span>
+                                    <span>Temps restant : 3j 10h 25m</span>
+                                </div>
+                            </div>
+                            <footer>
+                                <a class="stampcard-button-cta" href="#">Enchérir 6$</a>
+                            </footer>
+                        </div>
+                    </article>
+                    <article class="stampcard">
+                        <a aria-label="bouton-like" class="stampcard-button-like" href="#"><svg
+                                class="svg-icon like-button" role="img" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24">
+                                <title>Like Button</title>
+                                <desc>Like Button</desc>
+                                <g fill="none">
+                                    <path class="like-button-path" stroke="#000" stroke-width="1.5px"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        d="M12,9.05,10.88,7.93a3.16,3.16,0,0,0-4.48,0h0a3.17,3.17,0,0,0,0,4.47L12,18l5.6-5.6a3.17,3.17,0,0,0,0-4.47h0a3.16,3.16,0,0,0-4.48,0Z" />
+                                </g>
+                            </svg></a>
+                        <a href="#">
+                            <picture>
+                                <img src="assets/img/timbre-9.webp" alt="Timbre 1">
+                            </picture>
+                        </a>
+                        <div>
+                            <h3>
+                                <a href="#">Touva, 538-543 Russian Local. Butterflies sheet of 6. </a>
+                            </h3>
+                            <div class="stampcard-info-wrapper">
+                                <div class="stampcard-info">
+                                    <span>Nombre de mises : 1</span>
+                                    <span>Temps restant : 4j 8h 15m</span>
+                                </div>
+                            </div>
+                            <footer>
+                                <a class="stampcard-button-cta" href="#">Enchérir 80$</a>
+                            </footer>
+                        </div>
+                    </article>
+                    <article class="stampcard">
+                        <a aria-label="bouton-like" class="stampcard-button-like" href="#"><svg
+                                class="svg-icon like-button" role="img" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24">
+                                <title>Like Button</title>
+                                <desc>Like Button</desc>
+                                <g fill="none">
+                                    <path class="like-button-path" stroke="#000" stroke-width="1.5px"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        d="M12,9.05,10.88,7.93a3.16,3.16,0,0,0-4.48,0h0a3.17,3.17,0,0,0,0,4.47L12,18l5.6-5.6a3.17,3.17,0,0,0,0-4.47h0a3.16,3.16,0,0,0-4.48,0Z" />
+                                </g>
+                            </svg></a>
+                        <a href="#">
+                            <picture>
+                                <img src="assets/img/timbre-10.webp" alt="Timbre 1">
+                            </picture>
+                        </a>
+                        <div>
+                            <h3>
+                                <a href="#">Stamps - Bolivia - Scott# C130-C136 - Mint Hinged Set of 7 Stamps</a>
+                            </h3>
+                            <div class="stampcard-info-wrapper">
+                                <div class="stampcard-info">
+                                    <span>Nombres de mises : 3</span>
+                                    <span>Temps restant : 4j 10h 30m</span>
+                                </div>
+                            </div>
+                            <footer>
+                                <a class="stampcard-button-cta" href="#">Enchérir 16$</a>
+                            </footer>
+                        </div>
+                    </article>
+                    <article class="stampcard">
+                        <a aria-label="bouton-like" class="stampcard-button-like" href="#"><svg
+                                class="svg-icon like-button" role="img" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24">
+                                <title>Like Button</title>
+                                <desc>Like Button</desc>
+                                <g fill="none">
+                                    <path class="like-button-path" stroke="#000" stroke-width="1.5px"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        d="M12,9.05,10.88,7.93a3.16,3.16,0,0,0-4.48,0h0a3.17,3.17,0,0,0,0,4.47L12,18l5.6-5.6a3.17,3.17,0,0,0,0-4.47h0a3.16,3.16,0,0,0-4.48,0Z" />
+                                </g>
+                            </svg></a>
+                        <a href="#">
+                            <picture>
+                                <img src="assets/img/timbre-11.webp" alt="Timbre 1">
+                            </picture>
+                        </a>
+                        <div>
+                            <h3>
+                                <a href="#">Canada #50 Used fine to very fine Cat$110 1897, Queen Victoria Jubilee</a>
+                            </h3>
+                            <div class="stampcard-info-wrapper">
+                                <div class="stampcard-info">
+                                    <span>Nombres de mises : 12</span>
+                                    <span>Temps restant : 5j 5h 40m</span>
+                                </div>
+                            </div>
+                            <footer>
+                                <a class="stampcard-button-cta" href="#">Enchérir 46$</a>
+                            </footer>
+                        </div>
+                    </article>
+                    <article class="stampcard">
+                        <a aria-label="bouton-like" class="stampcard-button-like" href="#"><svg
+                                class="svg-icon like-button" role="img" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24">
+                                <title>Like Button</title>
+                                <desc>Like Button</desc>
+                                <g fill="none">
+                                    <path class="like-button-path" stroke="#000" stroke-width="1.5px"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        d="M12,9.05,10.88,7.93a3.16,3.16,0,0,0-4.48,0h0a3.17,3.17,0,0,0,0,4.47L12,18l5.6-5.6a3.17,3.17,0,0,0,0-4.47h0a3.16,3.16,0,0,0-4.48,0Z" />
+                                </g>
+                            </svg></a>
+                        <a href="#">
+                            <picture>
+                                <img src="assets/img/timbre-12.webp" alt="Timbre 1">
+                            </picture>
+                        </a>
+                        <div>
+                            <h3>
+                                <a href="#">TONGA 1938 20th ANNIV OF QUEEN'S ACCESSION SET ON FIRST DAY OF ISSUE
+                                    COVER</a>
+                            </h3>
+                            <div class="stampcard-info-wrapper">
+                                <div class="stampcard-info">
+                                    <span>Nombre de mises : 13</span>
+                                    <span>Temps restant : 7j 10h 25m</span>
+                                </div>
+                            </div>
+                            <footer>
+                                <a class="stampcard-button-cta" href="#">Enchérir 12$</a>
+                            </footer>
+                        </div>
+                    </article>
+                </div>
+            </section>
+            <!-- CTA lord Stampee -->
+            <section class="cta-wrapper">
+                <div class="cta-content">
+                    <picture><img src="assets/img/lord-stampee.webp" alt="Lord Stampee"></picture>
+                    <div>
+                        <h2 class="padding-bottom">Qui est lord Stampee ?</h2>
+                        <p>Lord Stampee vient d’une famille de passionnés de philatélie depuis des générations. Sa
+                            passion pour les timbres rares et précieux l'a amené à rassembler l'une des collections les
+                            plus impressionnantes du monde.</p>
+                        <p>Ses collections de timbres ont été les plus complètes connues pour l'époque classique
+                            (timbres
+                            émis avant 1900), avec une passion pour les émissions d'avant 1870. Elles ont notamment
+                            concerné
+                            les provinces canadiennes et la Confédération du Canada, la Suisse, la colonie du Cap,
+                            Ceylan,
+                            le Gambie, Maurice, l'Argentine et l'Uruguay. Pour l'histoire postale des États-Unis, sa
+                            collection est une référence pour les affranchissements dans l'Ouest du pays.</p>
+                        <p>Membre active du Collectors Club of New York, Theodore Steinway et lui ont permis le
+                            développement
+                            de cette association. Juge international pendant trois décennies, il est le commissaire des
+                            expositions philatéliques internationales de 1980. En mars 1985 à New York, Theodore
+                            Steinway,
+                            plusieurs philatélistes et lui fondent la Philatelic Foundation, institution éducative à but
+                            non
+                            lucratif qui se donne pour but des travaux d'expertise, de recherches et de publications
+                            philatéliques. Ses collections et celles de sa fille ont été dispersés par la maison aux
+                            enchères Harmer's entre 1968 et 1971, 1989 et 1992 et en 1997.</p>
+                        <a href="#">En savoir plus sur Lord Stampee et ses collections<i
+                                class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </section>
+            <!-- carrousel coups de coeur du Lord -->
+            <section>
+                <h2>
+                    <a href="#">Les coups de coeur du lord
+                        <svg class="svg-icon right-arrow" role="img" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 19.9 19.7">
+                            <title>Right Arrow</title>
+                            <desc>Right Arrow</desc>
+                            <g class="right-arrow" fill="none" stroke="#000" stroke-width="2.5px" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <polyline class="cls-1" points="17 6 23 12 17 18" />
+                                <line class="cls-1" x1="23" x2="1" y1="12" y2="12" />
+                            </g>
+                        </svg>
+                    </a>
+                </h2>
+                <div class="carrousel">
+                    <article class="stampcard">
+                        <a aria-label="bouton-like" class="stampcard-button-like" href="#"><svg
+                                class="svg-icon like-button" role="img" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24">
+                                <title>Like Button</title>
+                                <desc>Like Button</desc>
+                                <g fill="none">
+                                    <path class="like-button-path" stroke="#000" stroke-width="1.5px"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        d="M12,9.05,10.88,7.93a3.16,3.16,0,0,0-4.48,0h0a3.17,3.17,0,0,0,0,4.47L12,18l5.6-5.6a3.17,3.17,0,0,0,0-4.47h0a3.16,3.16,0,0,0-4.48,0Z" />
+                                </g>
+                            </svg></a>
+                        <!-- image -->
+                        <a href="#">
+                            <picture>
+                                <img src="assets/img/timbre-1.webp" alt="Timbre 1">
+                            </picture>
+                        </a>
+                        <div>
+                            <!-- titre -->
+                            <h3>
+                                <a href="#">Canada - Artifact Definitives # 917 - 922 M/NH - Set of Six</a>
+                            </h3>
+                            <!-- metadonnees mises -->
+                            <div class="stampcard-info-wrapper">
+                                <div class="stampcard-info">
+                                    <span>Nombre de mises: 12</span>
+                                    <span>Temps restant: 1h 20m</span>
+                                </div>
+                            </div>
+                            <!-- boutons enchérir -->
+                            <footer>
+                                <a class="stampcard-button-cta" href="#">Enchérir 91$</a>
+                            </footer>
+                        </div>
+                    </article>
+                    <article class="stampcard">
+                        <a aria-label="bouton-like" class="stampcard-button-like" href="#"><svg
+                                class="svg-icon like-button" role="img" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24">
+                                <title>Like Button</title>
+                                <desc>Like Button</desc>
+                                <g fill="none">
+                                    <path class="like-button-path" stroke="#000" stroke-width="1.5px"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        d="M12,9.05,10.88,7.93a3.16,3.16,0,0,0-4.48,0h0a3.17,3.17,0,0,0,0,4.47L12,18l5.6-5.6a3.17,3.17,0,0,0,0-4.47h0a3.16,3.16,0,0,0-4.48,0Z" />
+                                </g>
+                            </svg></a>
+                        <a href="#">
+                            <picture>
+                                <img src="assets/img/timbre-2.webp" alt="Timbre 1">
+                            </picture>
+                        </a>
+                        <div>
+                            <h3>
+                                <a href="#">Dominica #676-77 (1980 Queen Mother set in sheets of nine) VFMNH CV</a>
+                            </h3>
+                            <div class="stampcard-info-wrapper">
+                                <div class="stampcard-info">
+                                    <span>Nombre de mises : 14</span>
+                                    <span>Temps restant : 4h 53m</span>
+                                </div>
+                            </div>
+                            <footer>
+                                <a class="stampcard-button-cta" href="#">Enchérir 55$</a>
+
+                            </footer>
+                        </div>
+                    </article>
+                    <article class="stampcard">
+                        <a aria-label="bouton-like" class="stampcard-button-like" href="#"><svg
+                                class="svg-icon like-button" role="img" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24">
+                                <title>Like Button</title>
+                                <desc>Like Button</desc>
+                                <g fill="none">
+                                    <path class="like-button-path" stroke="#000" stroke-width="1.5px"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        d="M12,9.05,10.88,7.93a3.16,3.16,0,0,0-4.48,0h0a3.17,3.17,0,0,0,0,4.47L12,18l5.6-5.6a3.17,3.17,0,0,0,0-4.47h0a3.16,3.16,0,0,0-4.48,0Z" />
+                                </g>
+                            </svg></a>
+                        <a href="#">
+                            <picture>
+                                <img src="assets/img/timbre-3.webp" alt="Timbre 1">
+                            </picture>
+                        </a>
+                        <div>
+                            <h3>
+                                <a href="#">Vatican. Mi # 1 pages mostly used</a>
+                            </h3>
+                            <div class="stampcard-info-wrapper">
+                                <div class="stampcard-info">
+                                    <span>Nombre de mises : 23</span>
+                                    <span>Temps restant : 10h 25m</span>
+                                </div>
+                            </div>
+                            <footer>
+                                <a class="stampcard-button-cta" href="#">Enchérir 87$</a>
+                            </footer>
+                        </div>
+                    </article>
+                    <article class="stampcard">
+                        <a aria-label="bouton-like" class="stampcard-button-like" href="#"><svg
+                                class="svg-icon like-button" role="img" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24">
+                                <title>Like Button</title>
+                                <desc>Like Button</desc>
+                                <g fill="none">
+                                    <path class="like-button-path" stroke="#000" stroke-width="1.5px"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        d="M12,9.05,10.88,7.93a3.16,3.16,0,0,0-4.48,0h0a3.17,3.17,0,0,0,0,4.47L12,18l5.6-5.6a3.17,3.17,0,0,0,0-4.47h0a3.16,3.16,0,0,0-4.48,0Z" />
+                                </g>
+                            </svg></a>
+                        <a href="#">
+                            <picture>
+                                <img src="assets/img/timbre-4.webp" alt="Timbre 1">
+                            </picture>
+                        </a>
+                        <div>
+                            <h3>
+                                <a href="#">2017 Sierra Leone 8535-8538KL Marine fauna - Sea Shells 11,00 €</a>
+                            </h3>
+                            <div class="stampcard-info-wrapper">
+                                <div class="stampcard-info">
+                                    <span>Nombre de mises : 14</span>
+                                    <span>Temps restant : 20h 25m</span>
+                                </div>
+                            </div>
+                            <footer>
+                                <a class="stampcard-button-cta" href="#">Enchérir 36$</a>
+                            </footer>
+                        </div>
+                    </article>
+                    <article class="stampcard">
+                        <a aria-label="bouton-like" class="stampcard-button-like" href="#"><svg
+                                class="svg-icon like-button" role="img" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24">
+                                <title>Like Button</title>
+                                <desc>Like Button</desc>
+                                <g fill="none">
+                                    <path class="like-button-path" stroke="#000" stroke-width="1.5px"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        d="M12,9.05,10.88,7.93a3.16,3.16,0,0,0-4.48,0h0a3.17,3.17,0,0,0,0,4.47L12,18l5.6-5.6a3.17,3.17,0,0,0,0-4.47h0a3.16,3.16,0,0,0-4.48,0Z" />
+                                </g>
+                            </svg></a>
+                        <a href="#">
+                            <picture>
+                                <img src="assets/img/timbre-5.webp" alt="Timbre 1">
+                            </picture>
+                        </a>
+                        <div>
+                            <h3>
+                                <a href="#">Italy-Austrian Occupation Scott NE1-NE2 Unused HOG - 1918 Bosnia
+                                    Surcharges</a>
+                            </h3>
+                            <div class="stampcard-info-wrapper">
+                                <div class="stampcard-info">
+                                    <span>Nombre de mises : 3</span>
+                                    <span>Temps restant : 1j 10h 25m</span>
+                                </div>
+                            </div>
+                            <footer>
+                                <a class="stampcard-button-cta" href="#">Enchérir 16$</a>
+                            </footer>
+                        </div>
+                    </article>
+                    <article class="stampcard">
+                        <a aria-label="bouton-like" class="stampcard-button-like" href="#"><svg
+                                class="svg-icon like-button" role="img" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24">
+                                <title>Like Button</title>
+                                <desc>Like Button</desc>
+                                <g fill="none">
+                                    <path class="like-button-path" stroke="#000" stroke-width="1.5px"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        d="M12,9.05,10.88,7.93a3.16,3.16,0,0,0-4.48,0h0a3.17,3.17,0,0,0,0,4.47L12,18l5.6-5.6a3.17,3.17,0,0,0,0-4.47h0a3.16,3.16,0,0,0-4.48,0Z" />
+                                </g>
+                            </svg></a>
+                        <a href="#">
+                            <picture>
+                                <img src="assets/img/timbre-6.webp" alt="Timbre 1">
+                            </picture>
+                        </a>
+                        <div>
+                            <h3>
+                                <a href="#">Bahamas Unused Hinged Scott 49</a>
+                            </h3>
+                            <div class="stampcard-info-wrapper">
+                                <div class="stampcard-info">
+                                    <span>Nombres de mises : 3</span>
+                                    <span>Temps restant : 1j 20h 25m</span>
+                                </div>
+                            </div>
+                            <footer>
+                                <a class="stampcard-button-cta" href="#">Enchérir 5$</a>
+                            </footer>
+                        </div>
+                    </article>
+                    <article class="stampcard">
+                        <a aria-label="bouton-like" class="stampcard-button-like" href="#"><svg
+                                class="svg-icon like-button" role="img" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24">
+                                <title>Like Button</title>
+                                <desc>Like Button</desc>
+                                <g fill="none">
+                                    <path class="like-button-path" stroke="#000" stroke-width="1.5px"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        d="M12,9.05,10.88,7.93a3.16,3.16,0,0,0-4.48,0h0a3.17,3.17,0,0,0,0,4.47L12,18l5.6-5.6a3.17,3.17,0,0,0,0-4.47h0a3.16,3.16,0,0,0-4.48,0Z" />
+                                </g>
+                            </svg></a>
+                        <a href="#">
+                            <picture>
+                                <img src="assets/img/timbre-7.webp" alt="Timbre 1">
+                            </picture>
+                        </a>
+                        <div>
+                            <h3>
+                                <a href="#">Bahamas Unused Hinged Scott 60</a>
+                            </h3>
+                            <div class="stampcard-info-wrapper">
+                                <div class="stampcard-info">
+                                    <span>Nombre de mises : 2</span>
+                                    <span>Temps restant : 2j 10h 25m</span>
+                                </div>
+                            </div>
+                            <footer>
+                                <a class="stampcard-button-cta" href="#">Enchérir 10$</a>
+                            </footer>
+                        </div>
+                    </article>
+                    <article class="stampcard">
+                        <a aria-label="bouton-like" class="stampcard-button-like" href="#"><svg
+                                class="svg-icon like-button" role="img" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24">
+                                <title>Like Button</title>
+                                <desc>Like Button</desc>
+                                <g fill="none">
+                                    <path class="like-button-path" stroke="#000" stroke-width="1.5px"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        d="M12,9.05,10.88,7.93a3.16,3.16,0,0,0-4.48,0h0a3.17,3.17,0,0,0,0,4.47L12,18l5.6-5.6a3.17,3.17,0,0,0,0-4.47h0a3.16,3.16,0,0,0-4.48,0Z" />
+                                </g>
+                            </svg></a>
+                        <a href="#">
+                            <picture>
+                                <img src="assets/img/timbre-8.webp" alt="Timbre 1">
+                            </picture>
+                        </a>
+                        <div>
+                            <h3>
+                                <a href="#">Canada #359 (1956 Hockey issue) addressed OPS cachet FDC</a>
+                            </h3>
+                            <div class="stampcard-info-wrapper">
+                                <div class="stampcard-info">
+                                    <span>Nombres de mises : 3</span>
+                                    <span>Temps restant : 3j 10h 25m</span>
+                                </div>
+                            </div>
+                            <footer>
+                                <a class="stampcard-button-cta" href="#">Enchérir 6$</a>
+                            </footer>
+                        </div>
+                    </article>
+                    <article class="stampcard">
+                        <a aria-label="bouton-like" class="stampcard-button-like" href="#"><svg
+                                class="svg-icon like-button" role="img" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24">
+                                <title>Like Button</title>
+                                <desc>Like Button</desc>
+                                <g fill="none">
+                                    <path class="like-button-path" stroke="#000" stroke-width="1.5px"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        d="M12,9.05,10.88,7.93a3.16,3.16,0,0,0-4.48,0h0a3.17,3.17,0,0,0,0,4.47L12,18l5.6-5.6a3.17,3.17,0,0,0,0-4.47h0a3.16,3.16,0,0,0-4.48,0Z" />
+                                </g>
+                            </svg></a>
+                        <a href="#">
+                            <picture>
+                                <img src="assets/img/timbre-9.webp" alt="Timbre 1">
+                            </picture>
+                        </a>
+                        <div>
+                            <h3>
+                                <a href="#">Touva, 538-543 Russian Local. Butterflies sheet of 6. </a>
+                            </h3>
+                            <div class="stampcard-info-wrapper">
+                                <div class="stampcard-info">
+                                    <span>Nombre de mises : 1</span>
+                                    <span>Temps restant : 4j 8h 15m</span>
+                                </div>
+                            </div>
+                            <footer>
+                                <a class="stampcard-button-cta" href="#">Enchérir 80$</a>
+                            </footer>
+                        </div>
+                    </article>
+                    <article class="stampcard">
+                        <a aria-label="bouton-like" class="stampcard-button-like" href="#"><svg
+                                class="svg-icon like-button" role="img" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24">
+                                <title>Like Button</title>
+                                <desc>Like Button</desc>
+                                <g fill="none">
+                                    <path class="like-button-path" stroke="#000" stroke-width="1.5px"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        d="M12,9.05,10.88,7.93a3.16,3.16,0,0,0-4.48,0h0a3.17,3.17,0,0,0,0,4.47L12,18l5.6-5.6a3.17,3.17,0,0,0,0-4.47h0a3.16,3.16,0,0,0-4.48,0Z" />
+                                </g>
+                            </svg></a>
+                        <a href="#">
+                            <picture>
+                                <img src="assets/img/timbre-10.webp" alt="Timbre 1">
+                            </picture>
+                        </a>
+                        <div>
+                            <h3>
+                                <a href="#">Stamps - Bolivia - Scott# C130-C136 - Mint Hinged Set of 7 Stamps</a>
+                            </h3>
+                            <div class="stampcard-info-wrapper">
+                                <div class="stampcard-info">
+                                    <span>Nombres de mises : 3</span>
+                                    <span>Temps restant : 4j 10h 30m</span>
+                                </div>
+                            </div>
+                            <footer>
+                                <a class="stampcard-button-cta" href="#">Enchérir 16$</a>
+                            </footer>
+                        </div>
+                    </article>
+                    <article class="stampcard">
+                        <a aria-label="bouton-like" class="stampcard-button-like" href="#"><svg
+                                class="svg-icon like-button" role="img" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24">
+                                <title>Like Button</title>
+                                <desc>Like Button</desc>
+                                <g fill="none">
+                                    <path class="like-button-path" stroke="#000" stroke-width="1.5px"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        d="M12,9.05,10.88,7.93a3.16,3.16,0,0,0-4.48,0h0a3.17,3.17,0,0,0,0,4.47L12,18l5.6-5.6a3.17,3.17,0,0,0,0-4.47h0a3.16,3.16,0,0,0-4.48,0Z" />
+                                </g>
+                            </svg></a>
+                        <a href="#">
+                            <picture>
+                                <img src="assets/img/timbre-11.webp" alt="Timbre 1">
+                            </picture>
+                        </a>
+                        <div>
+                            <h3>
+                                <a href="#">Canada #50 Used fine to very fine Cat$110 1897, Queen Victoria Jubilee</a>
+                            </h3>
+                            <div class="stampcard-info-wrapper">
+                                <div class="stampcard-info">
+                                    <span>Nombres de mises : 12</span>
+                                    <span>Temps restant : 5j 5h 40m</span>
+                                </div>
+                            </div>
+                            <footer>
+                                <a class="stampcard-button-cta" href="#">Enchérir 46$</a>
+                            </footer>
+                        </div>
+                    </article>
+                    <article class="stampcard">
+                        <a aria-label="bouton-like" class="stampcard-button-like" href="#"><svg
+                                class="svg-icon like-button" role="img" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24">
+                                <title>Like Button</title>
+                                <desc>Like Button</desc>
+                                <g fill="none">
+                                    <path class="like-button-path" stroke="#000" stroke-width="1.5px"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        d="M12,9.05,10.88,7.93a3.16,3.16,0,0,0-4.48,0h0a3.17,3.17,0,0,0,0,4.47L12,18l5.6-5.6a3.17,3.17,0,0,0,0-4.47h0a3.16,3.16,0,0,0-4.48,0Z" />
+                                </g>
+                            </svg></a>
+                        <a href="#">
+                            <picture>
+                                <img src="assets/img/timbre-12.webp" alt="Timbre 1">
+                            </picture>
+                        </a>
+                        <div>
+                            <h3>
+                                <a href="#">TONGA 1938 20th ANNIV OF QUEEN'S ACCESSION SET ON FIRST DAY OF ISSUE
+                                    COVER</a>
+                            </h3>
+                            <div class="stampcard-info-wrapper">
+                                <div class="stampcard-info">
+                                    <span>Nombre de mises : 13</span>
+                                    <span>Temps restant : 7j 10h 25m</span>
+                                </div>
+                            </div>
+                            <footer>
+                                <a class="stampcard-button-cta" href="#">Enchérir 12$</a>
+                            </footer>
+                        </div>
+                    </article>
+                </div>
+            </section>
+            <!-- carrousel actualités -->
+            <section>
+                <h2>
+                    <a href="#">Découvrez nos actualités
+                        <svg class="svg-icon right-arrow" role="img" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 19.9 19.7">
+                            <title>Right Arrow</title>
+                            <desc>Right Arrow</desc>
+                            <g class="right-arrow" fill="none" stroke="#000" stroke-width="2.5px" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <polyline class="cls-1" points="17 6 23 12 17 18" />
+                                <line class="cls-1" x1="23" x2="1" y1="12" y2="12" />
+                            </g>
+                        </svg>
+                    </a>
+                </h2>
+                <div class="carrousel">
+                    <article class="stampcard">
+                        <div>
+                            <!-- titre -->
+                            <h3>
+                                <a href="#">Timbres</a>
+                            </h3>
+                            <!-- metadonnes enchère -->
+                            <aside>
+                                <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi enim laborum
+                                    expedita fugiat quam, esse ut? Molestiae voluptate adipisci, ullam, quidem nisi
+                                    minus aliquam quisquam neque rerum inventore explicabo deserunt...</span>
+                            </aside>
+                            <!-- bouton Lire l'article -->
+                            <footer>
+                                <a class="stampcard-button-cta" href="#">Lire l'article</a>
+                                <!-- <a aria-label="bouton-like" class="stampcard-button-like" href="#"><i class="fa-regular fa-heart fa-xl"></a></i> -->
+                            </footer>
+                        </div>
+                    </article>
+                    <article class="stampcard">
+                        <div>
+                            <h3>
+                                <a href="#">Enchères</a>
+                            </h3>
+                            <aside>
+                                <span>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Neque, quas, maiores
+                                    expedita libero eius facere, magnam dolore laudantium doloremque aspernatur fugiat
+                                    atque quaerat alias eveniet ex cum modi totam iusto?...</span>
+                            </aside>
+                            <footer>
+                                <a class="stampcard-button-cta" href="#">Lire l'article</a>
+                            </footer>
+                        </div>
+                    </article>
+                    <article class="stampcard">
+                        <div>
+                            <h3>
+                                <a href="#">Bridge</a>
+                            </h3>
+                            <aside>
+                                <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem libero minima rem
+                                    dignissimos sapiente fuga, maiores illum distinctio, beatae architecto aspernatur
+                                    consectetur voluptatem id quia sit explicabo dicta delectus commodi!...</span>
+                            </aside>
+                            <footer>
+                                <a class="stampcard-button-cta" href="#">Lire l'article</a>
+                            </footer>
+                        </div>
+                    </article>
+                    <article class="stampcard">
+                        <div>
+                            <h3>
+                                <a href="#">Enchères</a>
+                            </h3>
+                            <aside>
+                                <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores amet voluptates,
+                                    quos accusamus fugit perspiciatis fugiat eaque. Nulla, eius quo quas cupiditate
+                                    accusamus doloribus officiis, cum laboriosam harum, praesentium rem!...</span>
+                            </aside>
+                            <footer>
+                                <a class="stampcard-button-cta" href="#">Lire l'article</a>
+                            </footer>
+                        </div>
+                    </article>
+                    <article class="newscard">
+                        <a href="#">
+                            <picture>
+                                <img src="assets/img/collection-royaute.webp" alt="Collection famille royale ">
+                            </picture>
+                        </a>
+                        <div>
+                            <h3>
+                                <a href="#">Timbres</a>
+                            </h3>
+                            <aside>
+                                <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro, quam. Nam
+                                    laboriosam cum doloribus, quaerat provident velit magni, praesentium vel nihil
+                                    debitis aliquam nobis assumenda inventore et! Voluptas, quae eligendi.</span>
+                            </aside>
+                            <footer>
+                                <a class="stampcard-button-cta" href="#">Lire l'article</a>
+                            </footer>
+                        </div>
+                    </article>
+                </div>
+            </section>
+            <!-- CTA compte membre -->
+            <section class="cta-wrapper">
+                <picture><img src="assets/logo/crown.webp" alt=""></picture>
+                <h2>Devenez membre du prestigieux club Stampee</h2>
+                <div class="cta-content max-width60">
+                    <p>Ne manquez plus aucunes enchères, inscrivez-vous dès maintenant pour accéder aux
+                        avantages du
+                        club. Miser sur une enchère, créer votre liste de timbres favoris, recevoir notre
+                        infolettre, et
+                        encore plus de fonctionnalités à découvrir.
+                    </p>
+                </div>
+                <button>Créer mon compte</button>
+            </section>
+
+        </main>
+    </div>
+    <footer>
+        <div class="footer-logo"><a href="index.html"><img src="assets/logo/logo_clair.webp" alt="Logo Stampee"></a>
+        </div>
+        <div class="footer-main">
+            <div class="footer-main-content">
+                <h3>À propos</h3>
+                <p class="no-padding-bottom">Lord Stampee vient d’une famille de passionnés de philatélie depuis des
+                    générations. Sa passion pour
+                    les timbres rares et précieux l'a amené à rassembler l'une des collections les plus impressionnantes
+                    du monde.</p>
+                <a href="#">En savoir plus</a>
+            </div>
+            <div class="footer-main-content">
+                <h3>FAQ</h3>
+                <div>
+                    <a href="#">Comment créer son compte ?</a>
+                    <a href="#">Comment placer une offre ?</a>
+                    <a href="#">Comment créer une enchère ?</a>
+                    <a href="#">Comment trouver une enchère ?</a>
+                    <a href="#">Comment suivre une enchère ?</a>
+                </div>
+            </div>
+            <div class="footer-main-content">
+                <h3>Mon compte</h3>
+                <div>
+                    <a href="#">Inscription</a>
+                    <a href="#">Connexion</a>
+                    <a href="#">Protection des données</a>
+                </div>
+            </div>
+            <div class="footer-main-content">
+                <h3>Contact</h3>
+                <div>
+                    <a href="#">Qui sommes nous ?</a>
+                    <a href="#">S'inscrire à notre infolettre</a>
+                    <a href="#">Nous contacter</a>
+                    <a href="#">Termes et conditions</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-legal">
+            <span>©2023 Stampee Auctions</span>
+        </div>
+    </footer>
+</body>
+
+</html>

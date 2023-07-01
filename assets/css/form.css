@@ -1,0 +1,58 @@
+button {
+	padding: 10px;
+	border-radius: 8px;
+	color: var(--color-white);
+	background-color: var(--color-royal-blue);
+	border: 2px solid var(--color-white);
+	font-size: 1rem;
+}
+
+button:hover {
+	cursor: pointer;
+	color: var(--color-royal-blue);
+	background-color: inherit;
+	border: 2px solid var(--color-royal-blue);
+}
+
+button[type="reset"] {
+	color: var(--color-red);
+	background-color: inherit;
+	border: 2px solid var(--color-red);
+}
+
+button[type="reset"]:hover {
+	color: var(--color-white);
+	background-color: var(--color-red);
+}
+
+button:hover[type="reset"] {
+	color: var(--color-white);
+	border: 2px solid var(--color-red);
+}
+
+form button {
+	display: block;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+fieldset {
+	border: none;
+}
+
+label, legend {
+	width: 100%;
+}
+
+input, select {
+	border: 0.5px solid;
+	border-radius: 3px;
+	display: block;
+	padding: 10px;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+input:invalid {
+	border-color: red;
+}
