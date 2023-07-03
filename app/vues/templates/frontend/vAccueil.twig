@@ -1,0 +1,256 @@
+<!-- carrousel nouveautés et à venir -->
+<section>
+	<h2>
+		<a href="#">Nos nouvelles enchères
+			<svg class="svg-icon right-arrow" role="img" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 19.9 19.7">
+				<title>Right Arrow</title>
+				<desc>Right Arrow</desc>
+				<g class="right-arrow" fill="none" stroke="#000" stroke-width="2.5px" stroke-linecap="round" stroke-linejoin="round">
+					<polyline class="cls-1" points="17 6 23 12 17 18"/>
+					<line class="cls-1" x1="23" x2="1" y1="12" y2="12"/>
+				</g>
+			</svg>
+		</a>
+	</h2>
+	<div class="carrousel">
+		{% for timbre in nouveautes %}
+			<article class="stampcard">
+				<a aria-label="button-like" class="stampcard-button-like" href="#">
+					<svg class="svg-icon like-button" role="img" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+						<title>Like Button</title>
+						<desc>Like Button</desc>
+						<g fill="none">
+							<path class="like-button-path" stroke="#000" stroke-width="1.5px" stroke-linecap="round" stroke-linejoin="round" d="M12,9.05,10.88,7.93a3.16,3.16,0,0,0-4.48,0h0a3.17,3.17,0,0,0,0,4.47L12,18l5.6-5.6a3.17,3.17,0,0,0,0-4.47h0a3.16,3.16,0,0,0-4.48,0Z"/>
+						</g>
+					</svg>
+				</a>
+				<!-- image -->
+				<a href="#">
+					<picture>
+						<img src="assets/img/{{ timbre.image_principale }}" alt={{ timbre.titre }}>
+					</picture>
+				</a>
+				<div>
+					<!-- titre -->
+					<h3>
+						<a href="#">{{ timbre.titre }}</a>
+					</h3>
+					<!-- metadonnees mises -->
+					<div class="stampcard-info-wrapper">
+						<div class="stampcard-info">
+							<span>Nombre de mises:
+								{{ timbre.nb_mises }}</span>
+							<span>Temps restant:
+								{{ timbre.temps_restant }}</span>
+						</div>
+					</div>
+					<!-- boutons enchérir -->
+					<footer>
+						<a class="stampcard-button-cta" href="#">Enchérir</a>
+					</footer>
+				</div>
+			</article>
+		{% else %}
+			<div>Aucune Nouveautés.</div>
+		{% endfor %}
+	</div>
+</section>
+<!-- CTA lord Stampee -->
+<section class="cta-wrapper">
+	<div class="cta-content">
+		<picture><img src="assets/img/lord-stampee.webp" alt="Lord Stampee"></picture>
+		<div>
+			<h2 class="padding-bottom">Qui est lord Stampee ?</h2>
+			<p>Lord Stampee vient d’une famille de passionnés de philatélie depuis des générations. Sa
+																																				                            passion pour les timbres rares et précieux l'a amené à rassembler l'une des collections les
+																																				                            plus impressionnantes du monde.</p>
+			<p>Ses collections de timbres ont été les plus complètes connues pour l'époque classique
+																																				                            (timbres
+																																				                            émis avant 1900), avec une passion pour les émissions d'avant 1870. Elles ont notamment
+																																				                            concerné
+																																				                            les provinces canadiennes et la Confédération du Canada, la Suisse, la colonie du Cap,
+																																				                            Ceylan,
+																																				                            le Gambie, Maurice, l'Argentine et l'Uruguay. Pour l'histoire postale des États-Unis, sa
+																																				                            collection est une référence pour les affranchissements dans l'Ouest du pays.</p>
+			<p>Membre active du Collectors Club of New York, Theodore Steinway et lui ont permis le
+																																				                            développement
+																																				                            de cette association. Juge international pendant trois décennies, il est le commissaire des
+																																				                            expositions philatéliques internationales de 1980. En mars 1985 à New York, Theodore
+																																				                            Steinway,
+																																				                            plusieurs philatélistes et lui fondent la Philatelic Foundation, institution éducative à but
+																																				                            non
+																																				                            lucratif qui se donne pour but des travaux d'expertise, de recherches et de publications
+																																				                            philatéliques. Ses collections et celles de sa fille ont été dispersés par la maison aux
+																																				                            enchères Harmer's entre 1968 et 1971, 1989 et 1992 et en 1997.</p>
+			<a href="#">En savoir plus sur Lord Stampee et ses collections<i class="fa-solid fa-arrow-right"></i>
+			</a>
+		</div>
+	</div>
+</section>
+<!-- carrousel coups de coeur du Lord -->
+<section>
+	<h2>
+		<a href="#">Les coups de coeur du lord
+			<svg class="svg-icon right-arrow" role="img" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 19.9 19.7">
+				<title>Right Arrow</title>
+				<desc>Right Arrow</desc>
+				<g class="right-arrow" fill="none" stroke="#000" stroke-width="2.5px" stroke-linecap="round" stroke-linejoin="round">
+					<polyline class="cls-1" points="17 6 23 12 17 18"/>
+					<line class="cls-1" x1="23" x2="1" y1="12" y2="12"/>
+				</g>
+			</svg>
+		</a>
+	</h2>
+	<div class="carrousel">
+		{% for timbre in coupsCoeur %}
+			<article class="stampcard">
+				<a aria-label="button-like" class="stampcard-button-like" href="#">
+					<svg class="svg-icon like-button" role="img" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+						<title>Like Button</title>
+						<desc>Like Button</desc>
+						<g fill="none">
+							<path class="like-button-path" stroke="#000" stroke-width="1.5px" stroke-linecap="round" stroke-linejoin="round" d="M12,9.05,10.88,7.93a3.16,3.16,0,0,0-4.48,0h0a3.17,3.17,0,0,0,0,4.47L12,18l5.6-5.6a3.17,3.17,0,0,0,0-4.47h0a3.16,3.16,0,0,0-4.48,0Z"/>
+						</g>
+					</svg>
+				</a>
+				<!-- image -->
+				<a href="#">
+					<picture>
+						<img src="assets/img/{{ timbre.image_principale }}" alt={{ timbre.titre }}>
+					</picture>
+				</a>
+				<div>
+					<!-- titre -->
+					<h3>
+						<a href="#">{{ timbre.titre }}</a>
+					</h3>
+					<!-- metadonnees mises -->
+					<div class="stampcard-info-wrapper">
+						<div class="stampcard-info">
+							<span>Nombre de mises:
+								{{ timbre.nb_mises }}</span>
+							<span>Temps restant:
+								{{ timbre.temps_restant }}</span>
+						</div>
+					</div>
+					<!-- boutons enchérir -->
+					<footer>
+						<a class="stampcard-button-cta" href="#">Enchérir</a>
+					</footer>
+				</div>
+			</article>
+		{% else %}
+			<div>Aucun coups de coeur.</div>
+		{% endfor %}
+	</div>
+</section>
+<!-- carrousel actualités -->
+<section>
+	<h2>
+		<a href="#">Découvrez nos actualités
+			<svg class="svg-icon right-arrow" role="img" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 19.9 19.7">
+				<title>Right Arrow</title>
+				<desc>Right Arrow</desc>
+				<g class="right-arrow" fill="none" stroke="#000" stroke-width="2.5px" stroke-linecap="round" stroke-linejoin="round">
+					<polyline class="cls-1" points="17 6 23 12 17 18"/>
+					<line class="cls-1" x1="23" x2="1" y1="12" y2="12"/>
+				</g>
+			</svg>
+		</a>
+	</h2>
+	<div class="carrousel">
+		<article class="stampcard">
+			<div>
+				<!-- titre -->
+				<h3>
+					<a href="#">Timbres</a>
+				</h3>
+				<!-- metadonnes enchère -->
+				<aside>
+					<span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi enim laborum
+																																																						                                    expedita fugiat quam, esse ut? Molestiae voluptate adipisci, ullam, quidem nisi
+																																																						                                    minus aliquam quisquam neque rerum inventore explicabo deserunt...</span>
+				</aside>
+				<!-- bouton Lire l'article -->
+				<footer>
+					<a class="stampcard-button-cta" href="#">Lire l'article</a>
+					<!-- <a aria-label="bouton-like" class="stampcard-button-like" href="#"><i class="fa-regular fa-heart fa-xl"></a></i> -->
+				</footer>
+			</div>
+		</article>
+		<article class="stampcard">
+			<div>
+				<h3>
+					<a href="#">Enchères</a>
+				</h3>
+				<aside>
+					<span>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Neque, quas, maiores
+																																																						                                    expedita libero eius facere, magnam dolore laudantium doloremque aspernatur fugiat
+																																																						                                    atque quaerat alias eveniet ex cum modi totam iusto?...</span>
+				</aside>
+				<footer>
+					<a class="stampcard-button-cta" href="#">Lire l'article</a>
+				</footer>
+			</div>
+		</article>
+		<article class="stampcard">
+			<div>
+				<h3>
+					<a href="#">Bridge</a>
+				</h3>
+				<aside>
+					<span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem libero minima rem
+																																																						                                    dignissimos sapiente fuga, maiores illum distinctio, beatae architecto aspernatur
+																																																						                                    consectetur voluptatem id quia sit explicabo dicta delectus commodi!...</span>
+				</aside>
+				<footer>
+					<a class="stampcard-button-cta" href="#">Lire l'article</a>
+				</footer>
+			</div>
+		</article>
+		<article class="stampcard">
+			<div>
+				<h3>
+					<a href="#">Enchères</a>
+				</h3>
+				<aside>
+					<span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores amet voluptates,
+																																																						                                    quos accusamus fugit perspiciatis fugiat eaque. Nulla, eius quo quas cupiditate
+																																																						                                    accusamus doloribus officiis, cum laboriosam harum, praesentium rem!...</span>
+				</aside>
+				<footer>
+					<a class="stampcard-button-cta" href="#">Lire l'article</a>
+				</footer>
+			</div>
+		</article>
+		<article class="newscard">
+			<a href="#">
+				<picture>
+					<img src="assets/img/collection-royaute.webp" alt="Collection famille royale ">
+				</picture>
+			</a>
+			<div>
+				<h3>
+					<a href="#">Timbres</a>
+				</h3>
+				<aside>
+					<span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro, quam. Nam
+																																																						                                    laboriosam cum doloribus, quaerat provident velit magni, praesentium vel nihil
+																																																						                                    debitis aliquam nobis assumenda inventore et! Voluptas, quae eligendi.</span>
+				</aside>
+				<footer>
+					<a class="stampcard-button-cta" href="#">Lire l'article</a>
+				</footer>
+			</div>
+		</article>
+	</div>
+</section>
+<!-- CTA compte membre -->
+<section class="cta-wrapper">
+	<picture><img src="assets/logo/crown.webp" alt=""></picture>
+	<h2>Devenez membre du prestigieux club Stampee</h2>
+	<div class="cta-content max-width60">
+		<p>Ne manquez plus aucunes enchères, inscrivez-vous dès maintenant pour accéder aux avantages du club.Miser sur une enchère, créer votre liste de timbres favoris, recevoir notre infolettre, et encore plus de fonctionnalités à découvrir.</p>
+	</div>
+	<button>Créer mon compte</button>
+</section>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="author" content="Johanna Penet">
+		<meta name="description" content={{ titre }}>
+		<link rel="stylesheet" href="assets/css/main.css">
+		<link rel="stylesheet" href="assets/css/composition.css">
+		<link rel="stylesheet" href="assets/css/font.css">
+		<link rel="stylesheet" href="assets/css/form.css">
+		<link rel="stylesheet" href="assets/css/components/nav.css">
+		<link rel="stylesheet" href="assets/css/components/herobanner.css">
+		<link rel="stylesheet" href="assets/css/components/filter.css">
+		<link rel="stylesheet" href="assets/css/components/catalogue-header.css">
+		<link rel="stylesheet" href="assets/css/components/cta.css">
+		<link rel="stylesheet" href="assets/css/components/stampcard.css">
+		<link rel="stylesheet" href="assets/css/components/footer.css">
+		<link rel="stylesheet" href="assets/css/icons.css">
+		<link rel="stylesheet" href="assets/css/utilities.css">
+		<link rel="stylesheet" href="assets/css/media-query.css" media="screen and (max-width: 900px)">
+		<title>Stampee |
+			{{ titre }}</title>
+		<script src="assets/js/main.js" defer></script>
+		<script type="module" src="assets/js/connexionDeconnexion.js"></script>
+		<script type="module" src="assets/js/creerCompte.js"></script>
+	</head>
+
+	<body>
+		<header>
+			<!-- menus -->
+			<nav>
+				<!-- logo -->
+				<div class="nav-logo">
+					<a href="index.html"><img src="assets/logo/logo_fonce.webp" alt="Logo Stampee"></a>
+				</div>
+				<!-- menu burger -->
+				<input class="nav-toggle" type="checkbox" id="nav-burger">
+				<label aria-label="bouton menu reponsive" class="nav-burger" for="nav-burger">
+					<span></span>
+				</label>
+				<div
+					class="nav-wrapper">
+					<!-- menu secondaire -->
+					<div class="nav-top">
+						<div class="nav-top-language">
+							<select aria-label="langue" name="langue">
+								<option value="en">English</option>
+								<option value="fr" selected>Français</option>
+							</select>
+						</div>
+						<!-- connexion -->
+						<div class="nav-top-login">
+							<span id="utilisateur">{{ oUtilConn.utilisateur_prenom }}
+								{{ oUtilConn.utilisateur_nom }}</span>
+							<span id="connecter" class="{{ oUtilConn ? 'cache' : '' }}">Connexion</span>
+							<span id="creerCompte" class="{{ oUtilConn ? 'cache' : '' }}">Inscription</span>
+							<span id="deconnecter" class="{{ not oUtilConn ? 'cache' : '' }}">Déconnecter</span>
+						</div>
+					</div>
+					<!-- menu principale -->
+					<div class="nav-main h2 uppercase" role="menubar">
+						<a href="index.html" role="menuitem" aria-haspopup="false">Accueil</a>
+						<div class="nav-main-dropdown">
+							<a href="#" role="menuitem" aria-haspopup="true">Enchères</a>
+							<div class="nav-main-dropdown-content" role="menu">
+								<a href="catalogue.html" role="menuitem" aria-haspopup="false">Enchères en cours</a>
+								<a href="#" role="menuitem" aria-haspopup="false">Enchères archivées</a>
+								<a href="#" role="menuitem" aria-haspopup="false">Enchères à venir</a>
+							</div>
+						</div>
+						<div class="nav-main-dropdown">
+							<a href="#" role="menuitem" aria-haspopup="true">Actualités</a>
+							<div class="nav-main-dropdown-content" role="menu">
+								<a href="#" role="menuitem" aria-haspopup="false">Timbres</a>
+								<a href="#" role="menuitem" aria-haspopup="false">Enchères</a>
+								<a href="#" role="menuitem" aria-haspopup="false">Bridge</a>
+							</div>
+						</div>
+						<div class="nav-main-dropdown">
+							<a href="#" role="menuitem" aria-haspopup="true">À propos</a>
+							<div class="nav-main-dropdown-content" role="menu">
+								<a href="#" role="menuitem" aria-haspopup="false">Lord Reginald Stampee III</a>
+								<a href="#" role="menuitem" aria-haspopup="false">Historique familial</a>
+								<a href="#" role="menuitem" aria-haspopup="false">La philatélie</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</nav>
+			<div class="herobanner">
+				<img src="assets/img/herobanner{{ titre }}.webp" alt="">
+				<div class="herobanner-text max-width60">
+					<h1>{{ titreHB }}</h1>
+					<p>{{ texteHB }}</p>
+					<!-- barre de recherche -->
+					<div class="herobanner-searchbar">
+						<svg role="img" class="svg-icon search-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 19.9 19.7">
+							<title>Search Icon</title>
+							<desc>A magnifying glass icon.</desc>
+							<g class="search-path" fill="none" stroke="#000" stroke-width="2px">
+								<path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"/>
+								<circle cx="8" cy="8" r="7"/>
+							</g>
+						</svg>
+						<input aria-label="search-bar" type="search" placeholder="Recherchez un timbre">
+					</div>
+				</div>
+			</div>
+		</header>
+		<div>
+			<main>
+
+				{{ include(templateMain) }}
+
+			</main>
+		</div>
+		{{ include("frontend/modaleConnexion.twig") }}
+		{{ include("frontend/modaleCreerCompte.twig") }}
+
+		<footer>
+			<div class="footer-logo">
+				<a href="index.html"><img src="assets/logo/logo_clair.webp" alt="Logo Stampee"></a>
+			</div>
+			<div class="footer-main">
+				<div class="footer-main-content">
+					<h3>À propos</h3>
+					<p class="no-padding-bottom">Lord Stampee vient d’une famille de passionnés de philatélie depuis des
+																																																						                    générations. Sa passion pour
+																																																						                    les timbres rares et précieux l'a amené à rassembler l'une des collections les plus impressionnantes
+																																																						                    du monde.</p>
+					<a href="#">En savoir plus</a>
+				</div>
+				<div class="footer-main-content">
+					<h3>FAQ</h3>
+					<div>
+						<a href="#">Comment créer son compte ?</a>
+						<a href="#">Comment placer une offre ?</a>
+						<a href="#">Comment créer une enchère ?</a>
+						<a href="#">Comment trouver une enchère ?</a>
+						<a href="#">Comment suivre une enchère ?</a>
+					</div>
+				</div>
+				<div class="footer-main-content">
+					<h3>Mon compte</h3>
+					<div>
+						<a href="#">Inscription</a>
+						<a href="#">Connexion</a>
+						<a href="#">Protection des données</a>
+					</div>
+				</div>
+				<div class="footer-main-content">
+					<h3>Contact</h3>
+					<div>
+						<a href="#">Qui sommes nous ?</a>
+						<a href="#">S'inscrire à notre infolettre</a>
+						<a href="#">Nous contacter</a>
+						<a href="#">Termes et conditions</a>
+					</div>
+				</div>
+			</div>
+			<div class="footer-legal">
+				<span>©2023 Stampee Auctions</span>
+			</div>
+		</footer>
+	</body>
+</html>
