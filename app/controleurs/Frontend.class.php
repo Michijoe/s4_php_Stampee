@@ -20,7 +20,7 @@ class Frontend extends Routeur
   public function __construct()
   {
     $this->oUtilConn = $_SESSION['oUtilConn'] ?? null;
-    $this->timbre_id = $_GET['timbre_id']     ?? null;
+    $this->timbre_id   = $_GET['timbre_id']       ?? null;
     $this->oRequetesSQL = new RequetesSQL;
   }
 
@@ -46,9 +46,10 @@ class Frontend extends Routeur
     if (count($erreurs) > 0) {
       $retour = $erreurs;
     } else {
+      var_dump($_POST);
       $retour = $this->oRequetesSQL->creerCompteClient($_POST);
       if (!is_array($retour) && preg_match('/^[1-9]\d*$/', $retour)) {
-        $oUtilisateur->utilisateur_profil = Utilisateur::PROFIL_MEMBRE;
+        $oUtilisateur->utilisateur_profil = Utilisateur::PROFIL_CLIENT;
         $_SESSION['oUtilConn'] = $oUtilisateur;
       }
     }

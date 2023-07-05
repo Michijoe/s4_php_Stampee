@@ -11,7 +11,7 @@ class Routeur
   private $routes = [
     // uri,             classe,     méthode
     // ------------------------------------
-    ["membre",        "Membre",   "gererEntite"],
+    ["admin",         "Admin",    "gererEntite"],
     ["",              "Frontend", "afficherAccueil"],
     ["catalogue",     "Frontend", "afficherCatalogue"],
     ["timbre",        "Frontend", "voirTimbre"],
@@ -22,7 +22,7 @@ class Routeur
 
   protected $oRequetesSQL; // objet RequetesSQL utilisé par tous les contrôleurs
 
-  const BASE_URI = '/';
+  const BASE_URI = '/'; // pour le PHP Server de Visual Studio Code
 
   const ERROR_FORBIDDEN = "HTTP 403";
   const ERROR_NOT_FOUND = "HTTP 404";

@@ -36,11 +36,6 @@
 	align-items: center;
 }
 
-.nav-top-login > * + *:before {
-	content: '|';
-	padding-right: calc(var(--gap) / 2);
-}
-
 .nav-main {
 	display: flex;
 	gap: calc(var(--gap) * 2);

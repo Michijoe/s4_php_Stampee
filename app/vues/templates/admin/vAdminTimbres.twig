@@ -1,0 +1,124 @@
+<script>
+	history.pushState({}, '', 'admin?entite=timbre')
+</script>
+<section>
+	<div class="catalogue-header">
+		<h2>{{ titre }}</h2>
+		{# AJOUTER UN TIMBRE #}
+		<a href="admin?entite=timbre&action=a" class="button">Ajouter un timbre</a>
+	</div>
+	<p class="messageRetourAction {{ classRetour }}">{{ messageRetourAction }}&nbsp;</p>
+	{# TABLEAU TIMBRE #}
+	<table>
+		<thead>
+			<tr>
+				{% if oUtilConn.utilisateur_profil is same as constant('Utilisateur::PROFIL_ADMINISTRATEUR') %}
+					<th>Id</th>
+				{% endif %}
+				<th>Image</th>
+				<th>Titre</th>
+				<th>Description</th>
+				{# <th>Année publication</th> #}
+				{# <th>Condition</th> #}
+				{# <th>Pays</th> #}
+				{# <th>Tirage</th> #}
+				{# <th>Couleur dominante</th> #}
+				{# <th>Certification</th> #}
+					<th>
+				Statut
+				</th>
+					{% if oUtilConn.utilisateur_profil is same as constant('Utilisateur::PROFIL_ADMINISTRATEUR') %}
+						<th>
+					Créé par
+				</th>
+				{% endif %}
+					<th>
+				Action
+			</th>
+		</tr>
+		</thead>
+			<tbody>
+				{% for timbre in timbres %}
+					<tr>
+						{% if oUtilConn.utilisateur_profil is same as constant('Utilisateur::PROFIL_ADMINISTRATEUR') %}
+							<th>
+						{{ timbre.timbre_id }}
+					</th>
+					{% endif %}
+						<th>
+					<img src="assets/img/{{ timbre.image_principale }}.webp" alt=""> </th>
+					<th>
+						{{ timbre.timbre_titre }}
+					</th>
+					<th>
+						{{ timbre.timbre_description }}
+					</th>
+					{# <th>{{ timbre.timbre_annee_publication }}</th>
+																																								<th>
+																																									{% if timbre.timbre_statut == constant('Timbre::CONDITION_ENDOMMAGE') %}
+																																										Endommagée
+																																									{% elseif timbre.timbre_statut == constant('Timbre::CONDITION_MOYENNE') %}
+																																										Moyenne
+																																									{% elseif timbre.timbre_statut == constant('Timbre::CONDITION_BONNE') %}
+																																										Bonne
+																																									{% elseif timbre.timbre_statut == constant('Timbre::CONDITION_EXCELLENTE') %}
+																																										Excellente
+																																									{% elseif timbre.timbre_statut == constant('Timbre::CONDITION_PARFAITE') %}
+																																										Parfaite
+																																									{% endif %}
+																																								</th>
+																																								<th>{{ timbre.pays_nom }}</th>
+																																								<th>
+																																									{% if timbre.timbre_tirage == constant('Timbre::TIRAGE_MAX100') %}
+																																										0 - 100
+																																									{% elseif timbre.timbre_tirage == constant('Timbre::TIRAGE_MAX500') %}
+																																										100 - 500
+																																									{% elseif timbre.timbre_tirage == constant('Timbre::TIRAGE_MAX1000') %}
+																																										500 - 1000
+																																									{% elseif timbre.timbre_tirage == constant('Timbre::TIRAGE_MAX5000') %}
+																																										1000 - 5000
+																																									{% endif %}
+																																								</th>
+																																								<th>
+																																									{% if timbre.timbre_couleur == constant('Timbre::COULEUR_ROUGE') %}
+																																										Rouge
+																																									{% elseif timbre.timbre_couleur == constant('Timbre::COULEUR_JAUNE') %}
+																																										Jaune
+																																									{% elseif timbre.timbre_couleur == constant('Timbre::COULEUR_BLEU') %}
+																																										Bleu
+																																									{% elseif timbre.timbre_couleur == constant('Timbre::COULEUR_VERT') %}
+																																										Vert
+																																									{% elseif timbre.timbre_couleur == constant('Timbre::COULEUR_BLANC') %}
+																																										Blanc
+																																									{% elseif timbre.timbre_couleur == constant('Timbre::COULEUR_NOIR') %}
+																																										Noir
+																																									{% endif %}
+																																								</th> #}
+					{# <th>{{ timbre.timbre_certification }}</th> #}
+					<th>
+						{% if     timbre.timbre_statut == constant('Timbre::STATUT_INVISIBLE') %}
+							Non approuvé
+						{% elseif timbre.timbre_statut == constant('Timbre::STATUT_VISIBLE') %}
+							En ligne
+						{% elseif timbre.timbre_statut == constant('Timbre::STATUT_ARCHIVE') %}
+							Archivé
+						{% endif %}
+					</th>
+					{% if oUtilConn.utilisateur_profil is same as constant('Utilisateur::PROFIL_ADMINISTRATEUR') %}
+						<th>{{ timbre.utilisateur_prenom }}
+							{{ timbre.utilisateur_nom }}
+						</th>
+					{% endif %}
+					<th>
+						<a href="admin?entite=timbre&action=m&timbre_id={{ timbre.timbre_id }}">
+							modifier</a>
+						{# si pas d'enchere ni de mise sur le timbre on peut supprimer #}
+						<span class="confirmer" data-href="admin?entite=timbre&action=s&timbre_id={{ timbre.timbre_id }}">supprimer</span>
+					</th>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</section>
+{{ include("admin/modaleJonction.twig") }}
+{{ include("admin/modaleSuppression.twig") }}

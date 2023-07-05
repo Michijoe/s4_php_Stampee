@@ -11,21 +11,18 @@
 		<link rel="stylesheet" href="assets/css/font.css">
 		<link rel="stylesheet" href="assets/css/form.css">
 		<link rel="stylesheet" href="assets/css/components/nav.css">
-		<link rel="stylesheet" href="assets/css/components/herobanner.css">
-		<link rel="stylesheet" href="assets/css/components/filter.css">
 		<link rel="stylesheet" href="assets/css/components/catalogue-header.css">
-		<link rel="stylesheet" href="assets/css/components/cta.css">
-		<link rel="stylesheet" href="assets/css/components/stampcard.css">
 		<link rel="stylesheet" href="assets/css/components/footer.css">
 		<link rel="stylesheet" href="assets/css/icons.css">
 		<link rel="stylesheet" href="assets/css/utilities.css">
+		<link rel="stylesheet" href="assets/css/components/herobanner.css">
 		<link rel="stylesheet" href="assets/css/admin.css">
 		<link rel="stylesheet" href="assets/css/media-query.css" media="screen and (max-width: 900px)">
 		<title>Stampee |
 			{{ titre }}</title>
 		<script src="assets/js/main.js" defer></script>
 		<script type="module" src="assets/js/connexionCompte.js"></script>
-		<script type="module" src="assets/js/creerCompte.js"></script>
+		<script type="module" src="js/admin.js"></script>
 	</head>
 
 	<body>
@@ -89,35 +86,47 @@
 				</div>
 			</nav>
 			<div class="herobanner">
-				<img src="assets/img/herobanner{{ titre }}.webp" alt="">
+				<img src="assets/img/herobannerMembre.webp" alt="">
 				<div class="herobanner-text max-width60">
-					<h1>{{ titreHB }}</h1>
-					<p>{{ texteHB }}</p>
-					<!-- barre de recherche -->
-					<div class="herobanner-searchbar">
-						<svg role="img" class="svg-icon search-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 19.9 19.7">
-							<title>Search Icon</title>
-							<desc>A magnifying glass icon.</desc>
-							<g class="search-path" fill="none" stroke="#000" stroke-width="2px">
-								<path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"/>
-								<circle cx="8" cy="8" r="7"/>
-							</g>
-						</svg>
-						<input aria-label="search-bar" type="search" placeholder="Recherchez un timbre">
-					</div>
+					<h1>Espace membre</h1>
 				</div>
 			</div>
 		</header>
-		<div>
+		<div class="admin">
+			<aside>
+				<p>
+					{{ oUtilConn.utilisateur_prenom }}
+					{{ oUtilConn.utilisateur_nom }}
+					<a href="admin?entite=utilisateur&action=d">Déconnecter</a>
+				</p>
+				<ul>
+					<li>
+						<hr>
+						<a href="admin">Mes timbres</a>
+					</li>
+					<li>
+						<a href="admin?entite=enchere">Mes enchères</a>
+					</li>
+					<li>
+						<a href="admin?entite=mise">Mes mises</a>
+					</li>
+					<li>
+						<a href="admin?entite=like">Mes favoris</a>
+					</li>
+					{% if oUtilConn.utilisateur_profil == constant('Utilisateur::PROFIL_ADMINISTRATEUR') %}
+						<li>
+							<hr>
+							<a href="admin?entite=utilisateur">Utilisateurs</a>
+						</li>
+					{% endif %}
+				</ul>
+			</aside>
 			<main>
 
 				{{ include(templateMain) }}
 
 			</main>
 		</div>
-		{{ include("frontend/modaleConnexion.twig") }}
-		{{ include("frontend/modaleCreerCompte.twig") }}
-
 		<footer>
 			<div class="footer-logo">
 				<a href="."><img src="assets/logo/logo_clair.webp" alt="Logo Stampee"></a>
@@ -126,9 +135,9 @@
 				<div class="footer-main-content">
 					<h3>À propos</h3>
 					<p class="no-padding-bottom">Lord Stampee vient d’une famille de passionnés de philatélie depuis des
-																																																																																																																								                    générations. Sa passion pour
-																																																																																																																								                    les timbres rares et précieux l'a amené à rassembler l'une des collections les plus impressionnantes
-																																																																																																																								                    du monde.</p>
+																																																																																																																																																																																																																																										                    générations. Sa passion pour
+																																																																																																																																																																																																																																										                    les timbres rares et précieux l'a amené à rassembler l'une des collections les plus impressionnantes
+																																																																																																																																																																																																																																										                    du monde.</p>
 					<a href="#">En savoir plus</a>
 				</div>
 				<div class="footer-main-content">

@@ -9,7 +9,6 @@ class Utilisateur extends Entite
   protected $utilisateur_id = 0;
   protected $utilisateur_nom;
   protected $utilisateur_prenom;
-  protected $utilisateur_pseudo;
   protected $utilisateur_courriel;
   protected $utilisateur_mdp;
   protected $utilisateur_profil;
@@ -34,10 +33,6 @@ class Utilisateur extends Entite
   public function getUtilisateur_prenom()
   {
     return $this->utilisateur_prenom;
-  }
-  public function getUtilisateur_pseudo()
-  {
-    return $this->utilisateur_pseudo;
   }
   public function getUtilisateur_courriel()
   {
@@ -103,23 +98,6 @@ class Utilisateur extends Entite
       $this->erreurs['utilisateur_prenom'] = 'Au moins 2 caractères alphabétiques pour chaque mot.';
     }
     $this->utilisateur_prenom = $utilisateur_prenom;
-    return $this;
-  }
-
-  /**
-   * Mutateur de la propriété utilisateur_pseudo 
-   * @param string $utilisateur_pseudo
-   * @return $this
-   */
-  public function setUtilisateur_pseudo($utilisateur_pseudo)
-  {
-    unset($this->erreurs['utilisateur_pseudo']);
-    $utilisateur_pseudo = trim($utilisateur_pseudo);
-    $regExp = '/^[a-zÀ-ÖØ-öø-ÿ]{2,}( [a-zÀ-ÖØ-öø-ÿ]{2,})*$/i';
-    if (!preg_match($regExp, $utilisateur_pseudo)) {
-      $this->erreurs['utilisateur_pseudo'] = 'Au moins 2 caractères alphabétiques pour chaque mot.';
-    }
-    $this->utilisateur_pseudo = $utilisateur_pseudo;
     return $this;
   }
 

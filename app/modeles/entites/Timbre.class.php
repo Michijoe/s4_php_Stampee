@@ -14,13 +14,11 @@ class Timbre extends Entite
   protected $timbre_pays_id;
   protected $timbre_dimensions;
   protected $timbre_tirage;
-  protected $timbre_couleur_dominante;
+  protected $timbre_couleur;
   protected $timbre_certification;
-  protected $timbre_debut_enchere;
-  protected $timbre_fin_enchere;
-  protected $timbre_prix_plancher;
   protected $timbre_utilisateur_id;
   protected $timbre_statut;
+  protected $timbre_image;
 
   const ANNEE_PREMIER_TIMBRE = '1847';
 
@@ -86,12 +84,7 @@ class Timbre extends Entite
    */
   public function setTimbre_description($timbre_description)
   {
-    unset($this->erreurs['timbre_description']);
     $timbre_description = trim($timbre_description);
-    $regExp = '/^\S+(\s+\S+){4,}$/';
-    if (!preg_match($regExp, $timbre_description)) {
-      $this->erreurs['timbre_description'] = 'Au moins 5 mots.';
-    }
     $this->timbre_description = $timbre_description;
     return $this;
   }
@@ -194,20 +187,20 @@ class Timbre extends Entite
    * @param int $timbre_couleur_dominante
    * @return $this
    */
-  public function setTimbre_couleur_dominante($timbre_couleur_dominante)
+  public function setTimbre_couleur($timbre_couleur)
   {
     unset($this->erreurs['timbre_couleur_dominante']);
     if (
-      $timbre_couleur_dominante != Timbre::COULEUR_BLANC &&
-      $timbre_couleur_dominante != Timbre::COULEUR_BLEU &&
-      $timbre_couleur_dominante != Timbre::COULEUR_JAUNE &&
-      $timbre_couleur_dominante != Timbre::COULEUR_NOIR &&
-      $timbre_couleur_dominante != Timbre::COULEUR_ROUGE &&
-      $timbre_couleur_dominante != Timbre::COULEUR_VERT
+      $timbre_couleur != Timbre::COULEUR_BLANC &&
+      $timbre_couleur != Timbre::COULEUR_BLEU &&
+      $timbre_couleur != Timbre::COULEUR_JAUNE &&
+      $timbre_couleur != Timbre::COULEUR_NOIR &&
+      $timbre_couleur != Timbre::COULEUR_ROUGE &&
+      $timbre_couleur != Timbre::COULEUR_VERT
     ) {
-      $this->erreurs['timbre_couleur_dominante'] = 'Couleur incorrecte.';
+      $this->erreurs['timbre_couleur'] = 'Couleur incorrecte.';
     }
-    $this->timbre_couleur_dominante = $timbre_couleur_dominante;
+    $this->timbre_couleur = $timbre_couleur;
     return $this;
   }
 

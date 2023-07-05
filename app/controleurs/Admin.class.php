@@ -1,14 +1,15 @@
 <?php
 
 /**
- * Classe Contrôleur des requêtes de l'application membre
+ * Classe Contrôleur des requêtes de l'application admin
  */
 
-class Membre extends Routeur
+class Admin extends Routeur
 {
 
   protected $utilisateur_id;
   protected $timbre_id;
+  protected $enchere_id;
   protected $mise_id;
   protected $image_id;
   protected $pays_id;
@@ -27,31 +28,31 @@ class Membre extends Routeur
    */
   public function __construct()
   {
-    self::$entite = $_GET['entite'] ?? 'film';
+    self::$entite = $_GET['entite'] ?? 'timbre';
     self::$action = $_GET['action'] ?? 'l';
   }
 
   /**
-   * Gérer l'interface membre 
+   * Gérer l'interface d'administration 
    */
   public function gererEntite()
   {
     if (isset($_SESSION['oUtilConn'])) {
       self::$oUtilConn = $_SESSION['oUtilConn'];
       $entite = ucwords(self::$entite);
-      $classe = "Membre$entite";
+      $classe = "Admin$entite";
       if (class_exists($classe)) {
         (new $classe())->gererAction();
       } else {
         throw new Exception("L'entité " . self::$entite . " n'existe pas.");
       }
     } else {
-      (new MembreUtilisateur)->connecter();
+      (new AdminUtilisateur)->connecter();
     }
   }
 
   /**
-   * Gérer l'interface membre d'une entité
+   * Gérer l'interface d'administration d'une entité
    */
   public function gererAction()
   {

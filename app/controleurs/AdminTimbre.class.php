@@ -1,10 +1,10 @@
 <?php
 
 /**
- * Classe Contrôleur des requêtes sur l'entité Timbre de l'application membre
+ * Classe Contrôleur des requêtes sur l'entité Timbre de l'application admin
  */
 
-class MembreTimbre extends Membre
+class AdminTimbre extends Admin
 {
 
   protected $methodes = [
@@ -30,25 +30,27 @@ class MembreTimbre extends Membre
    */
   public function listerTimbres()
   {
-    $timbres = $this->oRequetesSQL->getTimbres('membre');
+    $timbres = $this->oRequetesSQL->getTimbres();
     (new Vue)->generer(
-      'vMembreTimbres',
+      'vAdminTimbres',
       [
         'oUtilConn'           => self::$oUtilConn,
-        'titre'               => 'Gestion des timbres',
+        'titre'               => 'Mes timbres',
         'timbres'             => $timbres,
         'classRetour'         => $this->classRetour,
         'messageRetourAction' => $this->messageRetourAction
       ],
-      'gabarit-membre'
+      'gabarit-admin'
     );
   }
+
 
   /**
    * Ajouter un timbre
    */
   public function ajouterTimbre()
   {
+    $pays = $this->oRequetesSQL->getPays();
     if (count($_POST) !== 0) {
       $timbre = $_POST;
       $oTimbre = new Timbre($timbre);
@@ -62,13 +64,9 @@ class MembreTimbre extends Membre
           'timbre_pays_id'             => $oTimbre->timbre_pays_id,
           'timbre_dimensions'          => $oTimbre->timbre_dimensions,
           'timbre_tirage'              => $oTimbre->timbre_tirage,
-          'timbre_couleur_dominante'   => $oTimbre->timbre_couleur_dominante,
+          'timbre_couleur'             => $oTimbre->timbre_couleur,
           'timbre_certification'       => $oTimbre->timbre_certification,
-          'timbre_debut_enchere'       => $oTimbre->timbre_debut_enchere,
-          'timbre_fin_enchere'         => $oTimbre->timbre_fin_enchere,
-          'timbre_prix_plancher'       => $oTimbre->timbre_prix_plancher,
-          'timbre_utilisateur_id'      => $oTimbre->timbre_utilisateur_id,
-          'timbre_statut'              => $oTimbre->timbre_statut
+          'timbre_utilisateur_id'      => self::$oUtilConn->utilisateur_id
         ]);
         if (preg_match('/^[1-9]\d*$/', $retour)) {
           $this->messageRetourAction = "Ajout du timbre numéro $retour effectué.";
@@ -85,19 +83,20 @@ class MembreTimbre extends Membre
     }
 
     (new Vue)->generer(
-      'vMembreTimbreAjouter',
+      'vAdminTimbreAjouter',
       [
         'oUtilConn' => self::$oUtilConn,
         'titre'     => 'Ajouter un timbre',
         'timbre'    => $timbre,
+        'pays'      => $pays,
         'erreurs'   => $erreurs
       ],
-      'gabarit-membre'
+      'gabarit-admin'
     );
   }
 
   /**
-   * Modifier un film
+   * Modifier un timbre
    */
   public function modifierTimbre()
   {
@@ -137,19 +136,19 @@ class MembreTimbre extends Membre
         exit;
       }
     } else {
-      $timbre = $this->oRequetesSQL->getTimbre($this->timbre_id, 'membre');
+      $timbre = $this->oRequetesSQL->getTimbre($this->timbre_id, 'admin');
       $erreurs = [];
     }
 
     (new Vue)->generer(
-      'vMembreTimbreModifier',
+      'vAdminTimbreModifier',
       [
         'oUtilConn' => self::$oUtilConn,
         'titre'     => "Modifier le timbre numéro $this->timbre_id",
         'timbre'    => $timbre,
         'erreurs'   => $erreurs
       ],
-      'gabarit-membre'
+      'gabarit-admin'
     );
   }
 

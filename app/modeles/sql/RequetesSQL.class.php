@@ -17,7 +17,7 @@ class RequetesSQL extends RequetesPDO
   public function getUtilisateurs()
   {
     $this->sql = "
-      SELECT utilisateur_id, utilisateur_nom, utilisateur_prenom, utilisateur_pseudo, utilisateur_courriel,
+      SELECT utilisateur_id, utilisateur_nom, utilisateur_prenom, utilisateur_courriel,
              utilisateur_renouveler_mdp, utilisateur_profil
       FROM utilisateur ORDER BY utilisateur_id DESC";
     return $this->getLignes();
@@ -31,7 +31,7 @@ class RequetesSQL extends RequetesPDO
   public function getUtilisateur($utilisateur_id)
   {
     $this->sql = "
-      SELECT utilisateur_id, utilisateur_nom, utilisateur_prenom, utilisateur_pseudo, utilisateur_courriel,
+      SELECT utilisateur_id, utilisateur_nom, utilisateur_prenom, utilisateur_courriel,
              utilisateur_renouveler_mdp, utilisateur_profil
       FROM utilisateur
       WHERE utilisateur_id = :utilisateur_id";
@@ -58,7 +58,7 @@ class RequetesSQL extends RequetesPDO
   public function connecter($champs)
   {
     $this->sql = "
-      SELECT utilisateur_id, utilisateur_nom, utilisateur_prenom, utilisateur_pseudo, 
+      SELECT utilisateur_id, utilisateur_nom, utilisateur_prenom,
              utilisateur_courriel, utilisateur_renouveler_mdp, utilisateur_profil
       FROM utilisateur
       WHERE utilisateur_courriel = :utilisateur_courriel AND utilisateur_mdp = SHA2(:utilisateur_mdp, 512)";
@@ -81,7 +81,6 @@ class RequetesSQL extends RequetesPDO
       INSERT INTO utilisateur SET
       utilisateur_nom            = :utilisateur_nom,
       utilisateur_prenom         = :utilisateur_prenom,
-      utilisateur_pseudo         = :utilisateur_pseudo,
       utilisateur_courriel       = :utilisateur_courriel,
       utilisateur_mdp            = SHA2(:utilisateur_mdp, 512),
       utilisateur_renouveler_mdp = "oui",
@@ -94,7 +93,7 @@ class RequetesSQL extends RequetesPDO
    * @param array $champs tableau des champs de l'utilisateur 
    * @return int|string clé primaire de la ligne ajoutée, message d'erreur sinon
    */
-  public function creerCompteMembre($champs)
+  public function creerCompteClient($champs)
   {
     $utilisateur = $this->controlerCourriel(
       ['utilisateur_courriel' => $champs['utilisateur_courriel'], 'utilisateur_id' => 0]
@@ -179,8 +178,6 @@ class RequetesSQL extends RequetesPDO
   }
 
 
-
-
   /* GESTION DES TIMBRES ================= */
 
   /**
@@ -188,9 +185,11 @@ class RequetesSQL extends RequetesPDO
    * @param  string $critere
    * @return array tableau des lignes produites par la select   
    */
-  // public function getTimbres($critere = 'complet')
-  // {
-  // }
+  public function getTimbres($critere = 'complet')
+  {
+    $this->sql = "SELECT * from timbre";
+    return $this->getLignes();
+  }
 
 
   /**
@@ -206,11 +205,28 @@ class RequetesSQL extends RequetesPDO
    * @param array $champs tableau des champs du timbre 
    * @return int|string clé primaire de la ligne ajoutée, message d'erreur sinon
    */
+  public function ajouterTimbre($champs)
+  {
+    $this->sql = '
+      INSERT INTO timbre SET
+      timbre_titre               = :timbre_titre,
+      timbre_description         = :timbre_description,
+      timbre_annee_publication   = :timbre_annee_publication,
+      timbre_condition           = :timbre_condition,
+      timbre_pays_id             = :timbre_pays_id,
+      timbre_dimensions          = :timbre_dimensions,
+      timbre_tirage              = :timbre_tirage,
+      timbre_couleur             = :timbre_couleur,
+      timbre_certification       = :timbre_certification,
+      timbre_utilisateur_id      = :timbre_utilisateur_id
+      ';
+    return $this->CUDLigne($champs);
+  }
 
 
   /**
    * Modifier un timbre
-   * @param array $champs tableau avec les champs à modifier et la clé film_id
+   * @param array $champs tableau avec les champs à modifier et la clé timbre_id
    * @return boolean true si modification effectuée, false sinon
    */
 
@@ -364,4 +380,18 @@ class RequetesSQL extends RequetesPDO
    * @param int $commentaire_id clé primaire
    * @return boolean|string true si suppression effectuée, message d'erreur sinon
    */
+
+
+  /* GESTION DES PAYS ================= */
+
+  /**
+   * Récupération des pays de la bd
+   * @param int $pays_id
+   * @return array|false tableau associatif de la ligne produite par la select, false si aucune ligne
+   */
+  public function getPays()
+  {
+    $this->sql = "SELECT * from pays";
+    return $this->getLignes();
+  }
 }
