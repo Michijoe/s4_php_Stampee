@@ -8,9 +8,8 @@
 class Frontend extends Routeur
 {
 
-  private $timbre_id;
-
   private $oUtilConn;
+  private $enchere_id;
 
   /**
    * Constructeur qui initialise des propriétés à partir du query string
@@ -46,10 +45,9 @@ class Frontend extends Routeur
     if (count($erreurs) > 0) {
       $retour = $erreurs;
     } else {
-      var_dump($_POST);
-      $retour = $this->oRequetesSQL->creerCompteClient($_POST);
+      $retour = $this->oRequetesSQL->creerCompteUtilisateur($_POST);
       if (!is_array($retour) && preg_match('/^[1-9]\d*$/', $retour)) {
-        $oUtilisateur->utilisateur_profil = Utilisateur::PROFIL_CLIENT;
+        $oUtilisateur->utilisateur_profil = Utilisateur::PROFIL_MEMBRE;
         $_SESSION['oUtilConn'] = $oUtilisateur;
       }
     }
@@ -64,6 +62,8 @@ class Frontend extends Routeur
     unset($_SESSION['oUtilConn']);
     echo json_encode(true);
   }
+
+
 
   /**
    * Afficher l'accueil
@@ -88,15 +88,18 @@ class Frontend extends Routeur
     );
   }
 
+
   /**
    * Afficher le catalogue complet, des enchères actives ou des enchères archivées
+   * 
+   * voir pour ne pas faire 3 requetes mais passer quel catalogue en argument
    * 
    */
   public function afficherCatalogue()
   {
-    $catalogue          = $this->oRequetesSQL->getTimbres('complet');
-    $catalogueActives   = $this->oRequetesSQL->getTimbres('actives');
-    $catalogueArchives  = $this->oRequetesSQL->getTimbres('archives');
+    $catalogue          = $this->oRequetesSQL->getEncheresTimbres();
+    $catalogueActives   = $this->oRequetesSQL->getEncheresTimbres('actives');
+    $catalogueArchives  = $this->oRequetesSQL->getEncheresTimbres('archives');
 
     (new Vue)->generer(
       "vCatalogue",
@@ -114,24 +117,25 @@ class Frontend extends Routeur
   }
 
 
+
   /**
-   * Afficher la fiche d'un timbre
+   * Afficher la fiche d'une enchere
    * 
    */
-  public function voirTimbre()
+  public function voirEnchere()
   {
-    $timbre = false;
-    if (!is_null($this->timbre_id)) {
-      $timbre   = $this->oRequetesSQL->getTimbre($this->timbre_id);
+    $enchere = false;
+    if (!is_null($this->enchere_id)) {
+      $enchere   = $this->oRequetesSQL->getTimbre($this->timbre_id);
     }
-    if (!$timbre) throw new Exception("Timbre inexistant.");
+    if (!$enchere) throw new Exception("Enchère inexistant.");
 
     (new Vue)->generer(
-      "vTimbre",
+      "vEnchere",
       [
         'oUtilConn'    => $this->oUtilConn,
-        'titre'        => 'Timbre',
-        'timbre'       => $timbre
+        'titre'        => $enchere['timbre_titre'],
+        'timbre'       => $enchere
       ],
       "gabarit-frontend"
     );

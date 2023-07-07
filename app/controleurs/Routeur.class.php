@@ -14,7 +14,7 @@ class Routeur
     ["admin",         "Admin",    "gererEntite"],
     ["",              "Frontend", "afficherAccueil"],
     ["catalogue",     "Frontend", "afficherCatalogue"],
-    ["timbre",        "Frontend", "voirTimbre"],
+    ["enchere",        "Frontend", "voirEnchere"],
     ["connecter",     "Frontend", "connecter"],
     ["creerCompte",   "Frontend", "creerCompte"],
     ["deconnecter",   "Frontend", "deconnecter"]
@@ -22,7 +22,8 @@ class Routeur
 
   protected $oRequetesSQL; // objet RequetesSQL utilisé par tous les contrôleurs
 
-  const BASE_URI = '/'; // pour le PHP Server de Visual Studio Code
+  const BASE_URI = '/S4/Stampee/'; // dossier racine du site par rapport au dossier racine d'Apache 
+  // const BASE_URI = '/'; // pour le PHP Server de Visual Studio Code
 
   const ERROR_FORBIDDEN = "HTTP 403";
   const ERROR_NOT_FOUND = "HTTP 404";

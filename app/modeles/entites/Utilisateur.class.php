@@ -16,8 +16,8 @@ class Utilisateur extends Entite
   protected $nouveau_mdp;
   protected $nouveau_mdp_bis;
 
-  const PROFIL_ADMINISTRATEUR = "administrateur";
-  const PROFIL_MEMBRE         = "membre";
+  const PROFIL_ADMINISTRATEUR = "Administrateur";
+  const PROFIL_MEMBRE         = "Membre";
 
   const ERR_COURRIEL_EXISTANT = "Courriel déjà utilisé.";
 

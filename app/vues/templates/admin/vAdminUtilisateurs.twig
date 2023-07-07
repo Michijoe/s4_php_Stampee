@@ -4,11 +4,9 @@
 <section>
 	<div class="catalogue-header">
 		<h2>{{ titre }}</h2>
-		{# AJOUTER UN UTILISATEUR #}
 		<a href="admin?entite=utilisateur&action=a" class="button">Ajouter un utilisateur</a>
 	</div>
 	<p class="messageRetourAction {{ classRetour }}">{{ messageRetourAction|raw }}&nbsp;</p>
-	{# TABLEAU UTILISATEUR #}
 	<table>
 		<thead>
 			<tr>
@@ -16,7 +14,6 @@
 				<th>Nom, Prénom</th>
 				<th>Courriel</th>
 				<th>Profil</th>
-				<th>Renouveler mdp</th>
 				<th>Actions</th>
 			</tr>
 		</thead>
@@ -28,7 +25,6 @@
 						{{ utilisateur.utilisateur_prenom }}</th>
 					<th>{{ utilisateur.utilisateur_courriel }}</th>
 					<th>{{ utilisateur.utilisateur_profil }}</th>
-					<th>{{ utilisateur.utilisateur_renouveler_mdp }}</th>
 					<th>
 						<a href="admin?entite=utilisateur&action=m&utilisateur_id={{ utilisateur.utilisateur_id }}">modifier</a>
 

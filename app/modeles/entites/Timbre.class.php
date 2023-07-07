@@ -16,9 +16,8 @@ class Timbre extends Entite
   protected $timbre_tirage;
   protected $timbre_couleur;
   protected $timbre_certification;
-  protected $timbre_utilisateur_id;
   protected $timbre_statut;
-  protected $timbre_image;
+  protected $enchere_id;
 
   const ANNEE_PREMIER_TIMBRE = '1847';
 
@@ -73,7 +72,7 @@ class Timbre extends Entite
     if (!preg_match($regExp, $timbre_titre)) {
       $this->erreurs['timbre_titre'] = 'Au moins un caractère.';
     }
-    $this->timbre_titre = mb_strtoupper($timbre_titre);
+    $this->timbre_titre = $timbre_titre;
     return $this;
   }
 
@@ -84,6 +83,7 @@ class Timbre extends Entite
    */
   public function setTimbre_description($timbre_description)
   {
+    unset($this->erreurs['timbre_description']);
     $timbre_description = trim($timbre_description);
     $this->timbre_description = $timbre_description;
     return $this;
@@ -154,9 +154,9 @@ class Timbre extends Entite
   {
     unset($this->erreurs['timbre_dimensions']);
     $timbre_dimensions = trim($timbre_dimensions);
-    $regExp = '/^\S+(\s+\S+){1,}$/';
+    $regExp = '/^.+$/';
     if (!preg_match($regExp, $timbre_dimensions)) {
-      $this->erreurs['timbre_dimensions'] = 'Au moins 2 mots.';
+      $this->erreurs['timbre_dimensions'] = 'Au moins 1 caractère.';
     }
     $this->timbre_dimensions = $timbre_dimensions;
     return $this;
@@ -215,57 +215,6 @@ class Timbre extends Entite
     return $this;
   }
 
-  /**
-   * Mutateur de la propriété timbre_debut_enchere
-   * @param string $timbre_debut_enchere
-   * @return $this
-   */
-  public function setTimbre_debut_enchere($timbre_debut_enchere)
-  {
-    unset($this->erreurs['timbre_debut_enchere']);
-    if (
-      !preg_match('/^\d+$/', $timbre_debut_enchere) ||
-      $timbre_debut_enchere < date("Y")
-    ) {
-      $this->erreurs['timbre_debut_enchere'] = "Supérieur à la date du jour.";
-    }
-    $this->timbre_debut_enchere = $timbre_debut_enchere;
-    return $this;
-  }
-
-  /**
-   * Mutateur de la propriété timbre_fin_enchere
-   * @param string $timbre_fin_enchere
-   * @return $this
-   */
-  public function setTimbre_fin_enchere($timbre_fin_enchere)
-  {
-    unset($this->erreurs['timbre_fin_enchere']);
-    if (
-      !preg_match('/^\d+$/', $timbre_fin_enchere) ||
-      $timbre_fin_enchere < $this->timbre_debut_enchere + 7
-    ) {
-      $this->erreurs['timbre_fin_enchere'] = "Supérieur à la date de début + 7 jours.";
-    }
-    $this->timbre_fin_enchere = $timbre_fin_enchere;
-    return $this;
-  }
-
-  /**
-   * Mutateur de la propriété timbre_utilisateur_id 
-   * @param int $timbre_utilisateur_id
-   * @return $this
-   */
-  public function setTimbre_utilisateur_id($timbre_utilisateur_id)
-  {
-    unset($this->erreurs['timbre_utilisateur_id']);
-    $regExp = '/^[1-9]\d*$/';
-    if (!preg_match($regExp, $timbre_utilisateur_id)) {
-      $this->erreurs['timbre_utilisateur_id'] = 'Numéro d\'utilisateur incorrect.';
-    }
-    $this->timbre_utilisateur_id = $timbre_utilisateur_id;
-    return $this;
-  }
 
   /**
    * Mutateur de la propriété timbre_statut
@@ -283,6 +232,22 @@ class Timbre extends Entite
       $this->erreurs['timbre_statut'] = 'Statut incorrect.';
     }
     $this->timbre_statut = $timbre_statut;
+    return $this;
+  }
+
+  /**
+   * Mutateur de la propriété timbre_enchere_id 
+   * @param int $timbre_enchere_id
+   * @return $this
+   */
+  public function setTimbre_enchere_id($timbre_enchere_id)
+  {
+    unset($this->erreurs['timbre_enchere_id']);
+    $regExp = '/^[1-9]\d*$/';
+    if (!preg_match($regExp, $timbre_enchere_id)) {
+      $this->erreurs['timbre_enchere_id'] = 'Numéro incorrect.';
+    }
+    $this->timbre_enchere_id = $timbre_enchere_id;
     return $this;
   }
 }

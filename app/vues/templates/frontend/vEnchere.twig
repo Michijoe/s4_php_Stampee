@@ -1,0 +1,30 @@
+<section>
+	<h1>{{ timbre.timbre_titre }}</h1>
+	<div>
+		<img src="{{ timbre.timbre_image }}" alt="">
+		<div class="info">
+			<p>{{ timbre.timbre_resume }}</p>
+			<hr>
+			<ul>
+				<li>
+					<span>Genre:</span>
+					<span>{{ timbre.genre_nom }}</span>
+				</li>
+				<li>
+					<span>Année:</span>
+					<span>{{ timbre.timbre_annee_sortie }}</span>
+				</li>
+				<li>
+					<span>Durée:</span>
+					<span>{{ timbre.timbre_duree }}
+						min</span>
+				</li>
+			</ul>
+		</div>
+		<div class="ba">
+			{% if timbre.timbre_bande_annonce != null %}
+				<video src="{{ timbre.timbre_bande_annonce }}" controls></video>
+			{% endif %}
+		</div>
+	</div>
+</section>

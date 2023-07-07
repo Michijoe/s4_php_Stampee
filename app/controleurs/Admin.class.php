@@ -10,6 +10,7 @@ class Admin extends Routeur
   protected $utilisateur_id;
   protected $timbre_id;
   protected $enchere_id;
+  protected $enchereTimbre_id;
   protected $mise_id;
   protected $image_id;
   protected $pays_id;
@@ -28,7 +29,7 @@ class Admin extends Routeur
    */
   public function __construct()
   {
-    self::$entite = $_GET['entite'] ?? 'timbre';
+    self::$entite = $_GET['entite'] ?? 'enchere';
     self::$action = $_GET['action'] ?? 'l';
   }
 

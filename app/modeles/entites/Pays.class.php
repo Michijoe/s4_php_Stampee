@@ -13,8 +13,9 @@ class Pays extends Entite
    * Mutateur de la propriété pays_id 
    * @param int $pays_id
    * @return $this
-   */    
-  public function setPays_id($pays_id) {
+   */
+  public function setPays_id($pays_id)
+  {
     unset($this->erreurs['pays_id']);
     $regExp = '/^[1-9]\d*$/';
     if (!preg_match($regExp, $pays_id)) {
@@ -22,14 +23,15 @@ class Pays extends Entite
     }
     $this->pays_id = $pays_id;
     return $this;
-  }    
+  }
 
   /**
    * Mutateur de la propriété pays_nom
    * @param string $pays_nom
    * @return $this
-   */    
-  public function setPays_nom($pays_nom) {
+   */
+  public function setPays_nom($pays_nom)
+  {
     unset($this->erreurs['pays_nom']);
     $pays_nom = trim($pays_nom);
     $regExp = '/^[a-zÀ-ÖØ-öø-ÿ]{2,}( [a-zÀ-ÖØ-öø-ÿ]{2,})*$/i';

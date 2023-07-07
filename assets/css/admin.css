@@ -16,6 +16,15 @@
 .admin li {
   display: block;
 }
+.confirmer {
+  cursor: pointer;
+}
+tbody a:hover, tbody span:hover {
+  color: var(--color-red);
+}
+tbody th {
+  max-width: 150px;
+}
 
 /* BOUTONS */
 .button {
@@ -70,3 +79,4 @@ table tbody tr:nth-of-type(even) {
 table tbody tr:last-of-type {
   border-bottom: 2px solid var(--color-royal-blue);
 }
+

@@ -1,0 +1,189 @@
+<div
+	class="container-catalogue">
+	<!-- barre des filtres -->
+	<aside class="regular-rhythm aside-catalogue">
+		<h2 class="no-underline">Filtres</h2>
+		<form
+			class="filter">
+			<!-- filtre thématiques -->
+			<div class="filter-item" data-filter-name="themes">
+				<input type="checkbox" id="themes" checked>
+				<label for="themes" class="filter-name h4">Thématiques</label>
+				<div class="filter-content">
+					<select>
+						<option value="">--choisir une thématique--</option>
+						<option value="rare">Timbres rares</option>
+						<option value="lord">Coup de coeur du lord</option>
+						<option value="royaute">Famille royale</option>
+						<option value="celebrites">Célébrités</option>
+						<option value="sports">Sports et Jeux Olympiques</option>
+						<option value="faune">Faune et flore</option>
+					</select>
+				</div>
+			</div>
+			<!-- filtre origine -->
+			<div class="filter-item" data-filter-name="origine">
+				<input type="checkbox" id="origine" checked>
+				<label for="origine" class="filter-name h4">Origine</label>
+				<div class="filter-content">
+					<div class="filter-country-checkbox">
+						<input type="checkbox" id="RU" name="RU">
+						<label for="RU">Royaume-Uni</label>
+					</div>
+					<div class="filter-country-checkbox">
+						<input type="checkbox" id="EU" name="EU">
+						<label for="EU">États-Unis</label>
+					</div>
+					<div class="filter-country-checkbox">
+						<input type="checkbox" id="CA" name="CA">
+						<label for="CA">Canada</label>
+					</div>
+					<div class="filter-country-checkbox">
+						<input type="checkbox" id="AU" name="AU">
+						<label for="AU">Australie</label>
+					</div>
+					<div class="filter-country-checkbox">
+						<input type="checkbox" id="EUR" name="EUR">
+						<label for="EUR">Europe</label>
+					</div>
+					<div class="filter-country-checkbox">
+						<input type="checkbox" id="AME" name="AME">
+						<label for="AME">Amérique</label>
+					</div>
+					<div class="filter-country-checkbox">
+						<input type="checkbox" id="AFR" name="AFR">
+						<label for="AFR">Afrique</label>
+					</div>
+					<div class="filter-country-checkbox">
+						<input type="checkbox" id="ASI" name="ASI">
+						<label for="ASI">Asie</label>
+					</div>
+					<div class="filter-country-checkbox">
+						<input type="checkbox" id="OCE" name="OCE">
+						<label for="OCE">Océanie</label>
+					</div>
+					<div class="filter-country-checkbox">
+						<input type="checkbox" id="other" name="other">
+						<label for="other">Autres</label>
+					</div>
+				</div>
+			</div>
+			<!-- filtre publication -->
+			<div class="filter-item" data-filter-name="publication">
+				<input type="checkbox" id="annee" checked>
+				<label for="annee" class="filter-name h4">Date de publication</label>
+				<div class="filter-content">
+					<select name="date-publication" aria-labelledby="annee">
+						<option value="">--choisir une date--</option>
+						<option value="max1900">avant 1900</option>
+						<option value="max1950">1900 - 1950</option>
+						<option value="max2000">1950 - 2000</option>
+						<option value="min2000">après 2000</option>
+					</select>
+				</div>
+			</div>
+			<!-- filtre date échéance -->
+			<div class="filter-item" data-filter-name="date">
+				<input type="checkbox" id="echeance" checked>
+				<label for="echeance" class="filter-name h4">Se termine avant</label>
+				<div class="filter-content"><input type="date" aria-label="date"></div>
+			</div>
+			<!-- filtre prix -->
+			<div class="filter-item" data-filter-name="prix">
+				<input type="checkbox" id="prix" checked>
+				<label for="prix" class="filter-name h4">Fourchette de prix</label>
+				<div class="filter-content filter-price-wrapper">
+					<div class="filter-price-field">
+						<span>Min</span>
+						<input type="number" class="input-min" value="0" aria-label="prix-minimum">
+					</div>
+					<div class="filter-price-field">
+						<span>Max</span>
+						<input type="number" class="input-max" value="10000" aria-label="prix maximum">
+					</div>
+				</div>
+			</div>
+			<!-- filtre condition -->
+			<div class="filter-item" data-filter-name="condition">
+				<input type="checkbox" id="condition" checked>
+				<label for="condition" class="filter-name h4">Condition</label>
+				<div class="filter-content">
+					<select aria-label="Filtres condition">
+						<option value="">--choisir une condition--</option>
+						<option value="Bonne">Parfaite</option>
+						<option value="Bonne">Excellente</option>
+						<option value="Moyenne">Bonne</option>
+						<option value="Moyenne">Moyenne</option>
+						<option value="Mauvaise">Mauvaise</option>
+					</select>
+				</div>
+			</div>
+			<!-- boutons recherche / reset -->
+			<footer class="regular-rhythm">
+				<button type="submit">Filtrer</button>
+				<button type="reset">Reset</button>
+			</footer>
+		</form>
+	</aside>
+	<main class="main-catalogue regular-rhythm">
+		<div
+			class="catalogue-header">
+			<!-- fil d'ariane -->
+			<ul>
+				<li>
+					<a href="index.html">Accueil</a>
+				</li>
+				<li>
+					<a href="#">Enchères</a>
+				</li>
+				<li class="catalogue-header-ariane-active">Enchères en cours</li>
+			</ul>
+			<!-- toggle vue -->
+			<button id="grid-list">Grille / Liste</button>
+		</div>
+		<!-- catalogue enchères -->
+		<div class="grid">
+			{% for enchere in catalogue %}
+				{# carte timbre #}
+				<article class="stampcard">
+					<a aria-label="button-like" class="stampcard-button-like" href="#">
+						<svg class="svg-icon like-button" role="img" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+							<title>Like Button</title>
+							<desc>Like Button</desc>
+							<g fill="none">
+								<path class="like-button-path" stroke="#000" stroke-width="1.5px" stroke-linecap="round" stroke-linejoin="round" d="M12,9.05,10.88,7.93a3.16,3.16,0,0,0-4.48,0h0a3.17,3.17,0,0,0,0,4.47L12,18l5.6-5.6a3.17,3.17,0,0,0,0-4.47h0a3.16,3.16,0,0,0-4.48,0Z"/>
+							</g>
+						</svg>
+					</a>
+					<!-- image -->
+					<a href="enchere?enchere_id={{ enchere.enchere_id }}">
+						<picture>
+							<img src={{ enchere.image_nom_fichier }} alt={{ enchere.timbre_titre }}>
+						</picture>
+					</a>
+					<div>
+						<!-- titre -->
+						<h3>
+							<a href="#">{{ enchere.timbre_titre }}</a>
+						</h3>
+						<!-- metadonnees mises -->
+						<div class="stampcard-info-wrapper">
+							<div class="stampcard-info">
+								<span>Nombre de mises:
+									{{ enchere.nb_mise }}</span>
+								<span>Date de fin:
+									{{ enchere.enchere_date_fin }}</span>
+							</div>
+						</div>
+						<!-- boutons enchérir -->
+						<footer>
+							<a class="stampcard-button-cta" href="#">Enchérir</a>
+						</footer>
+					</div>
+				</article>
+			{% else %}
+				<div>Aucun timbre.</div>
+			{% endfor %}
+		</div>
+	</main>
+</div>

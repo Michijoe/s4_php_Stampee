@@ -1,0 +1,54 @@
+<section>
+	<h1>{{ titre|upper }}</h1>
+
+	<form class="g" method="POST" action="admin?entite=enchere&action=m&timbre_id={{  timbre.timbre_id }} " enctype="multipart/form-data">
+		<div>
+			<label>Titre</label>
+			<input name="timbre_titre" value="{{ timbre.timbre_titre }}">
+			<span>&nbsp;{{ erreurs.timbre_titre }}</span>
+
+			<label>Année de sortie</label>
+			<input name="timbre_annee_sortie" type="number" value="{{ timbre.timbre_annee_sortie | default('now' | date('Y')) }}" min="{{ constant('Timbre::ANNEE_PREMIER_TIMBRE') }}" max="{{ 'now' | date('Y') }}">
+			<span>&nbsp;{{ erreurs.timbre_annee_sortie }}</span>
+
+			<label>Durée (minutes)</label>
+			<input name="timbre_duree" type="number" value="{{ timbre.timbre_duree }}" min="{{ constant('timbre::DUREE_MIN') }}" max="{{ constant('Timbre::DUREE_MAX') }}">
+			<span>&nbsp;{{ erreurs.timbre_duree }}</span>
+
+			<label>Genre</label>
+			<select name="timbre_genre_id">
+				{% for genre in genres %}
+					<option value="{{ genre.genre_id }}" {{ timbre.timbre_genre_id == genre.genre_id ? 'selected' : '' }}>{{ genre.genre_nom }}</option>
+				{% endfor %}
+			</select>
+			<span>&nbsp;{{ erreurs.timbre_genre_id }}</span>
+
+			<label>Résumé</label>
+			<textarea name="timbre_resume" rows="3">{{ timbre.timbre_resume }}</textarea>
+			<span>&nbsp;{{ erreurs.timbre_resume }}</span>
+
+			<label>Statut</label>
+			<select name="timbre_statut">
+				<option value="{{ constant('Timbre::STATUT_INVISIBLE') }}" {{ timbre.timbre_statut == constant('timbre::STATUT_INVISIBLE') ? 'selected' : '' }}>Invisible</option>
+				<option value="{{ constant('Timbre::STATUT_VISIBLE') }}" {{ timbre.timbre_statut == constant('timbre::STATUT_VISIBLE') ? 'selected' : '' }}>Visible
+				</option>
+				<option value="{{ constant('Timbre::STATUT_ARCHIVE') }}" {{ timbre.timbre_statut == constant('timbre::STATUT_ARCHIVE') ? 'selected' : '' }}>Archivé
+				</option>
+			</select>
+			<span>&nbsp;{{ erreurs.timbre_statut }}</span>
+		</div>
+
+		<div>
+			<label>Affiche au format jpg</label>
+			<img src="{{ timbre.timbre_affiche }}" alt="">
+			<input name="timbre_affiche" type="hidden" value="{{ timbre.timbre_affiche }}">
+			<input name="timbre_affiche" type="file">
+			<span>&nbsp;{{ erreurs.timbre_affiche }}</span>
+
+			<input type="hidden" name="timbre_id" value="{{ timbre.timbre_id }}">
+		</div>
+
+		<input type="submit" value="Envoyer">
+
+	</form>
+</section>

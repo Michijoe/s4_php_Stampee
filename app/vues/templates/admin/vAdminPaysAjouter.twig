@@ -1,7 +1,7 @@
 <section>
-	<h1>{{ titre|upper }}</h1>
+	<h2>{{ titre }}</h2>
 
-	<form method="POST" action="membre?entite=pays&action=a">
+	<form method="POST" action="admin?entite=pays&action=a">
 
 		<label>Nom</label>
 		<input name="pays_nom" value="{{ pays.pays_nom }}">
