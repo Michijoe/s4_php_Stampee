@@ -15,13 +15,18 @@
 		<input name="utilisateur_courriel" value="{{ utilisateur.utilisateur_courriel }}">
 		<span>&nbsp;{{ erreurs.utilisateur_courriel }}</span>
 
-
 		<label>Profil</label>
-		<select name="utilisateur_profil">
-			<option value="{{ constant('utilisateur::PROFIL_MEMBRE') }}" {{ utilisateur.utilisateur_profil == constant('utilisateur::PROFIL_MEMBRE') ? 'selected' : '' }}>Membre</option>
-			<option value="{{ constant('utilisateur::PROFIL_ADMINISTRATEUR') }}" {{ utilisateur.utilisateur_profil == constant('utilisateur::PROFIL_ADMINISTRATEUR') ? 'selected' : '' }}>Administrateur</option>
-		</select>
-		<span>&nbsp;{{ erreurs.utilisateur_profil }}</span>
+		{% if oUtilConn.utilisateur_profil == constant('Utilisateur::PROFIL_MEMBRE') %}
+			<select name="utilisateur_profil">
+				<option value="{{ constant('utilisateur::PROFIL_MEMBRE') }}" 'selected'>Membre</option>
+			</select>
+		{% else %}
+			<select name="utilisateur_profil">
+				<option value="{{ constant('utilisateur::PROFIL_MEMBRE') }}" {{ utilisateur.utilisateur_profil == constant('utilisateur::PROFIL_MEMBRE') ? 'selected' : '' }}>Membre</option>
+				<option value="{{ constant('utilisateur::PROFIL_ADMINISTRATEUR') }}" {{ utilisateur.utilisateur_profil == constant('utilisateur::PROFIL_ADMINISTRATEUR') ? 'selected' : '' }}>Administrateur</option>
+			</select>
+			<span>&nbsp;{{ erreurs.utilisateur_profil }}</span>
+		{% endif %}
 
 		<input type="hidden" name="utilisateur_id" value="{{ utilisateur.utilisateur_id }}">
 

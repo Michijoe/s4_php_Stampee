@@ -142,6 +142,7 @@
 			<button id="grid-list">Grille / Liste</button>
 		</div>
 		<!-- catalogue enchères -->
+		<script type="module" src="assets/js/decompte.js"></script>
 		<div class="grid">
 			{% for enchere in catalogue %}
 				{# carte timbre #}
@@ -171,8 +172,17 @@
 							<div class="stampcard-info">
 								<span>Nombre de mises:
 									{{ enchere.nb_mise }}</span>
-								<span>Date de fin:
-									{{ enchere.enchere_date_fin }}</span>
+								{% if enchere.heures_restant > 24 %}
+									<span>Date de fin:
+										{{ enchere.enchere_date_fin|date('d/m/Y') }}</span>
+								{% elseif enchere.heures_restant > 0 %}
+									<span>Temps restant:
+										{{ enchere.heures_restant }}
+										heures</span>
+								{% else %}
+									<span>Enchère terminée</span>
+								{% endif %}
+
 							</div>
 						</div>
 						<!-- boutons enchérir -->

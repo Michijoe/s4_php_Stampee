@@ -1,29 +1,33 @@
 .admin {
   display: flex;
-  max-width: 1250px;
-  margin: auto;
+  flex-wrap: wrap;
+  gap: var(--spacing-double);
+  padding: 0 5vw;
 }
 .messageRetourAction {
   margin-bottom: 10px;
 }
 .admin aside {
-  flex: 1;
-  padding: var(--spacing-double) 0 var(--gap) 5vw;
+  flex-grow: 0;
+  flex-basis: 15ch;
+  padding: var(--spacing-double) 0;
 }
 .admin > main {
-  flex: 10;
+  flex-grow: 5;
+  flex-basis: 80ch;
+}
+.admin ul {
+  padding-top: var(--gap);
 }
 .admin li {
   display: block;
+  padding-top: var(--spacing-thin);
 }
 .confirmer {
   cursor: pointer;
 }
-tbody a:hover, tbody span:hover {
+tbody a:hover, tbody span:hover, .admin li a:hover {
   color: var(--color-red);
-}
-tbody th {
-  max-width: 150px;
 }
 
 /* BOUTONS */
@@ -47,9 +51,8 @@ tbody th {
 /* TABLE */
 table {
   border-collapse: collapse;
-  margin: 25px 0;
   font-size: 0.9em;
-  min-width: 400px;
+  min-width: 100%;
   border-radius: 5px 5px 0 0;
   overflow: hidden;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);

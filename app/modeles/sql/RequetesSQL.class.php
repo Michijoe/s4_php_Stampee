@@ -131,7 +131,8 @@ class RequetesSQL extends RequetesPDO
       utilisateur_prenom   = :utilisateur_prenom,
       utilisateur_courriel = :utilisateur_courriel,
       utilisateur_profil   = :utilisateur_profil
-      WHERE utilisateur_id = :utilisateur_id';
+      WHERE utilisateur_id = :utilisateur_id
+      AND utilisateur_id > 2'; // ne pas modifier les 2 premiers utilisateurs du jeu d'essai
     return $this->CUDLigne($champs);
   }
 
@@ -146,7 +147,8 @@ class RequetesSQL extends RequetesPDO
       UPDATE utilisateur SET
       utilisateur_mdp            = SHA2(:utilisateur_mdp, 512),
       utilisateur_renouveler_mdp = "oui"
-      WHERE utilisateur_id = :utilisateur_id';
+      WHERE utilisateur_id = :utilisateur_id
+      AND utilisateur_id > 2'; // ne pas modifier les 2 premiers utilisateurs du jeu d'essai
     return $this->CUDLigne($champs);
   }
 
@@ -162,7 +164,7 @@ class RequetesSQL extends RequetesPDO
       utilisateur_mdp            = SHA2(:utilisateur_mdp, 512), 
       utilisateur_renouveler_mdp = "non"
       WHERE utilisateur_id = :utilisateur_id
-      AND utilisateur_id > 1'; // ne pas modifier le premier utilisateur admin du jeu d'essai
+      AND utilisateur_id > 2'; // ne pas modifier les 2 premiers utilisateurs du jeu d'essai
     return $this->CUDLigne($champs);
   }
 
@@ -175,7 +177,7 @@ class RequetesSQL extends RequetesPDO
   {
     $this->sql = '
       DELETE FROM utilisateur WHERE utilisateur_id = :utilisateur_id
-      AND utilisateur_id > 1'; // ne pas modifier le premier utilisateur admin du jeu d'essai
+      AND utilisateur_id > 2'; // ne pas modifier les 2 premiers utilisateurs du jeu d'essai
     return $this->CUDLigne(['utilisateur_id' => $utilisateur_id]);
   }
 
@@ -183,75 +185,81 @@ class RequetesSQL extends RequetesPDO
 
   /**
    * Récupération de toutes les enchères de timbres :
-   * - pour l'administrateur
-   * - pour un utilisateur dans son espace membre
-   * - du catalogue complet
-   * - catalogue des enchères actives
-   * - catalogue des enchères archivées
-   * - des nouveautés
-   * - des coups de coeur du Lord
-   * @param  string $critere
+   * - pour les membres (membre_admin | membre_owner)
+   * - pour le catalogue des enchères actives (public)
+   * - pour le catalogue des enchères archivées
+   * - pour le catalogue complet de toutes les enchères
+   * - pour la strip des nouveautés
+   * - pour la strip des coups de coeur du Lord
+   * @param  string $critere = 'membre_admin' | 'membre_owner' | 'public'
    * @return array tableau des lignes produites par la select   
    */
-  public function getEncheresTimbres($critere = 'public')
+  public function getEncheresTimbres($critere)
   {
-    $oAujourdhui = new DateTime();
-    $dateDerniereChance = $oAujourdhui->modify('-1 day');
-    $dateNouveaute = $oAujourdhui->modify('-7 day');
-
+    $oAujourdhui = ENV === "DEV" ? new DateTime(MOCK_NOW) : new DateTime();
+    $aujourdhui = $oAujourdhui->format('Y-m-d H:i:s');
 
     // SELECT POUR TOUS
-    $this->sql = "SELECT timbre_titre, image_nom_fichier, enchere_date_fin, enchere_id";
+    $this->sql = "SELECT timbre_titre, image_nom_fichier, enchere_date_fin, enchere_id, timbre_id";
 
-    // SELECT POUR LES MEMBRES ET ADMINS
+    // SELECT POUR MEMBRE ET ADMIN
     if (str_contains($critere, 'membre')) {
       $this->sql .= ", timbre_statut, enchere_date_debut";
+      if ($critere === 'membre_admin') $this->sql .= ", utilisateur_nom, utilisateur_prenom";
 
-      // alimenter les colonnes id et utilisateur pour l'administrateur
-      if ($critere === 'membre_admin') {
-        $this->sql .= ", utilisateur_nom, utilisateur_prenom";
-      }
-
-      // SELECT POUR LE FRONTEND
-      // alimenter les colonnes mises, temps et prix pour le frontend
+      // SELECT POUR PUBLIC
     } else if (str_contains($critere, 'public')) {
-      $this->sql .= ", COUNT(mise_id) AS nb_mise";
+      $this->sql .= ", COUNT(mise_id) AS nb_mise, TIMESTAMPDIFF(HOUR, '$aujourdhui', enchere_date_fin) AS heures_restant";
     }
 
-
-    // FROM ET JOIN POUR TOUS
+    // FROM / JOIN POUR TOUS
     $this->sql .= " FROM timbre INNER JOIN enchere ON timbre_enchere_id = enchere_id INNER JOIN image ON timbre_id = image_timbre_id";
 
-
-    // FROM ET JOIN POUR MEMBRES ET ADMIN
-    // alimenter les colonnes id et utilisateur pour l'administrateur
-    if ($critere === 'membre_admin') {
+    // JOIN / WHERE POUR MEMBRE ET ADMIN
+    if (str_contains($critere, 'membre')) {
       $this->sql .= " INNER JOIN utilisateur ON enchere_utilisateur_id = utilisateur_id";
+      if ($critere === 'membre_owner') $this->sql .= " WHERE timbre_utilisateur_id = " . $_SESSION['oUtilConn']->utilisateur_id;
+
+      // JOIN / WHERE POUR PUBLIC 
+    } else if (str_contains($critere, 'public')) {
+      $this->sql .= " LEFT JOIN mise ON mise_enchere_id = enchere_id WHERE timbre_statut = '1' AND TIMESTAMPDIFF(SECOND, enchere_date_fin, '$aujourdhui') <= 0 AND TIMESTAMPDIFF(SECOND, '$aujourdhui', enchere_date_debut) < 0 GROUP BY enchere_id, timbre_titre, image_nom_fichier, enchere_date_fin, timbre_id";
     }
 
-    // restriction aux encheres d'un utilisateur
-    else if ($critere === 'membre_owner') {
-      $this->sql .= " WHERE utilisateur_id = " . $_SESSION['oUtilConn']->utilisateur_id;
-    }
-
-    // frontend ajout mise 
-    else if (str_contains($critere, 'public')) {
-      $this->sql .= " LEFT JOIN mise ON mise_enchere_id = enchere_id WHERE timbre_statut = '1' GROUP BY enchere_id, timbre_titre, image_nom_fichier, enchere_date_fin ORDER BY enchere_date_fin ASC";
-    }
+    // ORDER BY POUR TOUS
+    $this->sql .= " ORDER BY enchere_date_fin ASC";
 
     return $this->getLignes();
   }
 
+  /**
+   * Récupération d'un timbre :
+   * @param  int $timbre_id, clé du timbre
+   * @param string $mode, admin si pour l'interface membre
+   * @return array|false tableau associatif de la ligne produite par la select, false si aucune ligne   
+   */
+  public function getTimbre($timbre_id, $mode = null)
+  {
+    if ($mode == 'admin') {
+      $this->sql = "SELECT timbre_id, timbre_titre, timbre_description, timbre_annee_publication, timbre_condition, timbre_dimensions, timbre_couleur, timbre_certification, image_nom_fichier, timbre_pays_id FROM timbre INNER JOIN image ON timbre_id = image_timbre_id WHERE timbre_id = :timbre_id";
+    }
 
-
+    return $this->getLignes(['timbre_id' => $timbre_id], RequetesPDO::UNE_SEULE_LIGNE);
+  }
 
   /**
-   * Récupération d'une enchère de timbre 
-   * @param int    $timbre_id 
-   * @param string $mode, admin si pour l'interface d'administration
-   * @return array|false tableau associatif de la ligne produite par la select, false si aucune ligne  
+   * Récupération d'une enchère :
+   * @param  int $timbre_id, clé du timbre
+   * @param string $mode, admin si pour l'interface membre
+   * @return array|false tableau associatif de la ligne produite par la select, false si aucune ligne   
    */
+  public function getEnchere($timbre_id, $mode = null)
+  {
+    if ($mode == 'admin') {
+      $this->sql = "SELECT enchere_id, enchere_date_debut, enchere_date_fin, enchere_prix_plancher, enchere_coups_coeur_lord FROM enchere LEFT JOIN timbre ON timbre_enchere_id = enchere_id WHERE timbre_id = :timbre_id";
+    }
 
+    return $this->getLignes(['timbre_id' => $timbre_id], RequetesPDO::UNE_SEULE_LIGNE);
+  }
 
   /**
    * Ajouter une enchère
@@ -317,6 +325,67 @@ class RequetesSQL extends RequetesPDO
   }
 
   /**
+   * Modifier une enchère
+   * @param array $champs tableau des champs de l'enchère de timbre 
+   * @return boolean true si modification effectuée, false sinon
+   */
+  public function modifierEnchere($champs)
+  {
+    try {
+      $this->debuterTransaction();
+
+      $this->sql = '
+      UPDATE enchere SET
+      enchere_date_debut        = :enchere_date_debut,
+      enchere_date_fin          = :enchere_date_fin,
+      enchere_prix_plancher     = :enchere_prix_plancher,
+      enchere_coups_coeur_lord  = :enchere_coups_coeur_lord,
+      WHERE enchere_id          = :enchere_id;
+      ';
+      $retour = $this->CUDLigne($champs);
+
+      $this->validerTransaction();
+      return  $retour;
+    } catch (Exception $e) {
+      $this->annulerTransaction();
+      return $e->getMessage();
+    }
+  }
+
+  /**
+   * Modifier un timbre
+   * @param array $champs tableau des champs du timbre 
+   * @return int|string clé primaire de la ligne ajoutée, message d'erreur sinon
+   */
+  public function modifierTimbre($champs)
+  {
+    try {
+      $this->debuterTransaction();
+
+      $this->sql = '
+      UPDATE timbre SET
+      timbre_titre               = :timbre_titre,
+      timbre_description         = :timbre_description,
+      timbre_annee_publication   = :timbre_annee_publication,
+      timbre_condition           = :timbre_condition,
+      timbre_pays_id             = :timbre_pays_id,
+      timbre_dimensions          = :timbre_dimensions,
+      timbre_tirage              = :timbre_tirage,
+      timbre_couleur             = :timbre_couleur,
+      timbre_certification       = :timbre_certification,
+      WHERE timbre_id            = :timbre_id;
+      ';
+      $retour = $this->CUDLigne($champs);
+
+      $this->validerTransaction();
+      return $retour;
+    } catch (Exception $e) {
+      $this->annulerTransaction();
+      return $e->getMessage();
+    }
+  }
+
+  /**
    * Modifier l'image d'un timbre
    * @param int $timbre_id
    * @return boolean true si téléversement, false sinon
@@ -344,12 +413,6 @@ class RequetesSQL extends RequetesPDO
   }
 
 
-  /**
-   * Modifier un timbre
-   * @param array $champs tableau avec les champs à modifier et la clé timbre_id
-   * @return boolean true si modification effectuée, false sinon
-   */
-
 
   /**
    * Supprimer un timbre
@@ -357,6 +420,25 @@ class RequetesSQL extends RequetesPDO
    * @return boolean|string true si suppression effectuée, message d'erreur sinon
    */
 
+  public function supprimerTimbre($timbre_id)
+  {
+    try {
+      $this->debuterTransaction();
+      $this->sql = '
+        DELETE timbre, enchere, image FROM timbre INNER JOIN enchere ON timbre_enchere_id = enchere_id INNER JOIN image ON image_timbre_id = timbre_id WHERE timbre_id = :timbre_id';
+      if (!$this->CUDLigne(['timbre_id' => $timbre_id]))
+        throw new Exception("");
+      foreach (glob("medias/images/timbre-$timbre_id-*") as $fichier) {
+        if (!@unlink($fichier))
+          throw new Exception("Erreur dans la suppression du fichier image.");
+      }
+      $this->validerTransaction();
+      return true;
+    } catch (Exception $e) {
+      $this->annulerTransaction();
+      return $e->getMessage();
+    }
+  }
 
 
   /* GESTION DES PAYS 

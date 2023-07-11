@@ -10,6 +10,7 @@ class Frontend extends Routeur
 
   private $oUtilConn;
   private $enchere_id;
+  private $timbre_id;
 
   /**
    * Constructeur qui initialise des propriétés à partir du query string
@@ -97,9 +98,7 @@ class Frontend extends Routeur
    */
   public function afficherCatalogue()
   {
-    $catalogue          = $this->oRequetesSQL->getEncheresTimbres();
-    $catalogueActives   = $this->oRequetesSQL->getEncheresTimbres('actives');
-    $catalogueArchives  = $this->oRequetesSQL->getEncheresTimbres('archives');
+    $catalogue = $this->oRequetesSQL->getEncheresTimbres('public');
 
     (new Vue)->generer(
       "vCatalogue",
@@ -109,8 +108,6 @@ class Frontend extends Routeur
         'titreHB'            => 'Catalogue des enchères',
         'texteHB'            => '',
         'catalogue'          => $catalogue,
-        'catalogueActives'   => $catalogueActives,
-        'catalogueArchives'  => $catalogueArchives,
       ],
       "gabarit-frontend"
     );

@@ -21,7 +21,7 @@ class AdminEnchere extends Admin
    */
   public function __construct()
   {
-    $this->enchereTimbre_id = $_GET['enchereTimbre_id'] ?? null;
+    $this->timbre_id = $_GET['timbre_id'] ?? null;
     $this->oRequetesSQL = new RequetesSQL;
   }
 
@@ -100,7 +100,6 @@ class AdminEnchere extends Admin
         // ajout des images
         $image_id = $this->oRequetesSQL->modifierTimbreImage($timbre_id);
 
-
         if (preg_match('/^[1-9]\d*$/', $enchere_id) && preg_match('/^[1-9]\d*$/', $timbre_id) && preg_match('/^[1-9]\d*$/', $image_id)) {
           $this->messageRetourAction = "Ajout de l'enchère numéro $enchere_id effectué.";
         } else {
@@ -139,18 +138,36 @@ class AdminEnchere extends Admin
   /**
    * Modifier un timbre
    */
-  public function modifierTimbre()
+  public function modifierEnchereTimbre()
   {
     if (!preg_match('/^\d+$/', $this->timbre_id))
       throw new Exception("Numéro du timbre non renseigné pour une modification");
 
     if (count($_POST) !== 0) {
-      $timbre = $_POST;
+
+      // ajout de l'enchère et du timbre
+      $enchere = $_POST['enchere'];
+      $timbre = $_POST['timbre'];
+
+      $oEnchere = new Enchere($enchere);
       $oTimbre = new Timbre($timbre);
-      // if ($_FILES['timbre_image']['tmp_name'] !== "") $oTimbre->setTimbre_image($_FILES['timbre_image']['name']);
-      $erreurs = $oTimbre->erreurs;
-      if (count($erreurs) === 0) {
-        $retour = $this->oRequetesSQL->modifierTimbre([
+
+      $erreursEnchere = $oEnchere->erreurs;
+      $erreursTimbre = $oTimbre->erreurs;
+
+      // on valide qu'il n'y a pas d'erreur dans enchere ET timbre avant de modifier la bd
+      if (count($erreursEnchere) === 0 && count($erreursTimbre) === 0) {
+
+        $modifEnchere = $this->oRequetesSQL->modifierEnchere([
+          'enchere_id'                 => $oEnchere->enchere_id,
+          'enchere_date_debut'         => $oEnchere->enchere_date_debut,
+          'enchere_date_fin'           => $oEnchere->enchere_date_fin,
+          'enchere_prix_plancher'      => $oEnchere->enchere_prix_plancher,
+          'enchere_coups_coeur_lord'   => $oEnchere->enchere_coups_coeur_lord
+        ]);
+
+        $modifTimbre = $this->oRequetesSQL->modifierTimbre([
+          'timbre_id'                  => $oTimbre->timbre_id,
           'timbre_titre'               => $oTimbre->timbre_titre,
           'timbre_description'         => $oTimbre->timbre_description,
           'timbre_annee_publication'   => $oTimbre->timbre_annee_publication,
@@ -158,36 +175,37 @@ class AdminEnchere extends Admin
           'timbre_pays_id'             => $oTimbre->timbre_pays_id,
           'timbre_dimensions'          => $oTimbre->timbre_dimensions,
           'timbre_tirage'              => $oTimbre->timbre_tirage,
-          'timbre_couleur_dominante'   => $oTimbre->timbre_couleur_dominante,
-          'timbre_certification'       => $oTimbre->timbre_certification,
-          'timbre_utilisateur_id'      => $oTimbre->timbre_utilisateur_id,
-          'timbre_statut'              => $oTimbre->timbre_statut
+          'timbre_couleur'             => $oTimbre->timbre_couleur,
+          'timbre_certification'       => $oTimbre->timbre_certification
         ]);
-        $this->messageRetourAction = "";
-        if ($retour === true) {
-          $this->messageRetourAction .= "Modification du timbre numéro $this->timbre_id effectuée.";
+
+        if ($modifEnchere && $modifTimbre) {
+          $this->messageRetourAction = "Modification de l'enchère de timbre $this->timbre_id effectuée.";
         } else {
           $this->classRetour = "erreur";
-          $this->messageRetourAction .= "modification du timbre numéro $this->timbre_id non effectuée.";
-          if ($retour !== false) $this->messageRetourAction .= " " . $retour;
+          $this->messageRetourAction = "Modification de l'enchère de timbre $this->timbre_id non effectuée. " . $modifEnchere . $modifTimbre;
         }
         $this->listerEncheresTimbres();
         exit;
       }
     } else {
       $timbre = $this->oRequetesSQL->getTimbre($this->timbre_id, 'admin');
-      $erreurs = [];
+      $enchere = $this->oRequetesSQL->getEnchere($this->timbre_id, 'admin');
+      $erreursTimbre = [];
+      $erreursEnchere = [];
     }
     $pays = $this->oRequetesSQL->getPays();
 
     (new Vue)->generer(
       'vAdminEnchereModifier',
       [
-        'oUtilConn' => self::$oUtilConn,
-        'titre'     => "Modifier le timbre numéro $this->timbre_id",
-        'timbre'    => $timbre,
-        'pays'      => $pays,
-        'erreurs'   => $erreurs
+        'oUtilConn'      => self::$oUtilConn,
+        'titre'          => 'Modifier une enchère',
+        'timbre'         => $timbre,
+        'enchere'        => $enchere,
+        'pays'           => $pays,
+        'erreursTimbre'  => $erreursTimbre,
+        'erreursEnchere' => $erreursEnchere,
       ],
       'gabarit-admin'
     );
@@ -196,7 +214,7 @@ class AdminEnchere extends Admin
   /**
    * Supprimer un timbre
    */
-  public function supprimerTimbre()
+  public function supprimerEnchereTimbre()
   {
     if (!preg_match('/^\d+$/', $this->timbre_id))
       throw new Exception("Numéro de timbre incorrect pour une suppression.");

@@ -1,3 +1,4 @@
 <?php
-  define("ENV", "DEV");
-  if (ENV === "DEV") define("MOCK_NOW", "2021-10-25");
+define("ENV", "DEV");
+// define("ENV", "PROD");
+if (ENV === "DEV") define("MOCK_NOW", "2023-07-14 20:00:00");

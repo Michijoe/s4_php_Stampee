@@ -8,9 +8,9 @@ class AdminUtilisateur extends Admin
 {
 
   protected $methodes = [
-    'l'           => ['nom'    => 'listerUtilisateurs',  'droits' => [Utilisateur::PROFIL_ADMINISTRATEUR]],
+    'l'           => ['nom'    => 'listerUtilisateurs'],
     'a'           => ['nom'    => 'ajouterUtilisateur',   'droits' => [Utilisateur::PROFIL_ADMINISTRATEUR]],
-    'm'           => ['nom'    => 'modifierUtilisateur',  'droits' => [Utilisateur::PROFIL_ADMINISTRATEUR]],
+    'm'           => ['nom'    => 'modifierUtilisateur'],
     's'           => ['nom'    => 'supprimerUtilisateur', 'droits' => [Utilisateur::PROFIL_ADMINISTRATEUR]],
     'd'           => ['nom'    => 'deconnecter'],
     'generer_mdp' => ['nom'    => 'genererMdp',           'droits' => [Utilisateur::PROFIL_ADMINISTRATEUR]]
@@ -104,14 +104,22 @@ class AdminUtilisateur extends Admin
    */
   public function listerUtilisateurs()
   {
-    $utilisateurs = $this->oRequetesSQL->getUtilisateurs();
+    $utilisateur_id = self::$oUtilConn->utilisateur_id;
+    echo ($utilisateur_id);
+    if (self::$oUtilConn->utilisateur_profil === Utilisateur::PROFIL_ADMINISTRATEUR) {
+      $utilisateurs = $this->oRequetesSQL->getUtilisateurs();
+      $titre = 'Gestion des utilisateurs';
+    } else {
+      $utilisateur = $this->oRequetesSQL->getUtilisateur($utilisateur_id);
+      $titre = 'Mon compte';
+    }
 
     (new Vue)->generer(
       'vAdminUtilisateurs',
       [
         'oUtilConn'           => self::$oUtilConn,
-        'titre'               => 'Gestion des utilisateurs',
-        'utilisateurs'        => $utilisateurs,
+        'titre'               => $titre,
+        'utilisateurs'        => isset($utilisateurs) ? $utilisateurs : $utilisateur,
         'classRetour'         => $this->classRetour,
         'messageRetourAction' => $this->messageRetourAction
       ],
