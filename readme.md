@@ -1,3 +1,13 @@
+# BD
+
+La base de données Stampee est disponible dans sql/stampee.sql et contient la structure de toutes les tables et quelques données de base :
+- 2 utilisateurs
+- 2o timbres
+- 2o encheres
+- 20 images
+
+---
+
 # LOGIN
 
 Deux comptes par défaut :

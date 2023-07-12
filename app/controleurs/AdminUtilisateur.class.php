@@ -96,7 +96,9 @@ class AdminUtilisateur extends Admin
   public function deconnecter()
   {
     unset($_SESSION['oUtilConn']);
-    parent::gererEntite();
+    // parent::gererEntite();
+    $accueil = new Frontend();
+    $accueil->afficherAccueil();
   }
 
   /**

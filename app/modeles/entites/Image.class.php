@@ -35,9 +35,12 @@ class Image extends Entite
     {
         unset($this->erreurs['image_nom_fichier']);
         $image_nom_fichier = trim($image_nom_fichier);
-        $regExp = '/^.+\.jpg$/';
-        if (!preg_match($regExp, $image_nom_fichier)) {
-            $this->erreurs['image_nom_fichier'] = "Vous devez téléverser un fichier de type jpg.";
+        $allowTypes = array('jpg', 'png', 'jpeg', 'gif', 'webp');
+        // récupération de l'extension du fichier uploadé
+        $extension = substr($_FILES['image_nom_fichier']['type'], strpos($_FILES['image_nom_fichier']['type'], "/") + 1);
+        // vérifier si l'extension est autorisée
+        if (!in_array($extension, $allowTypes)) {
+            $this->erreurs['image_nom_fichier'] = "Seules les extensions WEBP, JPG, JPEG, PNG et GIF sont autorisées.";
         }
         $this->image_nom_fichier = $image_nom_fichier;
         return $this;

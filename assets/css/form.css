@@ -56,3 +56,9 @@ input, select, textarea {
 input:invalid {
 	border-color: red;
 }
+
+form span {
+	text-align: center;
+	display: block;
+	color: var(--color-red);
+}

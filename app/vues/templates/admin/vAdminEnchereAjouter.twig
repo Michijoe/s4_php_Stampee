@@ -1,97 +1,99 @@
 <section>
 	<h2>{{ titre }}</h2>
 
-	<form class="g" method="POST" action="admin?entite=enchere&action=a" enctype="multipart/form-data">
+	<form method="POST" action="admin?entite=enchere&action=a" enctype="multipart/form-data">
 
-		<div>
-			<label>Titre</label>
-			<input name="timbre[timbre_titre]" value="{{ timbre.timbre_titre }}">
-			<span>&nbsp;{{ erreursTimbre.timbre_titre }}</span>
+		<label>Titre*</label>
+		<input name="timbre[timbre_titre]" value="{{ timbre.timbre_titre }}">
+		<span>{{ erreursTimbre.timbre_titre }}</span>
 
-			<label>Description</label>
-			<textarea name="timbre[timbre_description]" rows="3">{{ timbre.timbre_description }}</textarea>
-			<span>&nbsp;{{ erreursTimbre.timbre_description }}</span>
+		<label>Description</label>
+		<textarea name="timbre[timbre_description]" rows="3">{{ timbre.timbre_description }}</textarea>
+		<span>{{ erreursTimbre.timbre_description }}</span>
 
-			<label>Année de Publication</label>
-			<input name="timbre[timbre_annee_publication]" type="number" value="{{ timbre.timbre_annee_oublication | default('now' | date('Y')) }}" min="{{ constant('Timbre::ANNEE_PREMIER_TIMBRE') }}" max="{{ 'now' | date('Y') }}">
-			<span>&nbsp;{{ erreursTimbre.timbre_annee_publication }}</span>
+		<label>Année de Publication*</label>
+		<input name="timbre[timbre_annee_publication]" type="number" value="{{ timbre.timbre_annee_oublication | default('now' | date('Y')) }}" min="{{ constant('Timbre::ANNEE_PREMIER_TIMBRE') }}" max="{{ 'now' | date('Y') }}">
+		<span>{{ erreursTimbre.timbre_annee_publication }}</span>
 
-			<label>Condition</label>
-			<select name="timbre[timbre_condition]">
-				<option value="{{ constant('Timbre::CONDITION_PARFAITE') }}" {{ timbre.timbre_condition == constant('Timbre::CONDITION_PARFAITE') ? 'selected' : '' }}>Parfaite</option>
-				<option value="{{ constant('Timbre::CONDITION_EXCELLENTE') }}" {{ timbre.timbre_condition == constant('Timbre::CONDITION_EXCELLENTE') ? 'selected' : '' }}>Excellente
-				</option>
-				<option value="{{ constant('Timbre::CONDITION_BONNE') }}" {{ timbre.timbre_condition == constant('Timbre::CONDITION_BONNE') ? 'selected' : '' }}>Bonne
-				</option>
-				<option value="{{ constant('Timbre::CONDITION_MOYENNE') }}" {{ timbre.timbre_condition == constant('Timbre::CONDITION_MOYENNE') ? 'selected' : '' }}>Moyenne
-				</option>
-				<option value="{{ constant('Timbre::CONDITION_ENDOMMAGE') }}" {{ timbre.timbre_condition == constant('Timbre::CONDITION_ENDOMMAGE') ? 'selected' : '' }}>Endommagée
-				</option>
-			</select>
+		<label>Condition*</label>
+		<select name="timbre[timbre_condition]">
+			<option value="{{ constant('Timbre::CONDITION_PARFAITE') }}" {{ timbre.timbre_condition == constant('Timbre::CONDITION_PARFAITE') ? 'selected' : '' }}>Parfaite</option>
+			<option value="{{ constant('Timbre::CONDITION_EXCELLENTE') }}" {{ timbre.timbre_condition == constant('Timbre::CONDITION_EXCELLENTE') ? 'selected' : '' }}>Excellente
+			</option>
+			<option value="{{ constant('Timbre::CONDITION_BONNE') }}" {{ timbre.timbre_condition == constant('Timbre::CONDITION_BONNE') ? 'selected' : '' }}>Bonne
+			</option>
+			<option value="{{ constant('Timbre::CONDITION_MOYENNE') }}" {{ timbre.timbre_condition == constant('Timbre::CONDITION_MOYENNE') ? 'selected' : '' }}>Moyenne
+			</option>
+			<option value="{{ constant('Timbre::CONDITION_ENDOMMAGE') }}" {{ timbre.timbre_condition == constant('Timbre::CONDITION_ENDOMMAGE') ? 'selected' : '' }}>Endommagée
+			</option>
+		</select>
 
-			<label>Pays</label>
-			<select name="timbre[timbre_pays_id]">
-				<option value="">Sélectionnez un pays</option>
-				{% for unPays in pays %}
-					<option value="{{ unPays.pays_id }}" {{ timbre.timbre_pays_id == unPays.pays_id ? 'selected' : '' }}>{{ unPays.pays_nom }}</option>
-				{% endfor %}
-			</select>
-			<span>&nbsp;{{ erreursTimbre.timbre_pays_id }}</span>
+		<label>Pays*</label>
+		<select name="timbre[timbre_pays_id]">
+			<option value="">Sélectionnez un pays</option>
+			{% for unPays in pays %}
+				<option value="{{ unPays.pays_id }}" {{ timbre.timbre_pays_id == unPays.pays_id ? 'selected' : '' }}>{{ unPays.pays_nom }}</option>
+			{% endfor %}
+		</select>
+		<span>{{ erreursTimbre.timbre_pays_id }}</span>
 
-			<label>Dimensions</label>
-			<textarea name="timbre[timbre_dimensions]" rows="1">{{ timbre.timbre_dimensions }}</textarea>
-			<span>&nbsp;{{ erreursTimbre.timbre_dimensions }}</span>
+		<label>Dimensions</label>
+		<textarea name="timbre[timbre_dimensions]" rows="1">{{ timbre.timbre_dimensions }}</textarea>
+		<span>{{ erreursTimbre.timbre_dimensions }}</span>
 
-			<label>Tirage</label>
-			<select name="timbre[timbre_tirage]">
-				<option value="{{ constant('Timbre::TIRAGE_MAX100') }}" {{ timbre.timbre_tirage == constant('Timbre::TIRAGE_MAX100') ? 'selected' : '' }}>0 - 100</option>
-				<option value="{{ constant('Timbre::TIRAGE_MAX500') }}" {{ timbre.timbre_tirage == constant('Timbre::TIRAGE_MAX500') ? 'selected' : '' }}>100 - 500</option>
-				<option value="{{ constant('Timbre::TIRAGE_MAX1000') }}" {{ timbre.timbre_tirage == constant('Timbre::TIRAGE_MAX1000') ? 'selected' : '' }}>500 - 1000</option>
-				<option value="{{ constant('Timbre::TIRAGE_MAX5000') }}" {{ timbre.timbre_tirage == constant('Timbre::TIRAGE_MAX5000') ? 'selected' : '' }}>1000 - 5000</option>
-			</select>
+		<label>Tirage*</label>
+		<select name="timbre[timbre_tirage]">
+			<option value="{{ constant('Timbre::TIRAGE_MAX100') }}" {{ timbre.timbre_tirage == constant('Timbre::TIRAGE_MAX100') ? 'selected' : '' }}>0 - 100</option>
+			<option value="{{ constant('Timbre::TIRAGE_MAX500') }}" {{ timbre.timbre_tirage == constant('Timbre::TIRAGE_MAX500') ? 'selected' : '' }}>100 - 500</option>
+			<option value="{{ constant('Timbre::TIRAGE_MAX1000') }}" {{ timbre.timbre_tirage == constant('Timbre::TIRAGE_MAX1000') ? 'selected' : '' }}>500 - 1000</option>
+			<option value="{{ constant('Timbre::TIRAGE_MAX5000') }}" {{ timbre.timbre_tirage == constant('Timbre::TIRAGE_MAX5000') ? 'selected' : '' }}>1000 - 5000</option>
+		</select>
 
-			<label>Couleur dominante</label>
-			<select name="timbre[timbre_couleur]">
-				<option value="{{ constant('Timbre::COULEUR_ROUGE') }}" {{ timbre.timbre_couleur == constant('Timbre::COULEUR_ROUGE') ? 'selected' : '' }}>Rouge</option>
-				<option value="{{ constant('Timbre::COULEUR_JAUNE') }}" {{ timbre.timbre_couleur == constant('Timbre::COULEUR_JAUNE') ? 'selected' : '' }}>Jaune</option>
-				<option value="{{ constant('Timbre::COULEUR_BLEU') }}" {{ timbre.timbre_couleur == constant('Timbre::COULEUR_BLEU') ? 'selected' : '' }}>Bleu</option>
-				<option value="{{ constant('Timbre::COULEUR_VERT') }}" {{ timbre.timbre_couleur == constant('Timbre::COULEUR_VERT') ? 'selected' : '' }}>Vert</option>
-				<option value="{{ constant('Timbre::COULEUR_BLANC') }}" {{ timbre.timbre_couleur == constant('Timbre::COULEUR_BLANC') ? 'selected' : '' }}>Blanc</option>
-				<option value="{{ constant('Timbre::COULEUR_NOIR') }}" {{ timbre.timbre_couleur == constant('Timbre::COULEUR_NOIR') ? 'selected' : '' }}>Noir</option>
-			</select>
+		<label>Couleur dominante*</label>
+		<select name="timbre[timbre_couleur]">
+			<option value="{{ constant('Timbre::COULEUR_ROUGE') }}" {{ timbre.timbre_couleur == constant('Timbre::COULEUR_ROUGE') ? 'selected' : '' }}>Rouge</option>
+			<option value="{{ constant('Timbre::COULEUR_JAUNE') }}" {{ timbre.timbre_couleur == constant('Timbre::COULEUR_JAUNE') ? 'selected' : '' }}>Jaune</option>
+			<option value="{{ constant('Timbre::COULEUR_BLEU') }}" {{ timbre.timbre_couleur == constant('Timbre::COULEUR_BLEU') ? 'selected' : '' }}>Bleu</option>
+			<option value="{{ constant('Timbre::COULEUR_VERT') }}" {{ timbre.timbre_couleur == constant('Timbre::COULEUR_VERT') ? 'selected' : '' }}>Vert</option>
+			<option value="{{ constant('Timbre::COULEUR_BLANC') }}" {{ timbre.timbre_couleur == constant('Timbre::COULEUR_BLANC') ? 'selected' : '' }}>Blanc</option>
+			<option value="{{ constant('Timbre::COULEUR_NOIR') }}" {{ timbre.timbre_couleur == constant('Timbre::COULEUR_NOIR') ? 'selected' : '' }}>Noir</option>
+		</select>
 
-			<label>Certification</label>
-			<select name="timbre[timbre_certification]">
-				<option value="1" {{ timbre.timbre_certification == '1' ? 'selected' : '' }}>Oui</option>
-				<option value="0" {{ timbre.timbre_certification == '0' ? 'selected' : '' }}>Non</option>
-			</select>
+		<label>Certification*</label>
+		<select name="timbre[timbre_certification]">
+			<option value="0" {{ timbre.timbre_certification == '0' ? 'selected' : '' }}>Non</option>
+			<option value="1" {{ timbre.timbre_certification == '1' ? 'selected' : '' }}>Oui</option>
+		</select>
 
-		</div>
-		<div>
-			<label>Date et heure du début de l'enchère</label>
-			<input type="datetime-local" name="enchere[enchere_date_debut]" value="{{ enchere_date_debut }}">
-			<span>&nbsp;{{ erreursEnchere.enchere_date_debut }}</span>
+		<label>Date et heure du début de l'enchère*</label>
+		<input type="datetime-local" name="enchere[enchere_date_debut]" value="{{ enchere.enchere_date_debut }}">
+		<span>{{ erreursEnchere.enchere_date_debut }}</span>
 
-			<label>Date et heure de la fin de l'enchère</label>
-			<input type="datetime-local" name="enchere[enchere_date_fin]" value="{{ enchere_date_fin }}">
-			<span>&nbsp;{{ erreursEnchere.enchere_date_fin }}</span>
+		<label>Date et heure de la fin de l'enchère*</label>
+		<input type="datetime-local" name="enchere[enchere_date_fin]" value="{{ enchere.enchere_date_fin }}">
+		<span>{{ erreursEnchere.enchere_date_fin }}</span>
 
-			<label>Prix plancher</label>
-			<input type="number" name="enchere[enchere_prix_plancher]" value="{{ enchere_prix_plancher }}">
-			<span>&nbsp;{{ erreursEnchere.enchere_prix_plancher }}</span>
+		<label>Prix de réserve*</label>
+		<input type="number" name="enchere[enchere_prix_plancher]" value="{{ enchere.enchere_prix_plancher }}">
+		<span>{{ erreursEnchere.enchere_prix_plancher }}</span>
 
-			<label>Coups de coeur du lord</label>
+		{% if oUtilConn.utilisateur_profil is same as constant('Utilisateur::PROFIL_ADMINISTRATEUR') %}
+			<label>Coups de coeur du lord*</label>
 			<select name="enchere[enchere_coups_coeur_lord]">
-				<option value="Oui" {{ enchere_coups_coeur_lord == 'Oui' ? 'selected' : '' }}>Oui</option>
 				<option value="Non" {{ enchere_coups_coeur_lord == 'Non' ? 'selected' : '' }}>Non</option>
+				<option value="Oui" {{ enchere_coups_coeur_lord == 'Oui' ? 'selected' : '' }}>Oui</option>
 			</select>
+		{% else %}
+			<select class="cache" name="enchere[enchere_coups_coeur_lord]">
+				<option value="Non" selected>Non</option>
+			</select>
+		{% endif %}
 
-		</div>
-		<div>
-			<label>Image principale</label>
-			<input name="image_nom_fichier" type="file">
-			<span>&nbsp;{{ erreurs.image_nom_fichier }}</span>
-		</div>
+
+		<label>Image principale*</label>
+		<input name="image_nom_fichier" type="file">
+		<span>{{ erreursImage.image_nom_fichier }}</span>
+
 		<input type="submit" value="Envoyer">
 
 	</form>

@@ -88,9 +88,6 @@ p:not(.no-padding-bottom) {
   #connecter, #creerCompte, #deconnecter {
 	cursor: pointer;
   }
-  #utilisateur {
-	color: #fff;
-  }
   p.legende {
 	margin: 5px 0;
 	text-align: center;

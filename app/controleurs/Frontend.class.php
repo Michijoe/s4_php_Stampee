@@ -55,16 +55,6 @@ class Frontend extends Routeur
     echo json_encode($retour);
   }
 
-  /**
-   * Déconnecter un utilisateur
-   */
-  public function deconnecter()
-  {
-    unset($_SESSION['oUtilConn']);
-    echo json_encode(true);
-  }
-
-
 
   /**
    * Afficher l'accueil

@@ -70,7 +70,7 @@ class Timbre extends Entite
     $timbre_titre = trim($timbre_titre);
     $regExp = '/^.+$/';
     if (!preg_match($regExp, $timbre_titre)) {
-      $this->erreurs['timbre_titre'] = 'Au moins un caractère.';
+      $this->erreurs['timbre_titre'] = 'Au moins 1 caractère.';
     }
     $this->timbre_titre = $timbre_titre;
     return $this;
@@ -83,7 +83,6 @@ class Timbre extends Entite
    */
   public function setTimbre_description($timbre_description)
   {
-    unset($this->erreurs['timbre_description']);
     $timbre_description = trim($timbre_description);
     $this->timbre_description = $timbre_description;
     return $this;
@@ -139,7 +138,7 @@ class Timbre extends Entite
     unset($this->erreurs['timbre_pays_id']);
     $regExp = '/^[1-9]\d*$/';
     if (!preg_match($regExp, $timbre_pays_id)) {
-      $this->erreurs['timbre_pays_id'] = 'Numéro de pays incorrect.';
+      $this->erreurs['timbre_pays_id'] = 'Veuillez sélectionner un pays dans la liste.';
     }
     $this->timbre_pays_id = $timbre_pays_id;
     return $this;
@@ -152,12 +151,7 @@ class Timbre extends Entite
    */
   public function setTimbre_dimensions($timbre_dimensions)
   {
-    unset($this->erreurs['timbre_dimensions']);
     $timbre_dimensions = trim($timbre_dimensions);
-    $regExp = '/^.+$/';
-    if (!preg_match($regExp, $timbre_dimensions)) {
-      $this->erreurs['timbre_dimensions'] = 'Au moins 1 caractère.';
-    }
     $this->timbre_dimensions = $timbre_dimensions;
     return $this;
   }

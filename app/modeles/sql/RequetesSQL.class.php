@@ -386,35 +386,6 @@ class RequetesSQL extends RequetesPDO
   }
 
   /**
-   * Modifier l'image d'un timbre
-   * @param int $timbre_id
-   * @return boolean true si téléversement, false sinon
-   */
-  public function modifierTimbreImage($timbre_id)
-  {
-    if ($_FILES['image_nom_fichier']['tmp_name'] !== "") {
-      $allowTypes = array('jpg', 'png', 'jpeg', 'gif', 'webp');
-      // récupération de l'extension du fichier uploadé
-      $extension = substr($_FILES['image_nom_fichier']['type'], strpos($_FILES['image_nom_fichier']['type'], "/") + 1);
-      // vérifier si l'extension est autorisée
-      if (in_array($extension, $allowTypes)) {
-        $this->sql = 'INSERT INTO image SET image_nom_fichier = :image_nom_fichier, image_timbre_id = :timbre_id';
-        $champs['timbre_id']    = $timbre_id;
-        $champs['image_nom_fichier'] = "medias/images/timbre-$timbre_id-" . ".jpg";
-        $this->CUDLigne($champs);
-        if (!@move_uploaded_file($_FILES['image_nom_fichier']['tmp_name'], $champs['image_nom_fichier']))
-          throw new Exception("Le stockage du fichier image a échoué.");
-        return true;
-      } else {
-        throw new Exception("Seulement les extensions WEBP, JPG, JPEG, PNG et GIF sont autorisées.");
-      }
-    }
-    return false;
-  }
-
-
-
-  /**
    * Supprimer un timbre
    * @param int $timbre_id clé primaire
    * @return boolean|string true si suppression effectuée, message d'erreur sinon
@@ -439,6 +410,62 @@ class RequetesSQL extends RequetesPDO
       return $e->getMessage();
     }
   }
+
+
+
+  /* GESTION DES IMAGES ================= */
+
+  /**
+   * Récupération des images d'un timbre
+   * @param int $timbre_id
+   * @return array|false tableau associatif de la ligne produite par la select, false si aucune ligne
+   */
+
+
+  /**
+   * Modifier l'image d'un timbre
+   * @param int $timbre_id
+   * @return boolean true si téléversement, false sinon
+   */
+  public function modifierTimbreImage($timbre_id)
+  {
+    try {
+      $this->debuterTransaction();
+
+      $this->sql = 'INSERT INTO image (image_nom_fichier, image_timbre_id)
+                    VALUES (:image_nom_fichier, :timbre_id)
+                    ON DUPLICATE KEY UPDATE image_nom_fichier = :image_nom_fichier;';
+
+      // récupération de l'extension du fichier uploadé
+      $extension = substr($_FILES['image_nom_fichier']['type'], strpos($_FILES['image_nom_fichier']['type'], "/") + 1);
+
+      $champs['timbre_id'] = $timbre_id;
+      $champs['image_nom_fichier'] = "medias/images/timbre-$timbre_id" . "." . $extension;
+      $image_id = $this->CUDLigne($champs);
+
+      // suppression de l'ancienne image si elle existe
+      foreach (glob("medias/images/timbre-$timbre_id-*") as $fichier) {
+        if (!@unlink($fichier))
+          throw new Exception("Erreur dans la suppression de l'ancienne image.");
+      }
+
+      // ajout de la nouvelle image
+      if (!@move_uploaded_file($_FILES['image_nom_fichier']['tmp_name'], $champs['image_nom_fichier'])) throw new Exception("Le stockage du fichier image a échoué.");
+
+      $this->validerTransaction();
+      return  $image_id;
+    } catch (Exception $e) {
+      $this->annulerTransaction();
+      return $e->getMessage();
+    }
+  }
+
+  /**
+   * Supprimer une image
+   * @param int $image_id clé primaire
+   * @return boolean|string true si suppression effectuée, message d'erreur sinon
+   */
+
 
 
   /* GESTION DES PAYS 
@@ -547,46 +574,11 @@ class RequetesSQL extends RequetesPDO
 
 
 
-
-
-  /* GESTION DES IMAGES ================= */
-
-  /**
-   * Récupération des images d'un timbre
-   * @param int $timbre_id
-   * @return array|false tableau associatif de la ligne produite par la select, false si aucune ligne
-   */
-
-
-  /**
-   * Ajouter une image
-   * @param array $champs tableau des champs d'une image 
-   * @return int|string clé primaire de la ligne ajoutée, message d'erreur sinon
-   */
-
-
-  /**
-   * Modifier une image
-   * @param array $champs tableau des champs d'une image
-   * @return boolean|string true si modifié, message d'erreur sinon
-   */
-
-
-  /**
-   * Supprimer une image
-   * @param int $image_id clé primaire
-   * @return boolean|string true si suppression effectuée, message d'erreur sinon
-   */
-
-
-
-
-
   /* GESTION DES LIKES ================= */
 
   /**
-   * Récupération des likes d'un timbre
-   * @param int $timbre_id
+   * Récupération des likes d'une enchere
+   * @param int $enchere_id
    * @return array|false tableau associatif de la ligne produite par la select, false si aucune ligne
    */
 
@@ -600,41 +592,17 @@ class RequetesSQL extends RequetesPDO
 
   /**
    * Supprimer un like
-   * @param int $image_id clé primaire
+   * @param int $enchere_id clé primaire
    * @return boolean|string true si suppression effectuée, message d'erreur sinon
    */
-
-
-
-  /* GESTION DES COUPS DE COEUR DU LORD ================= */
-
-  /**
-   * Récupération des coups de coeur du Lord
-   * @return array|false tableau associatif de la ligne produite par la select, false si aucune ligne
-   */
-
-
-  /**
-   * Ajouter un coup de coeur
-   * @param array $champs tableau des champs d'un coup de coeur 
-   * @return int|string clé primaire de la ligne ajoutée, message d'erreur sinon
-   */
-
-
-  /**
-   * Supprimer un coup de coeur
-   * @param int $image_id clé primaire
-   * @return boolean|string true si suppression effectuée, message d'erreur sinon
-   */
-
 
 
 
   /* GESTION DES COMMENTAIRES ================= */
 
   /**
-   * Récupération des commentaires d'un timbre
-   * @param int $timbre_id
+   * Récupération des commentaires d'une enchere
+   * @param int $enchere_id
    * @return array|false tableau associatif de la ligne produite par la select, false si aucune ligne
    */
 

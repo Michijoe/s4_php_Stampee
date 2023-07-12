@@ -83,3 +83,15 @@ table tbody tr:last-of-type {
   border-bottom: 2px solid var(--color-royal-blue);
 }
 
+.admin form {
+  padding-top: 1rem;
+}
+
+.admin input[type='submit'] {
+  margin-top: 1rem;
+}
+
+.admin-tableau-enchere img {
+  max-width: 100px;
+  max-height: 100px;
+}

@@ -5,7 +5,7 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="author" content="Johanna Penet">
-		<meta name="description" content={{ titre }}>
+		<meta name="description" content="{{ titre }}">
 		<link rel="stylesheet" href="assets/css/main.css">
 		<link rel="stylesheet" href="assets/css/composition.css">
 		<link rel="stylesheet" href="assets/css/font.css">
@@ -24,7 +24,6 @@
 		<link rel="stylesheet" href="assets/css/media-query.css" media="screen and (max-width: 900px)">
 		<title>Stampee |
 			{{ titre }}</title>
-		<script src="assets/js/main.js" defer></script>
 		<script type="module" src="assets/js/connexionDeconnexion.js"></script>
 		<script type="module" src="assets/js/creerCompte.js"></script>
 	</head>
@@ -56,7 +55,7 @@
 						<div class="nav-top-login">
 							<span id="connecter" class="{{ oUtilConn ? 'cache' : '' }}">Connexion</span>
 							<span id="creerCompte" class="{{ oUtilConn ? 'cache' : '' }}">Inscription</span>
-							<a id="compte" class="{{ not oUtilConn ? 'cache' : '' }}" href='admin'>Mon compte</a>
+							<a id="utilisateur" class="{{ not oUtilConn ? 'cache' : '' }}" href='admin'>Mon compte</a>
 						</div>
 					</div>
 					<!-- menu principale -->
@@ -127,9 +126,9 @@
 				<div class="footer-main-content">
 					<h3>À propos</h3>
 					<p class="no-padding-bottom">Lord Stampee vient d’une famille de passionnés de philatélie depuis des
-																																																																																																																																																                    générations. Sa passion pour
-																																																																																																																																																                    les timbres rares et précieux l'a amené à rassembler l'une des collections les plus impressionnantes
-																																																																																																																																																                    du monde.</p>
+																																																																																																																																																																		                    générations. Sa passion pour
+																																																																																																																																																																		                    les timbres rares et précieux l'a amené à rassembler l'une des collections les plus impressionnantes
+																																																																																																																																																																		                    du monde.</p>
 					<a href="#">En savoir plus</a>
 				</div>
 				<div class="footer-main-content">

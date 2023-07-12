@@ -1,50 +1,50 @@
 <script type="module">
-  document.querySelectorAll(".avecOeil span").forEach(eSpan => {
-    eSpan.onclick = function() {
-      let eInput = eSpan.previousElementSibling;
-      eInput.type = eInput.type == 'password' ? 'text' : 'password';
-      this.classList.toggle('oeil');
-      this.classList.toggle('oeilbarre');
-    };
-  });
+	document.querySelectorAll(".avecOeil span").forEach(eSpan => {
+eSpan.onclick = function () {
+let eInput = eSpan.previousElementSibling;
+eInput.type = eInput.type == 'password' ? 'text' : 'password';
+this.classList.toggle('oeil');
+this.classList.toggle('oeilbarre');
+};
+});
 </script>
 
 <dialog id="modaleCreerCompte">
-  <section>
-    <h1>Créer un compte</h1>
-    
-    <form id="frmCreerCompte" name="frmCreerCompte" method="POST">
+	<section>
+		<h1>Créer un compte</h1>
 
-      <br><span id="messageErreurCreerCompte">&nbsp;</span>
+		<form id="frmCreerCompte" name="frmCreerCompte" method="POST">
 
-      <label>Nom</label>
-      <input name="utilisateur_nom" value="">
-      <span id="err_utilisateur_nom">&nbsp;</span>
+			<span id="messageErreurCreerCompte"></span>
 
-      <label>Prénom</label>
-      <input name="utilisateur_prenom" value="">
-      <span id="err_utilisateur_prenom">&nbsp;</span>
+			<label>Nom</label>
+			<input name="utilisateur_nom" value="">
+			<span id="err_utilisateur_nom"></span>
 
-      <label>Courriel</label>
-      <input name="utilisateur_courriel" value="">
-      <span id="err_utilisateur_courriel">&nbsp;</span>
+			<label>Prénom</label>
+			<input name="utilisateur_prenom" value="">
+			<span id="err_utilisateur_prenom"></span>
 
-      <label>Mot de passe</label>
-      <div class="avecOeil">
-        <input type="password" name="nouveau_mdp" value="">
-        <span class="oeil"></span>
-      </div>  
-      <span id="err_nouveau_mdp">&nbsp;</span>
+			<label>Courriel</label>
+			<input name="utilisateur_courriel" value="">
+			<span id="err_utilisateur_courriel"></span>
 
-      <label>Confirmez le mot de passe</label>
-      <div class="avecOeil">
-        <input type="password" name="nouveau_mdp_bis" value="">
-        <span class="oeil"></span>
-      </div>
-      <span id="err_nouveau_mdp_bis">&nbsp;</span>
+			<label>Mot de passe</label>
+			<div class="avecOeil">
+				<input type="password" name="nouveau_mdp" value="">
+				<span class="oeil"></span>
+			</div>
+			<span id="err_nouveau_mdp"></span>
 
-      <input type="submit" value="Envoyer">
+			<label>Confirmez le mot de passe</label>
+			<div class="avecOeil">
+				<input type="password" name="nouveau_mdp_bis" value="">
+				<span class="oeil"></span>
+			</div>
+			<span id="err_nouveau_mdp_bis"></span>
 
-    </form>
-  </section>
+			<input type="submit" value="Envoyer">
+
+		</form>
+	</section>
 </dialog>

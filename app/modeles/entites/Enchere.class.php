@@ -40,7 +40,7 @@ class Enchere extends Entite
         if (
             $enchere_date_debut < date("Y")
         ) {
-            $this->erreurs['enchere_date_debut'] = "Doit être supérieur à la date du jour.";
+            $this->erreurs['enchere_date_debut'] = "Doit être supérieur à la date et à l'heure du jour.";
         }
         $this->enchere_date_debut = $enchere_date_debut;
         return $this;
@@ -57,7 +57,7 @@ class Enchere extends Entite
         if (
             $enchere_date_fin < $this->enchere_date_debut
         ) {
-            $this->erreurs['enchere_date_fin'] = "Doit être supérieur à la date de début.";
+            $this->erreurs['enchere_date_fin'] = "Doit être supérieur à la date et à l'heure du début de l'enchère.";
         }
         $this->enchere_date_fin = $enchere_date_fin;
         return $this;

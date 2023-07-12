@@ -62,15 +62,19 @@ class AdminEnchere extends Admin
       // ajout de l'enchère et du timbre
       $enchere = $_POST['enchere'];
       $timbre = $_POST['timbre'];
+      $image = [];
+      $image['image_nom_fichier'] = $_FILES['image_nom_fichier']['tmp_name'];
 
       $oEnchere = new Enchere($enchere);
       $oTimbre = new Timbre($timbre);
+      $oImage = new Image($image);
 
       $erreursEnchere = $oEnchere->erreurs;
       $erreursTimbre = $oTimbre->erreurs;
+      $erreursImage = $oImage->erreurs;
 
-      // on valide qu'il n'y a pas d'erreur dans enchere ET timbre avant d'insérer dans la bd
-      if (count($erreursEnchere) === 0 && count($erreursTimbre) === 0) {
+      // on valide qu'il n'y a pas d'erreur dans enchere ET timbre ET image avant d'insérer dans la bd
+      if (count($erreursEnchere) === 0 && count($erreursTimbre) === 0 && count($erreursImage) === 0) {
         $enchere_id = $this->oRequetesSQL->ajouterEnchere([
           'enchere_date_debut'         => $oEnchere->enchere_date_debut,
           'enchere_date_fin'           => $oEnchere->enchere_date_fin,
@@ -114,6 +118,7 @@ class AdminEnchere extends Admin
       $enchere = [];
       $erreursTimbre = [];
       $erreursEnchere = [];
+      $erreursImage = [];
     }
     $pays = $this->oRequetesSQL->getPays();
 
@@ -127,7 +132,7 @@ class AdminEnchere extends Admin
         'pays'           => $pays,
         'erreursTimbre'  => $erreursTimbre,
         'erreursEnchere' => $erreursEnchere,
-        'erreursTimbre'  => $erreursTimbre
+        'erreursImage'   => $erreursImage
       ],
       'gabarit-admin'
     );

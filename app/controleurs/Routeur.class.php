@@ -14,7 +14,7 @@ class Routeur
     ["admin",         "Admin",    "gererEntite"],
     ["",              "Frontend", "afficherAccueil"],
     ["catalogue",     "Frontend", "afficherCatalogue"],
-    ["enchere",        "Frontend", "voirEnchere"],
+    ["enchere",       "Frontend", "voirEnchere"],
     ["connecter",     "Frontend", "connecter"],
     ["creerCompte",   "Frontend", "creerCompte"],
     ["deconnecter",   "Frontend", "deconnecter"]
