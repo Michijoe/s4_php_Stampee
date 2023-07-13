@@ -46,3 +46,11 @@ body > footer {
 	background-color: var(--color-royal-blue);
 	color: var(--color-white);
 }
+
+.container-card-detail {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	gap: var(--spacing-double);
+	padding: var(--gap) 5vw;
+}

@@ -9,8 +9,8 @@ class Enchere extends Entite
     protected $enchere_id;
     protected $enchere_date_debut;
     protected $enchere_date_fin;
-    protected $enchere_prix_plancher;
-    protected $enchere_coups_coeur_lord;
+    protected $enchere_prix_reserve;
+    protected $enchere_coup_coeur;
 
     /**
      * Mutateur de la propriété enchere_id 
@@ -64,36 +64,36 @@ class Enchere extends Entite
     }
 
     /**
-     * Mutateur de la propriété enchere_prix_plancher 
-     * @param int $enchere_prix_plancher
+     * Mutateur de la propriété enchere_prix_reserve 
+     * @param int $enchere_prix_reserve
      * @return $this
      */
-    public function setEnchere_prix_plancher($enchere_prix_plancher)
+    public function setEnchere_prix_reserve($enchere_prix_reserve)
     {
-        unset($this->erreurs['enchere_prix_plancher']);
+        unset($this->erreurs['enchere_prix_reserve']);
         $regExp = '/^\d+$/';
-        if (!preg_match($regExp, $enchere_prix_plancher)) {
-            $this->erreurs['enchere_prix_plancher'] = 'Entrez un nombre entier.';
+        if (!preg_match($regExp, $enchere_prix_reserve)) {
+            $this->erreurs['enchere_prix_reserve'] = 'Entrez un nombre entier.';
         }
-        $this->enchere_prix_plancher = $enchere_prix_plancher;
+        $this->enchere_prix_reserve = $enchere_prix_reserve;
         return $this;
     }
 
     /**
-     * Mutateur de la propriété enchere_coups_coeur_lord
-     * @param int $enchere_coups_coeur_lord
+     * Mutateur de la propriété enchere_coup_coeur
+     * @param int $enchere_coup_coeur
      * @return $this
      */
-    public function setEnchere_coups_coeur_lord($enchere_coups_coeur_lord)
+    public function setEnchere_coup_coeur($enchere_coup_coeur)
     {
-        unset($this->erreurs['enchere_coups_coeur_lord']);
+        unset($this->erreurs['enchere_coup_coeur']);
         if (
-            $enchere_coups_coeur_lord != 'Oui' &&
-            $enchere_coups_coeur_lord != 'Non'
+            $enchere_coup_coeur != 'Oui' &&
+            $enchere_coup_coeur != 'Non'
         ) {
-            $this->erreurs['enchere_coups_coeur_lord'] = 'Entrée incorrecte.';
+            $this->erreurs['enchere_coup_coeur'] = 'Entrée incorrecte.';
         }
-        $this->enchere_coups_coeur_lord = $enchere_coups_coeur_lord;
+        $this->enchere_coup_coeur = $enchere_coup_coeur;
         return $this;
     }
 }

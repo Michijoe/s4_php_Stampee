@@ -30,7 +30,7 @@ class AdminEnchere extends Admin
    */
   public function listerEncheresTimbres()
   {
-    if (self::$oUtilConn->utilisateur_profil === Utilisateur::PROFIL_ADMINISTRATEUR) {
+    if (self::$oUtilConn->utilisateur_profil_id === Utilisateur::PROFIL_ADMINISTRATEUR) {
       $encheresTimbres = $this->oRequetesSQL->getEncheresTimbres('membre_admin');
       $titre = 'Toutes les enchères de timbres';
     } else {
@@ -78,8 +78,8 @@ class AdminEnchere extends Admin
         $enchere_id = $this->oRequetesSQL->ajouterEnchere([
           'enchere_date_debut'         => $oEnchere->enchere_date_debut,
           'enchere_date_fin'           => $oEnchere->enchere_date_fin,
-          'enchere_prix_plancher'      => $oEnchere->enchere_prix_plancher,
-          'enchere_coups_coeur_lord'   => $oEnchere->enchere_coups_coeur_lord,
+          'enchere_prix_reserve'       => $oEnchere->enchere_prix_reserve,
+          'enchere_coup_coeur'   => $oEnchere->enchere_coup_coeur,
           'enchere_utilisateur_id'     => self::$oUtilConn->utilisateur_id
         ]);
 
@@ -91,11 +91,11 @@ class AdminEnchere extends Admin
           'timbre_titre'               => $oTimbre->timbre_titre,
           'timbre_description'         => $oTimbre->timbre_description,
           'timbre_annee_publication'   => $oTimbre->timbre_annee_publication,
-          'timbre_condition'           => $oTimbre->timbre_condition,
+          'timbre_condition_id'        => $oTimbre->timbre_condition_id,
           'timbre_pays_id'             => $oTimbre->timbre_pays_id,
           'timbre_dimensions'          => $oTimbre->timbre_dimensions,
-          'timbre_tirage'              => $oTimbre->timbre_tirage,
-          'timbre_couleur'             => $oTimbre->timbre_couleur,
+          'timbre_tirage_id'           => $oTimbre->timbre_tirage_id,
+          'timbre_couleur_id'          => $oTimbre->timbre_couleur_id,
           'timbre_certification'       => $oTimbre->timbre_certification,
           'timbre_utilisateur_id'      => self::$oUtilConn->utilisateur_id,
           'timbre_enchere_id'          => $oTimbre->timbre_enchere_id
@@ -121,6 +121,9 @@ class AdminEnchere extends Admin
       $erreursImage = [];
     }
     $pays = $this->oRequetesSQL->getPays();
+    $conditions = $this->oRequetesSQL->getConditions();
+    $tirages = $this->oRequetesSQL->getTirages();
+    $couleurs = $this->oRequetesSQL->getCouleurs();
 
     (new Vue)->generer(
       'vAdminEnchereAjouter',
@@ -130,6 +133,9 @@ class AdminEnchere extends Admin
         'timbre'         => $timbre,
         'enchere'        => $enchere,
         'pays'           => $pays,
+        'conditions'     => $conditions,
+        'tirages'        => $tirages,
+        'couleurs'       => $couleurs,
         'erreursTimbre'  => $erreursTimbre,
         'erreursEnchere' => $erreursEnchere,
         'erreursImage'   => $erreursImage
@@ -167,8 +173,8 @@ class AdminEnchere extends Admin
           'enchere_id'                 => $oEnchere->enchere_id,
           'enchere_date_debut'         => $oEnchere->enchere_date_debut,
           'enchere_date_fin'           => $oEnchere->enchere_date_fin,
-          'enchere_prix_plancher'      => $oEnchere->enchere_prix_plancher,
-          'enchere_coups_coeur_lord'   => $oEnchere->enchere_coups_coeur_lord
+          'enchere_prix_reserve'      => $oEnchere->enchere_prix_reserve,
+          'enchere_coup_coeur'   => $oEnchere->enchere_coup_coeur
         ]);
 
         $modifTimbre = $this->oRequetesSQL->modifierTimbre([
@@ -176,11 +182,11 @@ class AdminEnchere extends Admin
           'timbre_titre'               => $oTimbre->timbre_titre,
           'timbre_description'         => $oTimbre->timbre_description,
           'timbre_annee_publication'   => $oTimbre->timbre_annee_publication,
-          'timbre_condition'           => $oTimbre->timbre_condition,
+          'timbre_condition_id'        => $oTimbre->timbre_condition_id,
           'timbre_pays_id'             => $oTimbre->timbre_pays_id,
           'timbre_dimensions'          => $oTimbre->timbre_dimensions,
-          'timbre_tirage'              => $oTimbre->timbre_tirage,
-          'timbre_couleur'             => $oTimbre->timbre_couleur,
+          'timbre_tirage_id'           => $oTimbre->timbre_tirage_id,
+          'timbre_couleur_id'          => $oTimbre->timbre_couleur_id,
           'timbre_certification'       => $oTimbre->timbre_certification
         ]);
 
@@ -200,6 +206,11 @@ class AdminEnchere extends Admin
       $erreursEnchere = [];
     }
     $pays = $this->oRequetesSQL->getPays();
+    $conditions = $this->oRequetesSQL->getConditions();
+    $tirages = $this->oRequetesSQL->getTirages();
+    $couleurs = $this->oRequetesSQL->getCouleurs();
+
+    var_dump($timbre);
 
     (new Vue)->generer(
       'vAdminEnchereModifier',
@@ -209,6 +220,9 @@ class AdminEnchere extends Admin
         'timbre'         => $timbre,
         'enchere'        => $enchere,
         'pays'           => $pays,
+        'conditions'     => $conditions,
+        'tirages'        => $tirages,
+        'couleurs'       => $couleurs,
         'erreursTimbre'  => $erreursTimbre,
         'erreursEnchere' => $erreursEnchere,
       ],

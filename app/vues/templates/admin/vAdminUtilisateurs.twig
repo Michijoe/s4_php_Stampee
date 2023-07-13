@@ -4,13 +4,13 @@
 <section>
 	<div class="catalogue-header">
 		<h2>{{ titre }}</h2>
-		{% if oUtilConn.utilisateur_profil == constant('Utilisateur::PROFIL_ADMINISTRATEUR') %}
+		{% if oUtilConn.utilisateur_profil_id == constant('Utilisateur::PROFIL_ADMINISTRATEUR') %}
 			<a href="admin?entite=utilisateur&action=a" class="button">Ajouter un utilisateur</a>
 		{% endif %}
 
 	</div>
 	<p class="messageRetourAction {{ classRetour }}">{{ messageRetourAction|raw }}&nbsp;</p>
-	{% if oUtilConn.utilisateur_profil == constant('Utilisateur::PROFIL_ADMINISTRATEUR') %}
+	{% if oUtilConn.utilisateur_profil_id == constant('Utilisateur::PROFIL_ADMINISTRATEUR') %}
 		<table>
 			<thead>
 				<tr>
@@ -28,7 +28,13 @@
 						<th>{{ utilisateur.utilisateur_prenom }},
 							{{ utilisateur.utilisateur_nom }}</th>
 						<th>{{ utilisateur.utilisateur_courriel }}</th>
-						<th>{{ utilisateur.utilisateur_profil }}</th>
+						<th>
+							{% for profil in profils %}
+								{% if utilisateur.utilisateur_profil_id == profil.profil_id %}
+									{{ profil.profil_nom }}
+								{% endif %}
+							{% endfor %}
+						</th>
 						<th>
 							<a href="admin?entite=utilisateur&action=m&utilisateur_id={{ utilisateur.utilisateur_id }}">modifier</a>
 							{# si pas d'enchere ni de mise sur le timbre on peut supprimer #}

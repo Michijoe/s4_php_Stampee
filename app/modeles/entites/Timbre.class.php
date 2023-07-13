@@ -10,34 +10,16 @@ class Timbre extends Entite
   protected $timbre_titre;
   protected $timbre_description;
   protected $timbre_annee_publication;
-  protected $timbre_condition;
+  protected $timbre_condition_id;
   protected $timbre_pays_id;
   protected $timbre_dimensions;
-  protected $timbre_tirage;
-  protected $timbre_couleur;
+  protected $timbre_tirage_id;
+  protected $timbre_couleur_id;
   protected $timbre_certification;
   protected $timbre_statut;
   protected $enchere_id;
 
   const ANNEE_PREMIER_TIMBRE = '1847';
-
-  const TIRAGE_MAX100   = 0;
-  const TIRAGE_MAX500   = 1;
-  const TIRAGE_MAX1000  = 2;
-  const TIRAGE_MAX5000  = 3;
-
-  const CONDITION_ENDOMMAGE    = 0;
-  const CONDITION_MOYENNE      = 1;
-  const CONDITION_BONNE        = 2;
-  const CONDITION_EXCELLENTE   = 3;
-  const CONDITION_PARFAITE     = 4;
-
-  const COULEUR_ROUGE   = 0;
-  const COULEUR_JAUNE   = 1;
-  const COULEUR_BLEU    = 2;
-  const COULEUR_VERT    = 3;
-  const COULEUR_BLANC   = 4;
-  const COULEUR_NOIR    = 5;
 
   const STATUT_INVISIBLE = 0;
   const STATUT_VISIBLE   = 1;
@@ -68,9 +50,9 @@ class Timbre extends Entite
   {
     unset($this->erreurs['timbre_titre']);
     $timbre_titre = trim($timbre_titre);
-    $regExp = '/^.+$/';
+    $regExp = '/^.{4,}$/';
     if (!preg_match($regExp, $timbre_titre)) {
-      $this->erreurs['timbre_titre'] = 'Au moins 1 caractère.';
+      $this->erreurs['timbre_titre'] = 'Au moins 4 caractères.';
     }
     $this->timbre_titre = $timbre_titre;
     return $this;
@@ -112,19 +94,14 @@ class Timbre extends Entite
    * @param int $timbre_condition
    * @return $this
    */
-  public function setTimbre_condition($timbre_condition)
+  public function setTimbre_condition_id($timbre_condition_id)
   {
-    unset($this->erreurs['timbre_condition']);
-    if (
-      $timbre_condition != Timbre::CONDITION_BONNE &&
-      $timbre_condition != Timbre::CONDITION_ENDOMMAGE &&
-      $timbre_condition != Timbre::CONDITION_EXCELLENTE &&
-      $timbre_condition != Timbre::CONDITION_MOYENNE &&
-      $timbre_condition != Timbre::CONDITION_PARFAITE
-    ) {
-      $this->erreurs['timbre_condition'] = 'Condition incorrecte.';
+    unset($this->erreurs['timbre_condition_id']);
+    $regExp = '/^[1-9]\d*$/';
+    if (!preg_match($regExp, $timbre_condition_id)) {
+      $this->erreurs['timbre_condition_id'] = 'Veuillez sélectionner une condition dans la liste.';
     }
-    $this->timbre_condition = $timbre_condition;
+    $this->timbre_condition_id = $timbre_condition_id;
     return $this;
   }
 
@@ -161,18 +138,14 @@ class Timbre extends Entite
    * @param int $timbre_tirage
    * @return $this
    */
-  public function setTimbre_tirage($timbre_tirage)
+  public function setTimbre_tirage_id($timbre_tirage_id)
   {
-    unset($this->erreurs['timbre_tirage']);
-    if (
-      $timbre_tirage != Timbre::TIRAGE_MAX100 &&
-      $timbre_tirage != Timbre::TIRAGE_MAX1000 &&
-      $timbre_tirage != Timbre::TIRAGE_MAX500 &&
-      $timbre_tirage != Timbre::TIRAGE_MAX5000
-    ) {
-      $this->erreurs['timbre_tirage'] = 'Tirage incorrect.';
+    unset($this->erreurs['timbre_tirage_id']);
+    $regExp = '/^[1-9]\d*$/';
+    if (!preg_match($regExp, $timbre_tirage_id)) {
+      $this->erreurs['timbre_tirage_id'] = 'Veuillez sélectionner un tirage dans la liste.';
     }
-    $this->timbre_tirage = $timbre_tirage;
+    $this->timbre_tirage_id = $timbre_tirage_id;
     return $this;
   }
 
@@ -181,20 +154,14 @@ class Timbre extends Entite
    * @param int $timbre_couleur_dominante
    * @return $this
    */
-  public function setTimbre_couleur($timbre_couleur)
+  public function setTimbre_couleur_id($timbre_couleur_id)
   {
-    unset($this->erreurs['timbre_couleur_dominante']);
-    if (
-      $timbre_couleur != Timbre::COULEUR_BLANC &&
-      $timbre_couleur != Timbre::COULEUR_BLEU &&
-      $timbre_couleur != Timbre::COULEUR_JAUNE &&
-      $timbre_couleur != Timbre::COULEUR_NOIR &&
-      $timbre_couleur != Timbre::COULEUR_ROUGE &&
-      $timbre_couleur != Timbre::COULEUR_VERT
-    ) {
-      $this->erreurs['timbre_couleur'] = 'Couleur incorrecte.';
+    unset($this->erreurs['timbre_couleur_id']);
+    $regExp = '/^[1-9]\d*$/';
+    if (!preg_match($regExp, $timbre_couleur_id)) {
+      $this->erreurs['timbre_couleur_id'] = 'Veuillez sélectionner une couleur dans la liste.';
     }
-    $this->timbre_couleur = $timbre_couleur;
+    $this->timbre_couleur_id = $timbre_couleur_id;
     return $this;
   }
 

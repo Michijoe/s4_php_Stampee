@@ -107,8 +107,7 @@ class AdminUtilisateur extends Admin
   public function listerUtilisateurs()
   {
     $utilisateur_id = self::$oUtilConn->utilisateur_id;
-    echo ($utilisateur_id);
-    if (self::$oUtilConn->utilisateur_profil === Utilisateur::PROFIL_ADMINISTRATEUR) {
+    if (self::$oUtilConn->utilisateur_profil_id === Utilisateur::PROFIL_ADMINISTRATEUR) {
       $utilisateurs = $this->oRequetesSQL->getUtilisateurs();
       $titre = 'Gestion des utilisateurs';
     } else {
@@ -116,12 +115,15 @@ class AdminUtilisateur extends Admin
       $titre = 'Mon compte';
     }
 
+    $profils = $this->oRequetesSQL->getProfils();
+
     (new Vue)->generer(
       'vAdminUtilisateurs',
       [
         'oUtilConn'           => self::$oUtilConn,
         'titre'               => $titre,
         'utilisateurs'        => isset($utilisateurs) ? $utilisateurs : $utilisateur,
+        'profils'             => $profils,
         'classRetour'         => $this->classRetour,
         'messageRetourAction' => $this->messageRetourAction
       ],
@@ -146,7 +148,7 @@ class AdminUtilisateur extends Admin
           'utilisateur_prenom'   => $oUtilisateur->utilisateur_prenom,
           'utilisateur_courriel' => $oUtilisateur->utilisateur_courriel,
           'utilisateur_mdp'      => $oUtilisateur->utilisateur_mdp,
-          'utilisateur_profil'   => $oUtilisateur->utilisateur_profil
+          'utilisateur_profil_id' => $oUtilisateur->utilisateur_profil_id
         ]);
         if ($retour !== Utilisateur::ERR_COURRIEL_EXISTANT) {
           if (preg_match('/^[1-9]\d*$/', $retour)) {
@@ -172,6 +174,7 @@ class AdminUtilisateur extends Admin
       $utilisateur = [];
       $erreurs     = [];
     }
+    $profils = $this->oRequetesSQL->getProfils();
 
     (new Vue)->generer(
       'vAdminUtilisateurAjouter',
@@ -179,6 +182,7 @@ class AdminUtilisateur extends Admin
         'oUtilConn'   => self::$oUtilConn,
         'titre'       => 'Ajouter un utilisateur',
         'utilisateur' => $utilisateur,
+        'profils'     => $profils,
         'erreurs'     => $erreurs
       ],
       'gabarit-admin'
@@ -204,7 +208,7 @@ class AdminUtilisateur extends Admin
           'utilisateur_courriel' => $oUtilisateur->utilisateur_courriel,
           'utilisateur_nom'      => $oUtilisateur->utilisateur_nom,
           'utilisateur_prenom'   => $oUtilisateur->utilisateur_prenom,
-          'utilisateur_profil'   => $oUtilisateur->utilisateur_profil
+          'utilisateur_profil_id' => $oUtilisateur->utilisateur_profil_id
         ]);
         if ($retour !== Utilisateur::ERR_COURRIEL_EXISTANT) {
           if ($retour === true) {
@@ -224,12 +228,15 @@ class AdminUtilisateur extends Admin
       $erreurs = [];
     }
 
+    $profils = $this->oRequetesSQL->getProfils();
+
     (new Vue)->generer(
       'vAdminUtilisateurModifier',
       [
         'oUtilConn'   => self::$oUtilConn,
         'titre'       => "Modifier l'utilisateur numéro $this->utilisateur_id",
         'utilisateur' => $utilisateur,
+        'profils'     => $profils,
         'erreurs'     => $erreurs
       ],
       'gabarit-admin'

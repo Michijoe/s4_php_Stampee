@@ -11,13 +11,13 @@ class Utilisateur extends Entite
   protected $utilisateur_prenom;
   protected $utilisateur_courriel;
   protected $utilisateur_mdp;
-  protected $utilisateur_profil;
+  protected $utilisateur_profil_id;
 
   protected $nouveau_mdp;
   protected $nouveau_mdp_bis;
 
-  const PROFIL_ADMINISTRATEUR = "Administrateur";
-  const PROFIL_MEMBRE         = "Membre";
+  const PROFIL_ADMINISTRATEUR = "1";
+  const PROFIL_MEMBRE         = "2";
 
   const ERR_COURRIEL_EXISTANT = "Courriel déjà utilisé.";
 
@@ -42,9 +42,9 @@ class Utilisateur extends Entite
   {
     return $this->utilisateur_mdp;
   }
-  public function getUtilisateur_profil()
+  public function getUtilisateur_profil_id()
   {
-    return $this->utilisateur_profil;
+    return $this->utilisateur_profil_id;
   }
   public function getErreurs()
   {
@@ -140,20 +140,18 @@ class Utilisateur extends Entite
   }
 
   /**
-   * Mutateur de la propriété utilisateur_profil
-   * @param string $utilisateur_profil
+   * Mutateur de la propriété utilisateur_profil_id
+   * @param string $utilisateur_profil_id
    * @return $this
    */
-  public function setUtilisateur_profil($utilisateur_profil)
+  public function setUtilisateur_profil_id($utilisateur_profil_id)
   {
-    unset($this->erreurs['utilisateur_profil']);
-    if (
-      $utilisateur_profil !== self::PROFIL_ADMINISTRATEUR &&
-      $utilisateur_profil !== self::PROFIL_MEMBRE
-    ) {
-      $this->erreurs['utilisateur_profil'] = 'Profil incorrect.';
+    unset($this->erreurs['utilisateur_profil_id']);
+    $regExp = '/^[1-9]\d*$/';
+    if (!preg_match($regExp, $utilisateur_profil_id)) {
+      $this->erreurs['utilisateur_profil_id'] = 'Numéro incorrect.';
     }
-    $this->utilisateur_profil = $utilisateur_profil;
+    $this->utilisateur_profil_id = $utilisateur_profil_id;
     return $this;
   }
 

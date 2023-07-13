@@ -17,11 +17,11 @@
 
 
 		<label>Profil</label>
-		<select name="utilisateur_profil">
-			<option value="{{ constant('utilisateur::PROFIL_MEMBRE') }}" {{ utilisateur.utilisateur_profil == constant('utilisateur::PROFIL_MEMBRE') ? 'selected' : '' }}>Membre</option>
-			<option value="{{ constant('utilisateur::PROFIL_ADMINISTRATEUR') }}" {{ utilisateur.utilisateur_profil == constant('utilisateur::PROFIL_ADMINISTRATEUR') ? 'selected' : '' }}>Administrateur</option>
+		<select name="utilisateur_profil_id">
+			<option value="{{ constant('utilisateur::PROFIL_MEMBRE') }}" {{ utilisateur.utilisateur_profil_id == constant('utilisateur::PROFIL_MEMBRE') ? 'selected' : '' }}>Membre</option>
+			<option value="{{ constant('utilisateur::PROFIL_ADMINISTRATEUR') }}" {{ utilisateur.utilisateur_profil_id == constant('utilisateur::PROFIL_ADMINISTRATEUR') ? 'selected' : '' }}>Administrateur</option>
 		</select>
-		<span>&nbsp;{{ erreurs.utilisateur_profil }}</span>
+		<span>&nbsp;{{ erreurs.utilisateur_profil_id }}</span>
 
 
 		<input type="submit" value="Envoyer">

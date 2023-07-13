@@ -88,7 +88,7 @@
 				<img src="assets/img/herobannerMembre.webp" alt="">
 				<div class="herobanner-text max-width60">
 					<h1>Espace
-						{{ oUtilConn.utilisateur_profil == constant('Utilisateur::PROFIL_ADMINISTRATEUR') ? 'Administrateur' : 'Membre' }}</h1>
+						{{ oUtilConn.utilisateur_profil_id == constant('Utilisateur::PROFIL_ADMINISTRATEUR') ? 'Administrateur' : 'Membre' }}</h1>
 				</div>
 			</div>
 		</header>
@@ -100,19 +100,19 @@
 				</h3>
 				<ul class="h4">
 					<li>
-						<a href="admin?entite=enchere">{{ oUtilConn.utilisateur_profil == constant('Utilisateur::PROFIL_ADMINISTRATEUR') ? 'Enchères' : 'Mes enchères' }}</a>
+						<a href="admin?entite=enchere">{{ oUtilConn.utilisateur_profil_id == constant('Utilisateur::PROFIL_ADMINISTRATEUR') ? 'Enchères' : 'Mes enchères' }}</a>
 					</li>
 					<li>
-						<a href="admin?entite=mise">{{ oUtilConn.utilisateur_profil == constant('Utilisateur::PROFIL_ADMINISTRATEUR') ? 'Mises' : 'Mes mises' }}</a>
+						<a href="admin?entite=mise">{{ oUtilConn.utilisateur_profil_id == constant('Utilisateur::PROFIL_ADMINISTRATEUR') ? 'Mises' : 'Mes mises' }}</a>
 					</li>
 					<li>
-						<a href="admin?entite=like">{{ oUtilConn.utilisateur_profil == constant('Utilisateur::PROFIL_ADMINISTRATEUR') ? 'Favoris' : 'Mes favoris' }}</a>
+						<a href="admin?entite=like">{{ oUtilConn.utilisateur_profil_id == constant('Utilisateur::PROFIL_ADMINISTRATEUR') ? 'Favoris' : 'Mes favoris' }}</a>
 					</li>
 					<li><hr></li>
 					<li>
-						<a href="admin?entite=utilisateur">{{ oUtilConn.utilisateur_profil == constant('Utilisateur::PROFIL_ADMINISTRATEUR') ? 'Utilisateurs' : 'Mon compte' }}</a>
+						<a href="admin?entite=utilisateur">{{ oUtilConn.utilisateur_profil_id == constant('Utilisateur::PROFIL_ADMINISTRATEUR') ? 'Utilisateurs' : 'Mon compte' }}</a>
 					</li>
-					{% if oUtilConn.utilisateur_profil == constant('Utilisateur::PROFIL_ADMINISTRATEUR') %}
+					{% if oUtilConn.utilisateur_profil_id == constant('Utilisateur::PROFIL_ADMINISTRATEUR') %}
 						<li>
 							<a href="admin?entite=pays">Pays</a>
 						</li>
@@ -136,9 +136,9 @@
 				<div class="footer-main-content">
 					<h3>À propos</h3>
 					<p class="no-padding-bottom">Lord Stampee vient d’une famille de passionnés de philatélie depuis des
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																														                    générations. Sa passion pour
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																														                    les timbres rares et précieux l'a amené à rassembler l'une des collections les plus impressionnantes
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																														                    du monde.</p>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																				                    générations. Sa passion pour
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																				                    les timbres rares et précieux l'a amené à rassembler l'une des collections les plus impressionnantes
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																				                    du monde.</p>
 					<a href="#">En savoir plus</a>
 				</div>
 				<div class="footer-main-content">

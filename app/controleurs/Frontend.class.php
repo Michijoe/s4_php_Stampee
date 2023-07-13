@@ -10,7 +10,6 @@ class Frontend extends Routeur
 
   private $oUtilConn;
   private $enchere_id;
-  private $timbre_id;
 
   /**
    * Constructeur qui initialise des propriétés à partir du query string
@@ -20,7 +19,7 @@ class Frontend extends Routeur
   public function __construct()
   {
     $this->oUtilConn = $_SESSION['oUtilConn'] ?? null;
-    $this->timbre_id   = $_GET['timbre_id']       ?? null;
+    $this->enchere_id   = $_GET['enchere_id'] ?? null;
     $this->oRequetesSQL = new RequetesSQL;
   }
 
@@ -48,7 +47,7 @@ class Frontend extends Routeur
     } else {
       $retour = $this->oRequetesSQL->creerCompteUtilisateur($_POST);
       if (!is_array($retour) && preg_match('/^[1-9]\d*$/', $retour)) {
-        $oUtilisateur->utilisateur_profil = Utilisateur::PROFIL_MEMBRE;
+        $oUtilisateur->utilisateur_profil_id = Utilisateur::PROFIL_MEMBRE;
         $_SESSION['oUtilConn'] = $oUtilisateur;
       }
     }
@@ -83,8 +82,6 @@ class Frontend extends Routeur
   /**
    * Afficher le catalogue complet, des enchères actives ou des enchères archivées
    * 
-   * voir pour ne pas faire 3 requetes mais passer quel catalogue en argument
-   * 
    */
   public function afficherCatalogue()
   {
@@ -109,20 +106,25 @@ class Frontend extends Routeur
    * Afficher la fiche d'une enchere
    * 
    */
-  public function voirEnchere()
+  public function afficherEnchere()
   {
     $enchere = false;
+    $timbre = false;
     if (!is_null($this->enchere_id)) {
-      $enchere   = $this->oRequetesSQL->getTimbre($this->timbre_id);
+      $enchere = $this->oRequetesSQL->getEnchere($this->enchere_id);
+      $timbre = $this->oRequetesSQL->getTimbre($this->enchere_id);
     }
-    if (!$enchere) throw new Exception("Enchère inexistant.");
+    if (!$enchere || !$timbre) throw new Exception("Enchère ou timbre inexistants.");
 
     (new Vue)->generer(
       "vEnchere",
       [
         'oUtilConn'    => $this->oUtilConn,
-        'titre'        => $enchere['timbre_titre'],
-        'timbre'       => $enchere
+        'titre'        => 'Timbre',
+        'titreHB'      => 'Fiche Timbre',
+        'texteHB'      => '',
+        'enchere'      => $enchere,
+        'timbre'       => $timbre
       ],
       "gabarit-frontend"
     );

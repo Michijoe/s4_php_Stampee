@@ -13,13 +13,13 @@
 		<table class="admin-tableau-enchere">
 			<thead>
 				<tr>
-					{% if oUtilConn.utilisateur_profil is same as constant('Utilisateur::PROFIL_ADMINISTRATEUR') %}
+					{% if oUtilConn.utilisateur_profil_id is same as constant('Utilisateur::PROFIL_ADMINISTRATEUR') %}
 						<th>Id</th>
 					{% endif %}
 					<th>Image</th>
 					<th>Titre</th>
 					<th>Statut</th>
-					{% if oUtilConn.utilisateur_profil is same as constant('Utilisateur::PROFIL_ADMINISTRATEUR') %}
+					{% if oUtilConn.utilisateur_profil_id is same as constant('Utilisateur::PROFIL_ADMINISTRATEUR') %}
 						<th>Créé par</th>
 					{% endif %}
 					<th>Début enchère</th>
@@ -30,7 +30,7 @@
 			<tbody>
 				{% for enchereTimbre in encheresTimbres %}
 					<tr>
-						{% if oUtilConn.utilisateur_profil is same as constant('Utilisateur::PROFIL_ADMINISTRATEUR') %}
+						{% if oUtilConn.utilisateur_profil_id is same as constant('Utilisateur::PROFIL_ADMINISTRATEUR') %}
 							<th>{{ enchereTimbre.enchere_id }}</th>
 						{% endif %}
 						<th><img src="{{ enchereTimbre.image_nom_fichier }}" alt=""></th>
@@ -44,7 +44,7 @@
 								Archivé
 							{% endif %}
 						</th>
-						{% if oUtilConn.utilisateur_profil is same as constant('Utilisateur::PROFIL_ADMINISTRATEUR') %}
+						{% if oUtilConn.utilisateur_profil_id is same as constant('Utilisateur::PROFIL_ADMINISTRATEUR') %}
 							<th>{{ enchereTimbre.utilisateur_prenom }}
 								{{ enchereTimbre.utilisateur_nom }}
 							</th>

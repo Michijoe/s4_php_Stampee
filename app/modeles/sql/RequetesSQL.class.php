@@ -18,7 +18,7 @@ class RequetesSQL extends RequetesPDO
   {
     $this->sql = "
       SELECT utilisateur_id, utilisateur_nom, utilisateur_prenom, utilisateur_courriel,
-             utilisateur_renouveler_mdp, utilisateur_profil
+             utilisateur_renouveler_mdp, utilisateur_profil_id
       FROM utilisateur ORDER BY utilisateur_id ASC";
     return $this->getLignes();
   }
@@ -32,8 +32,8 @@ class RequetesSQL extends RequetesPDO
   {
     $this->sql = "
       SELECT utilisateur_id, utilisateur_nom, utilisateur_prenom, utilisateur_courriel,
-             utilisateur_renouveler_mdp, utilisateur_profil
-      FROM utilisateur
+             utilisateur_renouveler_mdp, utilisateur_profil_id
+      FROM utilisateur 
       WHERE utilisateur_id = :utilisateur_id";
     return $this->getLignes(['utilisateur_id' => $utilisateur_id], RequetesPDO::UNE_SEULE_LIGNE);
   }
@@ -59,8 +59,8 @@ class RequetesSQL extends RequetesPDO
   {
     $this->sql = "
       SELECT utilisateur_id, utilisateur_nom, utilisateur_prenom,
-             utilisateur_courriel, utilisateur_renouveler_mdp, utilisateur_profil
-      FROM utilisateur
+             utilisateur_courriel, utilisateur_renouveler_mdp, utilisateur_profil_id
+      FROM utilisateur 
       WHERE utilisateur_courriel = :utilisateur_courriel AND utilisateur_mdp = SHA2(:utilisateur_mdp, 512)";
     return $this->getLignes($champs, RequetesPDO::UNE_SEULE_LIGNE);
   }
@@ -84,7 +84,7 @@ class RequetesSQL extends RequetesPDO
       utilisateur_courriel       = :utilisateur_courriel,
       utilisateur_mdp            = SHA2(:utilisateur_mdp, 512),
       utilisateur_renouveler_mdp = "oui",
-      utilisateur_profil         = :utilisateur_profil';
+      utilisateur_profil_id      = :utilisateur_profil_id';
     return $this->CUDLigne($champs);
   }
 
@@ -108,7 +108,7 @@ class RequetesSQL extends RequetesPDO
       utilisateur_courriel       = :utilisateur_courriel,
       utilisateur_mdp            = SHA2(:nouveau_mdp, 512),
       utilisateur_renouveler_mdp = "non",
-      utilisateur_profil         = "' . Utilisateur::PROFIL_MEMBRE . '"';
+      utilisateur_profil_id      = "' . Utilisateur::PROFIL_MEMBRE . '"';
     return $this->CUDLigne($champs);
   }
 
@@ -130,7 +130,7 @@ class RequetesSQL extends RequetesPDO
       utilisateur_nom      = :utilisateur_nom,
       utilisateur_prenom   = :utilisateur_prenom,
       utilisateur_courriel = :utilisateur_courriel,
-      utilisateur_profil   = :utilisateur_profil
+      utilisateur_profil_id = :utilisateur_profil_id
       WHERE utilisateur_id = :utilisateur_id
       AND utilisateur_id > 2'; // ne pas modifier les 2 premiers utilisateurs du jeu d'essai
     return $this->CUDLigne($champs);
@@ -234,14 +234,11 @@ class RequetesSQL extends RequetesPDO
   /**
    * Récupération d'un timbre :
    * @param  int $timbre_id, clé du timbre
-   * @param string $mode, admin si pour l'interface membre
    * @return array|false tableau associatif de la ligne produite par la select, false si aucune ligne   
    */
-  public function getTimbre($timbre_id, $mode = null)
+  public function getTimbre($timbre_id)
   {
-    if ($mode == 'admin') {
-      $this->sql = "SELECT timbre_id, timbre_titre, timbre_description, timbre_annee_publication, timbre_condition, timbre_dimensions, timbre_couleur, timbre_certification, image_nom_fichier, timbre_pays_id FROM timbre INNER JOIN image ON timbre_id = image_timbre_id WHERE timbre_id = :timbre_id";
-    }
+    $this->sql = "SELECT timbre_id, timbre_titre, timbre_description, timbre_annee_publication, condition_nom, timbre_dimensions, tirage_nom, couleur_nom, timbre_certification, image_nom_fichier, pays_nom FROM timbre INNER JOIN `image` ON timbre_id = image_timbre_id INNER JOIN `condition` ON timbre_condition_id = condition_id INNER JOIN couleur ON timbre_couleur_id = couleur_id INNER JOIN tirage ON timbre_tirage_id = tirage_id INNER JOIN pays ON timbre_pays_id = pays_id WHERE timbre_id = :timbre_id";
 
     return $this->getLignes(['timbre_id' => $timbre_id], RequetesPDO::UNE_SEULE_LIGNE);
   }
@@ -249,14 +246,11 @@ class RequetesSQL extends RequetesPDO
   /**
    * Récupération d'une enchère :
    * @param  int $timbre_id, clé du timbre
-   * @param string $mode, admin si pour l'interface membre
    * @return array|false tableau associatif de la ligne produite par la select, false si aucune ligne   
    */
-  public function getEnchere($timbre_id, $mode = null)
+  public function getEnchere($timbre_id)
   {
-    if ($mode == 'admin') {
-      $this->sql = "SELECT enchere_id, enchere_date_debut, enchere_date_fin, enchere_prix_plancher, enchere_coups_coeur_lord FROM enchere LEFT JOIN timbre ON timbre_enchere_id = enchere_id WHERE timbre_id = :timbre_id";
-    }
+    $this->sql = "SELECT enchere_id, enchere_date_debut, enchere_date_fin, enchere_prix_reserve, enchere_coup_coeur FROM enchere LEFT JOIN timbre ON timbre_enchere_id = enchere_id WHERE timbre_id = :timbre_id";
 
     return $this->getLignes(['timbre_id' => $timbre_id], RequetesPDO::UNE_SEULE_LIGNE);
   }
@@ -275,8 +269,8 @@ class RequetesSQL extends RequetesPDO
       INSERT INTO enchere SET
       enchere_date_debut        = :enchere_date_debut,
       enchere_date_fin          = :enchere_date_fin,
-      enchere_prix_plancher     = :enchere_prix_plancher,
-      enchere_coups_coeur_lord  = :enchere_coups_coeur_lord,
+      enchere_prix_reserve      = :enchere_prix_reserve,
+      enchere_coup_coeur        = :enchere_coup_coeur,
       enchere_utilisateur_id    = :enchere_utilisateur_id;
       ';
 
@@ -305,11 +299,11 @@ class RequetesSQL extends RequetesPDO
       timbre_titre               = :timbre_titre,
       timbre_description         = :timbre_description,
       timbre_annee_publication   = :timbre_annee_publication,
-      timbre_condition           = :timbre_condition,
+      timbre_condition_id        = :timbre_condition_id,
       timbre_pays_id             = :timbre_pays_id,
       timbre_dimensions          = :timbre_dimensions,
-      timbre_tirage              = :timbre_tirage,
-      timbre_couleur             = :timbre_couleur,
+      timbre_tirage_id           = :timbre_tirage_id,
+      timbre_couleur_id          = :timbre_couleur_id,
       timbre_certification       = :timbre_certification,
       timbre_utilisateur_id      = :timbre_utilisateur_id,
       timbre_enchere_id          = :timbre_enchere_id;
@@ -338,8 +332,8 @@ class RequetesSQL extends RequetesPDO
       UPDATE enchere SET
       enchere_date_debut        = :enchere_date_debut,
       enchere_date_fin          = :enchere_date_fin,
-      enchere_prix_plancher     = :enchere_prix_plancher,
-      enchere_coups_coeur_lord  = :enchere_coups_coeur_lord,
+      enchere_prix_reserve      = :enchere_prix_reserve,
+      enchere_coup_coeur        = :enchere_coup_coeur,
       WHERE enchere_id          = :enchere_id;
       ';
       $retour = $this->CUDLigne($champs);
@@ -367,11 +361,11 @@ class RequetesSQL extends RequetesPDO
       timbre_titre               = :timbre_titre,
       timbre_description         = :timbre_description,
       timbre_annee_publication   = :timbre_annee_publication,
-      timbre_condition           = :timbre_condition,
+      timbre_condition_id        = :timbre_condition_id,
       timbre_pays_id             = :timbre_pays_id,
       timbre_dimensions          = :timbre_dimensions,
-      timbre_tirage              = :timbre_tirage,
-      timbre_couleur             = :timbre_couleur,
+      timbre_tirage_id           = :timbre_tirage_id,
+      timbre_couleur_id          = :timbre_couleur_id,
       timbre_certification       = :timbre_certification,
       WHERE timbre_id            = :timbre_id;
       ';
@@ -624,6 +618,201 @@ class RequetesSQL extends RequetesPDO
   /**
    * Supprimer un commentaire
    * @param int $commentaire_id clé primaire
+   * @return boolean|string true si suppression effectuée, message d'erreur sinon
+   */
+
+
+  /* GESTION DES PROFILS 
+     ================== */
+
+  /**
+   * Récupération des profils pour l'interface admin
+   * @return array tableau des lignes produites par la select   
+   */
+  public function getProfils()
+  {
+    $this->sql = "
+      SELECT profil_id, profil_nom, nb_utilisateurs
+      FROM profil
+      LEFT JOIN (SELECT COUNT(*) AS nb_utilisateurs, utilisateur_profil_id FROM utilisateur GROUP BY utilisateur_profil_id) AS FG ON utilisateur_profil_id = profil_id
+      ORDER BY profil_id ASC";
+    return $this->getLignes();
+  }
+
+  /**
+   * Récupération d'un profil
+   * @param int $profil_id, clé du genre  
+   * @return array|false tableau associatif de la ligne produite par la select, false si aucune ligne
+   */
+  public function getProfil($profil_id)
+  {
+    $this->sql = "
+      SELECT profil_id, profil_nom
+      FROM profil
+      WHERE profil_id = :profil_id";
+    return $this->getLignes(['profil_id' => $profil_id], RequetesPDO::UNE_SEULE_LIGNE);
+  }
+
+  /**
+   * Ajouter un profil
+   * @param array $champs tableau des champs du profil 
+   * @return int|string clé primaire de la ligne ajoutée, message d'erreur sinon
+   */
+
+  /**
+   * Supprimer un profil
+   * @param int $profil_id clé primaire
+   * @return boolean|string true si suppression effectuée, message d'erreur sinon
+   */
+
+
+
+  /* GESTION DES CONDITIONS 
+     ================== */
+
+  /**
+   * Récupération des conditions pour l'interface admin
+   * @return array tableau des lignes produites par la select   
+   */
+  public function getConditions()
+  {
+    $this->sql = "
+      SELECT condition_id, condition_nom, nb_timbres
+      FROM `condition`
+      LEFT JOIN (SELECT COUNT(*) AS nb_timbres, timbre_condition_id FROM timbre GROUP BY timbre_condition_id) AS FG ON timbre_condition_id = condition_id
+      ORDER BY condition_id ASC";
+    return $this->getLignes();
+  }
+
+  /**
+   * Récupération d'une condition
+   * @param int $condition_id, clé du genre  
+   * @return array|false tableau associatif de la ligne produite par la select, false si aucune ligne
+   */
+  public function getCondition($condition_id)
+  {
+    $this->sql = "
+      SELECT condition_id, condition_nom
+      FROM `condition`
+      WHERE condition_id = :condition_id";
+    return $this->getLignes(['condition_id' => $condition_id], RequetesPDO::UNE_SEULE_LIGNE);
+  }
+
+  /**
+   * Ajouter une condition
+   * @param array $champs tableau des champs du pays 
+   * @return int|string clé primaire de la ligne ajoutée, message d'erreur sinon
+   */
+
+  /**
+   * Modifier une condition
+   * @param array $champs tableau des champs du genre
+   * @return boolean|string true si modifié, message d'erreur sinon
+   */
+
+  /**
+   * Supprimer une condition
+   * @param int $condition_id clé primaire
+   * @return boolean|string true si suppression effectuée, message d'erreur sinon
+   */
+
+
+
+  /* GESTION DES COULEURS 
+     ================== */
+
+  /**
+   * Récupération des couleurs pour l'interface admin
+   * @return array tableau des lignes produites par la select   
+   */
+  public function getCouleurs()
+  {
+    $this->sql = "
+      SELECT couleur_id, couleur_nom, nb_timbres
+      FROM couleur
+      LEFT JOIN (SELECT COUNT(*) AS nb_timbres, timbre_couleur_id FROM timbre GROUP BY timbre_couleur_id) AS FG ON timbre_couleur_id = couleur_id
+      ORDER BY couleur_id ASC";
+    return $this->getLignes();
+  }
+
+  /**
+   * Récupération d'une couleur
+   * @param int $couleur_id, clé du genre  
+   * @return array|false tableau associatif de la ligne produite par la select, false si aucune ligne
+   */
+  public function getCouleur($couleur_id)
+  {
+    $this->sql = "
+      SELECT couleur_id, couleur_nom
+      FROM couleur
+      WHERE couleur_id = :couleur_id";
+    return $this->getLignes(['couleur_id' => $couleur_id], RequetesPDO::UNE_SEULE_LIGNE);
+  }
+
+  /**
+   * Ajouter une couleur
+   * @param array $champs tableau des champs du pays 
+   * @return int|string clé primaire de la ligne ajoutée, message d'erreur sinon
+   */
+
+  /**
+   * Modifier une couleur
+   * @param array $champs tableau des champs du genre
+   * @return boolean|string true si modifié, message d'erreur sinon
+   */
+
+  /**
+   * Supprimer une couleur
+   * @param int $condition_id clé primaire
+   * @return boolean|string true si suppression effectuée, message d'erreur sinon
+   */
+
+  /* GESTION DES TIRAGES 
+     ================== */
+
+  /**
+   * Récupération des tirages pour l'interface admin
+   * @return array tableau des lignes produites par la select   
+   */
+  public function getTirages()
+  {
+    $this->sql = "
+      SELECT tirage_id, tirage_nom, nb_timbres
+      FROM tirage
+      LEFT JOIN (SELECT COUNT(*) AS nb_timbres, timbre_tirage_id FROM timbre GROUP BY timbre_tirage_id) AS FG ON timbre_tirage_id = tirage_id
+      ORDER BY tirage_id ASC";
+    return $this->getLignes();
+  }
+
+  /**
+   * Récupération d'un tirage
+   * @param int $tirage_id, clé du genre  
+   * @return array|false tableau associatif de la ligne produite par la select, false si aucune ligne
+   */
+  public function getTirage($tirage_id)
+  {
+    $this->sql = "
+      SELECT tirage_id, tirage_nom
+      FROM tirage
+      WHERE tirage_id = :tirage_id";
+    return $this->getLignes(['tirage_id' => $tirage_id], RequetesPDO::UNE_SEULE_LIGNE);
+  }
+
+  /**
+   * Ajouter un tirage
+   * @param array $champs tableau des champs du pays 
+   * @return int|string clé primaire de la ligne ajoutée, message d'erreur sinon
+   */
+
+  /**
+   * Modifier un tirage
+   * @param array $champs tableau des champs du genre
+   * @return boolean|string true si modifié, message d'erreur sinon
+   */
+
+  /**
+   * Supprimer un tirage
+   * @param int $condition_id clé primaire
    * @return boolean|string true si suppression effectuée, message d'erreur sinon
    */
 }

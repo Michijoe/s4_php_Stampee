@@ -1,0 +1,17 @@
+.card-detail {
+    display: grid;
+    gap: var(--spacing-double);
+    grid-template-columns: 1fr 2fr 1fr;
+}
+
+.card-detail ul {
+    padding-bottom: var(--spacing-double);
+}
+.card-detail li {
+    display: block;
+}
+
+.card-detail-button-like {
+	position: absolute;
+	border-radius: 50%;
+}

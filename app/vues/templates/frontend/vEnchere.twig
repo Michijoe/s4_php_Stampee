@@ -1,30 +1,93 @@
-<section>
-	<h1>{{ timbre.timbre_titre }}</h1>
-	<div>
-		<img src="{{ timbre.timbre_image }}" alt="">
-		<div class="info">
-			<p>{{ timbre.timbre_resume }}</p>
-			<hr>
-			<ul>
-				<li>
-					<span>Genre:</span>
-					<span>{{ timbre.genre_nom }}</span>
-				</li>
-				<li>
-					<span>Année:</span>
-					<span>{{ timbre.timbre_annee_sortie }}</span>
-				</li>
-				<li>
-					<span>Durée:</span>
-					<span>{{ timbre.timbre_duree }}
-						min</span>
-				</li>
-			</ul>
-		</div>
-		<div class="ba">
-			{% if timbre.timbre_bande_annonce != null %}
-				<video src="{{ timbre.timbre_bande_annonce }}" controls></video>
-			{% endif %}
-		</div>
+<div class="container-card-detail">
+	<div
+		class="catalogue-header">
+		<!-- fil d'ariane -->
+		<ul>
+			<li><a href="#">Retour au catalogue</a></li>
+		</ul>
 	</div>
-</section>
+	<!-- Fiche timbre -->
+	{# carte timbre #}
+	<h3>{{ timbre.timbre_titre }}</h3>
+	<article
+		class="card-detail">
+		<!-- image -->
+		<div>
+			<picture>
+				<img src={{ timbre.image_nom_fichier }} alt="{{ timbre.timbre_titre }}">
+			</picture>
+			<a aria-label="button-like" class="card-detail-button-like" href="#">
+				<svg class="svg-icon like-button" role="img" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+					<title>Like Button</title>
+					<desc>Like Button</desc>
+					<g fill="none">
+						<path class="like-button-path" stroke="#000" stroke-width="1.5px" stroke-linecap="round" stroke-linejoin="round" d="M12,9.05,10.88,7.93a3.16,3.16,0,0,0-4.48,0h0a3.17,3.17,0,0,0,0,4.47L12,18l5.6-5.6a3.17,3.17,0,0,0,0-4.47h0a3.16,3.16,0,0,0-4.48,0Z"/>
+					</g>
+				</svg>
+				Ajouter aux favoris
+			</a>
+		</div>
+		<table>
+			<tbody>
+				<tr>
+					<th scope="row">Description</th>
+					<td>{{ timbre.timbre_description }}</td>
+				</tr>
+				<tr>
+					<th scope="row">Année de publication</th>
+					<td>{{ timbre.timbre_annee_publication }}</td>
+				</tr>
+				<tr>
+					<th scope="row">Condition</th>
+					<td>{{ timbre.condition_nom }}</td>
+				</tr>
+				<tr>
+					<th scope="row">Pays de provenance</th>
+					<td>{{ timbre.pays_nom }}</td>
+				</tr>
+				<tr>
+					<th scope="row">Dimensions</th>
+					<td>{{ timbre.timbre_dimensions }}</td>
+				</tr>
+				<tr>
+					<th scope="row">Tirage</th>
+					<td>{{ timbre.tirage_nom }}</td>
+				</tr>
+				<tr>
+					<th scope="row">Couleur dominante</th>
+					<td>{{ timbre.couleur_nom }}</td>
+				</tr>
+				<tr>
+					<th scope="row">Certification</th>
+					<td>{{ timbre.timbre_certification }}</td>
+				</tr>
+			</tbody>
+		</table>
+		<section>
+			<ul>
+				<li>Date de début d'enchère:
+					{{ enchere.enchere_date_debut|date('d/m/Y') }}</li>
+				{% if enchere.heures_restant > 24 %}
+					<li>Date de fin:
+						{{ enchere.enchere_date_fin|date('d/m/Y') }}</li>
+				{% elseif enchere.heures_restant > 0 %}
+					<li>Temps restant:
+						{{ enchere.heures_restant }}
+						heures</li>
+				{% else %}
+					<li>Enchère terminée</li>
+				{% endif %}
+				<li>Nombre de mises:
+					{{ enchere.nb_mise }}</li>
+				<li>Mise actuelle:
+					{{ enchere.mise_actuelle }}</li>
+				{% if enchere.enchere_coup_coeur %}
+					<li>Cette enchère est un coup de coeur du Lord ! Ne faites pas passez votre chance de l'acquérir, enchérissez vite !</li>
+				{% endif %}
+			</ul>
+
+			<a class="stampcard-button-cta" href="#">Enchérir</a>
+
+		</section>
+	</article>
+</div></div>

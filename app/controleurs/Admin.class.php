@@ -63,7 +63,7 @@ class Admin extends Routeur
       if (isset($this->methodes[self::$action]['droits'])) {
         $droits = $this->methodes[self::$action]['droits'];
         foreach ($droits as $droit) {
-          if ($droit === self::$oUtilConn->utilisateur_profil) {
+          if ($droit === self::$oUtilConn->utilisateur_profil_id) {
             $this->$methode();
             exit;
           }

@@ -3,11 +3,11 @@
 		{{ oUtilisateur.utilisateur_prenom }}
 		{{ oUtilisateur.utilisateur_nom }},</p>
 
-	{% if oUtilisateur.utilisateur_profil in [constant('utilisateur::PROFIL_ADMINISTRATEUR')]  %}
+	{% if oUtilisateur.utilisateur_profil_id in [constant('utilisateur::PROFIL_ADMINISTRATEUR')]  %}
 		<p style="line-height: 1.5; opacity: 0.9;">Nous avons le plaisir de vous transmettre votre identifiant de connexion et votre mot de passe pour accéder à l'administration de notre site Stampee.</p>
 	{% endif %}
 
-	{% if oUtilisateur.utilisateur_profil == constant('utilisateur::PROFIL_MEMBRE')  %}
+	{% if oUtilisateur.utilisateur_profil_id == constant('utilisateur::PROFIL_MEMBRE')  %}
 		<p style="line-height: 1.5; opacity: 0.9;">Nous avons le plaisir de vous transmettre votre identifiant de connexion et votre mot de passe sur notre site Stampee.</p>
 	{% endif %}
 
