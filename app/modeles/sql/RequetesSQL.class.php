@@ -303,6 +303,8 @@ class RequetesSQL extends RequetesPDO
         if (isset($champs["timbre_couleur_id"])) $criteres .= " AND timbre_couleur_id = :timbre_couleur_id";
         if (isset($champs["timbre_tirage_id"])) $criteres .= " AND timbre_tirage_id = :timbre_tirage_id";
 
+        if (isset($champs["recherche"])) $criteres .= " AND timbre_titre LIKE CONCAT('%',:recherche,'%')";
+
         $this->sql .= $criteres;
       }
     }

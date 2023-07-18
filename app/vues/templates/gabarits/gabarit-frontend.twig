@@ -93,30 +93,25 @@
 				<img src="assets/img/herobanner{{ titre }}.webp" alt="">
 				<div class="herobanner-text max-width60 min-width50">
 					<h1>{{ titreHB }}</h1>
-					<p>{{ texteHB }}</p>
-					<!-- barre de recherche -->
-					<form class="herobanner-searchbar" method="POST">
-						<div>
-							<select class="h4" name="search">
-								<option value="actif" selected>Enchères actives</option>
-								<option value="futur">Enchères à venir</option>
-								<option value="archive">Enchères archivées</option>
-							</select>
-						</div>
-						<input aria-label="search-bar" type="" placeholder="Recherchez un timbre dans nos catalogues">
-						<button type="submit">
-							<svg role="img" class="svg-icon search-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 19.9 19.7">
-								<title>
-									icon</title>
-								<desc>
-									magnifying glass icon.</desc>
-								<g class="search-path" fill="none" stroke="#000" stroke-width="2px">
-									<path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"/>
-									<circle cx="8" cy="8" r="7"/>
-								</g>
-							</svg>
-						</button>
-					</div>
+					{% if titre is not same as 'Timbre' %}
+						<p>{{ texteHB }}</p>
+						<!-- barre de recherche -->
+						<form class="herobanner-searchbar" method="POST" action="catalogue?catalogue={{ catalogueType ? catalogueType : 'public-actif' }}">
+							<input aria-label="search-bar" name="filtres[recherche]" placeholder="Recherchez un timbre" value={{ filtres["recherche"] }}>
+							<button type="submit">
+								<svg role="img" class="svg-icon search-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 19.9 19.7">
+									<title>
+										icon</title>
+									<desc>
+										magnifying glass icon.</desc>
+									<g class="search-path" fill="none" stroke="#000" stroke-width="2px">
+										<path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"/>
+										<circle cx="8" cy="8" r="7"/>
+									</g>
+								</svg>
+							</button>
+						</form>
+					{% endif %}
 				</div>
 			</header>
 			<div>
@@ -137,9 +132,9 @@
 					<div class="footer-main-content">
 						<h3>À propos</h3>
 						<p class="no-padding-bottom">Lord Stampee vient d’une famille de passionnés de philatélie depuis des
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																														                    générations. Sa passion pour
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																														                    les timbres rares et précieux l'a amené à rassembler l'une des collections les plus impressionnantes
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																														                    du monde.</p>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																										                    générations. Sa passion pour
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																										                    les timbres rares et précieux l'a amené à rassembler l'une des collections les plus impressionnantes
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																										                    du monde.</p>
 						<a href="#">En savoir plus</a>
 					</div>
 					<div class="footer-main-content">

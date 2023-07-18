@@ -20,11 +20,11 @@ class Frontend extends Routeur
    */
   public function __construct()
   {
-    $this->oUtilConn         = $_SESSION['oUtilConn'] ?? null;
-    $this->enchere_id        = $_GET['enchere_id'] ?? null;
-    $this->catalogue_type    = $_GET['catalogue'] ?? null;
-    $this->filtres           = $_POST['filtres'] ?? null;
-    $this->oRequetesSQL      = new RequetesSQL;
+    $this->oUtilConn            = $_SESSION['oUtilConn'] ?? null;
+    $this->enchere_id           = $_GET['enchere_id'] ?? null;
+    $this->catalogue_type       = $_GET['catalogue'] ?? null;
+    $this->filtres              = $_POST['filtres'] ?? null;
+    $this->oRequetesSQL         = new RequetesSQL;
   }
 
   /**
@@ -90,7 +90,7 @@ class Frontend extends Routeur
    */
   public function afficherCatalogue()
   {
-    // affichage filtres
+    // affichage des filtres dans le formulaire
     $pays        = $this->oRequetesSQL->getPays();
     $conditions  = $this->oRequetesSQL->getConditions();
     $couleurs    = $this->oRequetesSQL->getCouleurs();
@@ -99,7 +99,7 @@ class Frontend extends Routeur
     // reset des filtres au submit du bouton reset
     if (isset($_POST['reset'])) $this->filtres = null;
 
-    // montage du tableau de filtres sans entrées vides
+    // montage du tableau des filtres sans entrées vides
     if ($this->filtres) {
       $filtres = [];
       foreach ($this->filtres as $key => $value) {
@@ -113,13 +113,13 @@ class Frontend extends Routeur
 
     switch ($this->catalogue_type) {
       case 'public-actif':
-        $typeEnchere = "enchères en cours";
+        $typeEnchere = "Enchères en cours";
         break;
       case 'public-archive':
-        $typeEnchere = "enchères archivées";
+        $typeEnchere = "Enchères archivées";
         break;
       case 'public-futur':
-        $typeEnchere = "enchères à venir";
+        $typeEnchere = "Enchères à venir";
         break;
     }
 
@@ -133,8 +133,9 @@ class Frontend extends Routeur
         'tirages'            => $tirages,
         'filtres'            => $filtres ?? null,
         'titre'              => 'Catalogue',
-        'titreHB'            => 'Catalogue des ' . $typeEnchere,
+        'titreHB'            => 'Catalogue - ' . $typeEnchere,
         'typeEnchere'        => $typeEnchere,
+        'catalogueType'      => $this->catalogue_type,
         'texteHB'            => '',
         'catalogue'          => $catalogue,
       ],
