@@ -31,16 +31,32 @@
 
 .herobanner-searchbar {
 	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.herobanner-searchbar > input {
+	flex: 200px 10;
+}
+
+.herobanner-searchbar > div {
+	flex: 160px 1 0;
+}
+
+.herobanner-searchbar > svg {
+	flex: 1;
 }
 
 .herobanner-searchbar svg {
 	position: absolute;
 	right: 35px;
-	bottom: 60px;
+	bottom: 57px;
 	cursor: pointer;
 }
 
-.herobanner-searchbar input {
-	width: 100%;
-    margin-bottom: 3px;
+.herobanner-searchbar button {
+	padding: 0;
+	width: 0;
+	margin: 0;
+	border: 0;
 }

@@ -181,55 +181,145 @@ class RequetesSQL extends RequetesPDO
     return $this->CUDLigne(['utilisateur_id' => $utilisateur_id]);
   }
 
+
   /* GESTION DES ENCHERES DE TIMBRES ================= */
 
   /**
-   * Récupération de toutes les enchères de timbres :
-   * - pour les membres (membre_admin | membre_owner)
+   * Récupération de toutes les enchères de timbres avec les informations des mises :
+   * - pour les membres (admin-mise | admin-enchere | membre_owner | membre-miseur)
    * - pour le catalogue des enchères actives (public)
    * - pour le catalogue des enchères archivées
    * - pour le catalogue complet de toutes les enchères
-   * - pour la strip des nouveautés
+   * - pour la strip des nouveautés (public-nouveaute)
    * - pour la strip des coups de coeur du Lord
-   * @param  string $critere = 'membre_admin' | 'membre_owner' | 'public'
+   * @param  string $critere = 'admin-mise' |'admin-enchere | 'membre_owner' | 'membre-miseur' | 'public'
    * @return array tableau des lignes produites par la select   
    */
-  public function getEncheresTimbres($critere)
+
+  public function getEncheresMises($critere = null, $champs = null)
   {
     $oAujourdhui = ENV === "DEV" ? new DateTime(MOCK_NOW) : new DateTime();
     $aujourdhui = $oAujourdhui->format('Y-m-d H:i:s');
+    $nouveaute = $oAujourdhui->modify('-7 day')->format('Y-m-d H:i:s');
 
-    // SELECT POUR TOUS
-    $this->sql = "SELECT timbre_titre, image_nom_fichier, enchere_date_fin, enchere_id, timbre_id";
+    $this->sql = "
+       SELECT
+       e.enchere_id,
+       t.timbre_titre,
+       t.timbre_statut,
+       e.enchere_date_fin,
+       e.enchere_date_debut,
+       i.image_nom_fichier,
+       COUNT(m.mise_id) AS nb_mise,
+       TIMESTAMPDIFF(HOUR, '$aujourdhui', e.enchere_date_fin) AS heures_restant,
+       (
+         SELECT mise_prix
+         FROM mise
+         WHERE mise_enchere_id = e.enchere_id
+         ORDER BY mise_prix DESC
+         LIMIT 1
+       ) AS mise_actuelle,
+       (
+         SELECT mise_utilisateur_id
+         FROM mise
+         WHERE mise_enchere_id = e.enchere_id
+         ORDER BY mise_prix DESC
+         LIMIT 1
+       ) AS mise_actuelle_utilisateur_id";
 
-    // SELECT POUR MEMBRE ET ADMIN
-    if (str_contains($critere, 'membre')) {
-      $this->sql .= ", timbre_statut, enchere_date_debut";
-      if ($critere === 'membre_admin') $this->sql .= ", utilisateur_nom, utilisateur_prenom";
+    if ((str_contains($critere, 'admin'))) $this->sql .=
+      ", u.utilisateur_prenom, u.utilisateur_nom";
 
-      // SELECT POUR PUBLIC
-    } else if (str_contains($critere, 'public')) {
-      $this->sql .= ", COUNT(mise_id) AS nb_mise, TIMESTAMPDIFF(HOUR, '$aujourdhui', enchere_date_fin) AS heures_restant";
+    if ($critere === 'membre-miseur') $this->sql .= ", MAX(CASE WHEN m.mise_utilisateur_id = " . $_SESSION['oUtilConn']->utilisateur_id . " THEN m.mise_prix END) AS mise_max_utilisateur_actif";
+
+    $this->sql .= " 
+       FROM enchere e
+       JOIN timbre t ON e.enchere_id = t.timbre_enchere_id
+       JOIN image i ON i.image_timbre_id = t.timbre_id
+       LEFT JOIN mise m ON e.enchere_id = m.mise_enchere_id";
+
+    if ((str_contains($critere, 'admin'))) $this->sql .= " 
+     JOIN utilisateur u ON enchere_utilisateur_id = utilisateur_id";
+
+    if ($critere === 'membre-owner') $this->sql .= " WHERE timbre_utilisateur_id = " . $_SESSION['oUtilConn']->utilisateur_id;
+
+
+    // catalogue public montre les enchères validées
+    if (str_contains($critere, 'public')) {
+
+      $this->sql .= " WHERE timbre_statut = '1'";
+
+      // catalogue public des enchères actives montrent les enchères ayant débutées et pas encore finies
+      if ($critere === 'public-actif') $this->sql .= " AND TIMESTAMPDIFF(SECOND, enchere_date_fin, '$aujourdhui') <= 0 AND TIMESTAMPDIFF(SECOND, '$aujourdhui', enchere_date_debut) < 0";
+
+      // catalogue public des nouveautés montrent les enchères ayant débutées depuis moins d'1 semaine
+      else if ($critere === 'public-nouveaute') $this->sql .= " AND TIMESTAMPDIFF(SECOND, enchere_date_fin, '$aujourdhui') <= 0 AND TIMESTAMPDIFF(SECOND, '$aujourdhui', enchere_date_debut) < 0 AND TIMESTAMPDIFF(DAY, '$nouveaute', enchere_date_debut) > 0";
+
+      // catalogue public des enchères archivées motnrent les enchères dont la date de fin est dépassée
+      else if ($critere === 'public-archive') $this->sql .= " AND TIMESTAMPDIFF(SECOND, enchere_date_fin, '$aujourdhui') > 0";
+
+      // catalogue public des enchères futures montrent les enchères dont la date de début n'a pas commencé
+      else if ($critere === 'public-futur') $this->sql .= " AND TIMESTAMPDIFF(SECOND, '$aujourdhui', enchere_date_debut) > 0";
+
+      // catalogue public des enchères coups de coeur montrent les enchères actives Coup de coeur du Lord
+
+      // critères de recherche de l'utilisateur
+      if ($champs) {
+
+        $criteres = "";
+        if (isset($champs["timbre_pays_id"])) $criteres .= " AND timbre_pays_id = :timbre_pays_id";
+        if (isset($champs["timbre_annee_publication"])) {
+          switch ($champs["timbre_annee_publication"]) {
+            case '1900':
+              $criteres .= " AND timbre_annee_publication < :timbre_annee_publication";
+              break;
+            case '1950':
+              $criteres .= " AND timbre_annee_publication < :timbre_annee_publication";
+              break;
+            case '2000':
+              $criteres .= " AND timbre_annee_publication < :timbre_annee_publication";
+              break;
+            case 'min2000':
+              $criteres .= " AND timbre_annee_publication >= :timbre_annee_publication";
+              break;
+          }
+        }
+        if (isset($champs["enchere_date_fin"])) $criteres .= " AND enchere_date_fin <= :enchere_date_fin";
+        if (isset($champs["prix_mini"])) $criteres .= " AND (
+          SELECT mise_prix
+          FROM mise
+          WHERE mise_enchere_id = e.enchere_id
+          ORDER BY mise_prix DESC
+          LIMIT 1
+        ) >= :prix_mini";
+        if (isset($champs["prix_maxi"])) $criteres .= " AND (
+          SELECT mise_prix
+          FROM mise
+          WHERE mise_enchere_id = e.enchere_id
+          ORDER BY mise_prix DESC
+          LIMIT 1
+        ) <= :prix_maxi";
+        if (isset($champs["timbre_condition_id"])) $criteres .= " AND timbre_condition_id = :timbre_condition_id";
+        if (isset($champs["timbre_couleur_id"])) $criteres .= " AND timbre_couleur_id = :timbre_couleur_id";
+        if (isset($champs["timbre_tirage_id"])) $criteres .= " AND timbre_tirage_id = :timbre_tirage_id";
+
+        $this->sql .= $criteres;
+      }
     }
 
-    // FROM / JOIN POUR TOUS
-    $this->sql .= " FROM timbre INNER JOIN enchere ON timbre_enchere_id = enchere_id INNER JOIN image ON timbre_id = image_timbre_id";
+    $this->sql .= " GROUP BY e.enchere_id, t.timbre_titre, t.timbre_statut, e.enchere_date_fin, e.enchere_date_debut, i.image_nom_fichier";
 
-    // JOIN / WHERE POUR MEMBRE ET ADMIN
-    if (str_contains($critere, 'membre')) {
-      $this->sql .= " INNER JOIN utilisateur ON enchere_utilisateur_id = utilisateur_id";
-      if ($critere === 'membre_owner') $this->sql .= " WHERE timbre_utilisateur_id = " . $_SESSION['oUtilConn']->utilisateur_id;
+    if ($critere === 'membre-miseur'  || $critere === 'admin-mise') $this->sql .= " 
+     HAVING nb_mise > 0";
 
-      // JOIN / WHERE POUR PUBLIC 
-    } else if (str_contains($critere, 'public')) {
-      $this->sql .= " LEFT JOIN mise ON mise_enchere_id = enchere_id WHERE timbre_statut = '1' AND TIMESTAMPDIFF(SECOND, enchere_date_fin, '$aujourdhui') <= 0 AND TIMESTAMPDIFF(SECOND, '$aujourdhui', enchere_date_debut) < 0 GROUP BY enchere_id, timbre_titre, image_nom_fichier, enchere_date_fin, timbre_id";
-    }
+    // mise pour l'utilisateur actif seulement
+    if ($critere === 'membre-miseur') $this->sql .= " AND mise_max_utilisateur_actif > 0";
 
-    // ORDER BY POUR TOUS
-    $this->sql .= " ORDER BY enchere_date_fin ASC";
+    $this->sql .= " ORDER BY e.enchere_date_fin ASC;";
 
-    return $this->getLignes();
+    return $this->getLignes($champs ?? []);
   }
+
 
   /**
    * Récupération d'un timbre :
@@ -243,17 +333,42 @@ class RequetesSQL extends RequetesPDO
     return $this->getLignes(['timbre_id' => $timbre_id], RequetesPDO::UNE_SEULE_LIGNE);
   }
 
+
   /**
    * Récupération d'une enchère :
    * @param  int $timbre_id, clé du timbre
    * @return array|false tableau associatif de la ligne produite par la select, false si aucune ligne   
    */
-  public function getEnchere($timbre_id)
+  public function getEnchere($enchere_id)
   {
-    $this->sql = "SELECT enchere_id, enchere_date_debut, enchere_date_fin, enchere_prix_reserve, enchere_coup_coeur FROM enchere LEFT JOIN timbre ON timbre_enchere_id = enchere_id WHERE timbre_id = :timbre_id";
+    $oAujourdhui = ENV === "DEV" ? new DateTime(MOCK_NOW) : new DateTime();
+    $aujourdhui = $oAujourdhui->format('Y-m-d H:i:s');
 
-    return $this->getLignes(['timbre_id' => $timbre_id], RequetesPDO::UNE_SEULE_LIGNE);
+    $this->sql = "SELECT 
+    enchere_id, 
+    enchere_date_debut, 
+    enchere_date_fin,
+    TIMESTAMPDIFF(HOUR, '$aujourdhui', enchere_date_fin) AS heures_restant,
+    enchere_utilisateur_id, 
+    enchere_prix_reserve, 
+    enchere_coup_coeur, 
+    (SELECT COUNT(mise_id) FROM mise WHERE mise_enchere_id = enchere_id) AS nb_mise, 
+    MAX(mise_prix) AS mise_actuelle,
+    mise_utilisateur_id
+    FROM 
+        Enchere
+    LEFT JOIN 
+        Mise ON mise_enchere_id = enchere_id
+    WHERE 
+        enchere_id = :enchere_id
+    GROUP BY 
+        enchere_id, mise_utilisateur_id
+    ORDER BY MAX(mise_prix) DESC
+    LIMIT 1;";
+
+    return $this->getLignes(['enchere_id' => $enchere_id], RequetesPDO::UNE_SEULE_LIGNE);
   }
+
 
   /**
    * Ajouter une enchère
@@ -462,6 +577,29 @@ class RequetesSQL extends RequetesPDO
 
 
 
+  /* GESTION DES MISES ================= */
+
+  /**
+   * Ajouter une mise
+   * @param array $champs tableau des champs d'une mise 
+   * @return int|string clé primaire de la ligne ajoutée, message d'erreur sinon
+   */
+
+  public function miser($champs)
+  {
+    // $miseActuelle = $this->getMiseActuelle($champs['mise_enchere_id']);
+    // if ($miseActuelle > $champs['mise_prix'])
+    //   throw new Exception("Veuillez entrer une mise supérieure au prix actuel de l'enchère.");
+    $this->sql = '
+      INSERT INTO mise SET
+      mise_prix            = :mise_prix,
+      mise_utilisateur_id  = :mise_utilisateur_id,
+      mise_enchere_id      = :mise_enchere_id';
+    return $this->CUDLigne($champs);
+  }
+
+
+
   /* GESTION DES PAYS 
      ================== */
 
@@ -535,36 +673,6 @@ class RequetesSQL extends RequetesPDO
       AND pays_id NOT IN (SELECT DISTINCT timbre_pays_id FROM timbre)';
     return $this->CUDLigne(['pays_id' => $pays_id]);
   }
-
-
-
-  /* GESTION DES MISES ================= */
-  /**
-   * Récupération des mises d'un timbre
-   * @param int $timbre_id
-   * @return array|false tableau associatif de la ligne produite par la select, false si aucune ligne
-   */
-
-
-  /**
-   * Ajouter une mise
-   * @param array $champs tableau des champs d'une mise 
-   * @return int|string clé primaire de la ligne ajoutée, message d'erreur sinon
-   */
-
-
-  /**
-   * Modifier une mise
-   * @param array $champs tableau des champs d'une mise
-   * @return boolean|string true si modifié, message d'erreur sinon
-   */
-
-
-  /**
-   * Supprimer une mise
-   * @param int $mise_id clé primaire
-   * @return boolean|string true si suppression effectuée, message d'erreur sinon
-   */
 
 
 

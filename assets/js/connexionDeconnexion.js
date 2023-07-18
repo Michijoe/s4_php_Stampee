@@ -46,27 +46,3 @@ function traiterFormulaire(event) {
       eMessageErreurConnexion.innerHTML = "Erreur: " + e.message;
     });
 }
-
-// /**
-//  * Déconnecter au clic sur le lien Déconnecter
-//  */
-// function deconnecter() {
-//   fetch('deconnecter')
-//     .then(reponse => {
-//       if (!reponse.ok) {
-//         throw { message: "Problème technique sur le serveur" };
-//       }
-//       return reponse.json();
-//     })
-//     .then(codeRetour => {
-//       if (codeRetour) {
-//         eUtilisateur.innerHTML = "";
-//         // eDeconnecter.classList.add('cache');
-//         eConnecter.classList.remove('cache');
-//         eCreerCompte.classList.remove('cache')
-//       }
-//     })
-//     .catch((e) => {
-//       eMessageErreurConnexion.innerHTML = "Erreur: " + e.message;
-//     });
-// }

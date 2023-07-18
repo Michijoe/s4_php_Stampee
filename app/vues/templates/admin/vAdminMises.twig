@@ -1,0 +1,74 @@
+<script>
+	history.pushState({}, '', 'admin?entite=mise')
+</script>
+<section>
+	<div class="catalogue-header">
+		<h2>{{ titre }}</h2>
+	</div>
+	<p class="no-padding-bottom messageRetourAction {{ classRetour }}">{{ messageRetourAction }}&nbsp;</p>
+	{% if encheresMises %}
+		{# TABLEAU MISE #}
+		<table class="admin-tableau-enchere">
+			<thead>
+				<tr>
+					{% if oUtilConn.utilisateur_profil_id is same as constant('Utilisateur::PROFIL_ADMINISTRATEUR') %}
+						<th>Id</th>
+					{% endif %}
+					<th>Image</th>
+					<th>Titre</th>
+					<th>Début enchère</th>
+					<th>Fin enchère</th>
+					<th>Nombre de mises</th>
+					<th>Mise actuelle</th>
+					{% if oUtilConn.utilisateur_profil_id is same as constant('Utilisateur::PROFIL_ADMINISTRATEUR') %}
+						<th>Remporté par utilisateur #</th>
+					{% else %}
+						<th>Votre mise max</th>
+					{% endif %}
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for enchereMise in encheresMises %}
+					<tr>
+						{% if oUtilConn.utilisateur_profil_id is same as constant('Utilisateur::PROFIL_ADMINISTRATEUR') %}
+							<th>{{ enchereMise.enchere_id }}</th>
+						{% endif %}
+
+						<th>
+							<a href="enchere?enchere_id={{ enchereMise.enchere_id }}">
+								<picture><img src={{ enchereMise.image_nom_fichier }} alt="{{ enchere.timbre_titre }}"></picture>
+							</a>
+						</th>
+						<th>{{ enchereMise.timbre_titre }}</th>
+						<th>{{ enchereMise.enchere_date_debut }}</th>
+						<th>{{ enchereMise.enchere_date_fin }}</th>
+						<th>{{ enchereMise.nb_mise }}</th>
+						<th>{{ enchereMise.mise_actuelle }}$</th>
+						{% if oUtilConn.utilisateur_profil_id is same as constant('Utilisateur::PROFIL_ADMINISTRATEUR') %}
+							<th>{{ enchereMise.mise_actuelle_utilisateur_id }}</th>
+						{% else %}
+							<th>
+								{% if enchereMise.mise_max_utilisateur_actif %}
+									{{ enchereMise.mise_max_utilisateur_actif }}$
+								{% else %}
+									-
+								{% endif %}
+							</th>
+						{% endif %}
+						<th>
+							{% if enchereMise.mise_actuelle_utilisateur_id is same as oUtilConn.utilisateur_id %}
+								<span>Vous remportez l'enchère</span>
+							{% else %}
+								<a href="enchere?enchere_id={{ enchere.enchere_id }}">Enchérir</a>
+							{% endif %}
+						</th>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	{% else %}
+		<p>Vous n'avez pas encore miser sur une enchère !</p>
+	{% endif %}
+</section>
+{{ include("admin/modaleSuppression.twig") }}

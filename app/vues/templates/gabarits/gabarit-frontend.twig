@@ -63,11 +63,11 @@
 					<div class="nav-main h2 uppercase" role="menubar">
 						<a href="." role="menuitem" aria-haspopup="false">Accueil</a>
 						<div class="nav-main-dropdown">
-							<a href="catalogue" role="menuitem" aria-haspopup="true">Enchères</a>
+							<a href="#" role="menuitem" aria-haspopup="true">Enchères</a>
 							<div class="nav-main-dropdown-content" role="menu">
-								<a href="catalogue" role="menuitem" aria-haspopup="false">Enchères en cours</a>
-								<a href="#" role="menuitem" aria-haspopup="false">Enchères archivées</a>
-								<a href="#" role="menuitem" aria-haspopup="false">Enchères à venir</a>
+								<a href="catalogue?catalogue=public-actif" role="menuitem" aria-haspopup="false">Enchères en cours</a>
+								<a href="catalogue?catalogue=public-archive" role="menuitem" aria-haspopup="false">Enchères archivées</a>
+								<a href="catalogue?catalogue=public-futur" role="menuitem" aria-haspopup="false">Enchères à venir</a>
 							</div>
 						</div>
 						<div class="nav-main-dropdown">
@@ -91,78 +91,89 @@
 			</nav>
 			<div class="herobanner">
 				<img src="assets/img/herobanner{{ titre }}.webp" alt="">
-				<div class="herobanner-text max-width60">
+				<div class="herobanner-text max-width60 min-width50">
 					<h1>{{ titreHB }}</h1>
 					<p>{{ texteHB }}</p>
 					<!-- barre de recherche -->
-					<div class="herobanner-searchbar">
-						<svg role="img" class="svg-icon search-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 19.9 19.7">
-							<title>Search Icon</title>
-							<desc>A magnifying glass icon.</desc>
-							<g class="search-path" fill="none" stroke="#000" stroke-width="2px">
-								<path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"/>
-								<circle cx="8" cy="8" r="7"/>
-							</g>
-						</svg>
-						<input aria-label="search-bar" type="search" placeholder="Recherchez un timbre">
+					<form class="herobanner-searchbar" method="POST">
+						<div>
+							<select class="h4" name="search">
+								<option value="actif" selected>Enchères actives</option>
+								<option value="futur">Enchères à venir</option>
+								<option value="archive">Enchères archivées</option>
+							</select>
+						</div>
+						<input aria-label="search-bar" type="" placeholder="Recherchez un timbre dans nos catalogues">
+						<button type="submit">
+							<svg role="img" class="svg-icon search-icon" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 19.9 19.7">
+								<title>
+									icon</title>
+								<desc>
+									magnifying glass icon.</desc>
+								<g class="search-path" fill="none" stroke="#000" stroke-width="2px">
+									<path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"/>
+									<circle cx="8" cy="8" r="7"/>
+								</g>
+							</svg>
+						</button>
 					</div>
 				</div>
-			</div>
-		</header>
-		<div>
-			<main>
+			</header>
+			<div>
+				<main>
 
-				{{ include(templateMain) }}
+					{{ include(templateMain) }}
 
-			</main>
-		</div>
-		{{ include("frontend/modaleConnexion.twig") }}
-		{{ include("frontend/modaleCreerCompte.twig") }}
+				</main>
+			</div>
+			{{ include("frontend/modaleConnexion.twig") }}
+			{{ include("frontend/modaleCreerCompte.twig") }}
 
-		<footer>
-			<div class="footer-logo">
-				<a href="."><img src="assets/logo/logo_clair.webp" alt="Logo Stampee"></a>
-			</div>
-			<div class="footer-main">
-				<div class="footer-main-content">
-					<h3>À propos</h3>
-					<p class="no-padding-bottom">Lord Stampee vient d’une famille de passionnés de philatélie depuis des
-																																																																																																																																																																								                    générations. Sa passion pour
-																																																																																																																																																																								                    les timbres rares et précieux l'a amené à rassembler l'une des collections les plus impressionnantes
-																																																																																																																																																																								                    du monde.</p>
-					<a href="#">En savoir plus</a>
+			<footer>
+				<div class="footer-logo">
+					<a href="."><img src="assets/logo/logo_clair.webp" alt="Logo Stampee"></a>
 				</div>
-				<div class="footer-main-content">
-					<h3>FAQ</h3>
-					<div>
-						<a href="#">Comment créer son compte ?</a>
-						<a href="#">Comment placer une offre ?</a>
-						<a href="#">Comment créer une enchère ?</a>
-						<a href="#">Comment trouver une enchère ?</a>
-						<a href="#">Comment suivre une enchère ?</a>
+				<div class="footer-main">
+					<div class="footer-main-content">
+						<h3>À propos</h3>
+						<p class="no-padding-bottom">Lord Stampee vient d’une famille de passionnés de philatélie depuis des
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																														                    générations. Sa passion pour
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																														                    les timbres rares et précieux l'a amené à rassembler l'une des collections les plus impressionnantes
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																														                    du monde.</p>
+						<a href="#">En savoir plus</a>
+					</div>
+					<div class="footer-main-content">
+						<h3>FAQ</h3>
+						<div>
+							<a href="#">Comment créer son compte ?</a>
+							<a href="#">Comment placer une offre ?</a>
+							<a href="#">Comment créer une enchère ?</a>
+							<a href="#">Comment trouver une enchère ?</a>
+							<a href="#">Comment suivre une enchère ?</a>
+						</div>
+					</div>
+					<div class="footer-main-content">
+						<h3>Mon compte</h3>
+						<div>
+							<a href="#">Inscription</a>
+							<a href="#">Connexion</a>
+							<a href="#">Protection des données</a>
+						</div>
+					</div>
+					<div class="footer-main-content">
+						<h3>Contact</h3>
+						<div>
+							<a href="#">Qui sommes nous ?</a>
+							<a href="#">S'inscrire à notre infolettre</a>
+							<a href="#">Nous contacter</a>
+							<a href="#">Termes et conditions</a>
+						</div>
 					</div>
 				</div>
-				<div class="footer-main-content">
-					<h3>Mon compte</h3>
-					<div>
-						<a href="#">Inscription</a>
-						<a href="#">Connexion</a>
-						<a href="#">Protection des données</a>
-					</div>
+				<div class="footer-legal">
+					<span>©2023 Stampee Auctions</span>
 				</div>
-				<div class="footer-main-content">
-					<h3>Contact</h3>
-					<div>
-						<a href="#">Qui sommes nous ?</a>
-						<a href="#">S'inscrire à notre infolettre</a>
-						<a href="#">Nous contacter</a>
-						<a href="#">Termes et conditions</a>
-					</div>
-				</div>
-			</div>
-			<div class="footer-legal">
-				<span>©2023 Stampee Auctions</span>
-			</div>
-		</footer>
+			</footer>
+		</body>
 	</body>
-</html>
+</html></body></html>

@@ -10,6 +10,8 @@ class Frontend extends Routeur
 
   private $oUtilConn;
   private $enchere_id;
+  private $catalogue_type;
+  private $filtres;
 
   /**
    * Constructeur qui initialise des propriétés à partir du query string
@@ -18,9 +20,11 @@ class Frontend extends Routeur
    */
   public function __construct()
   {
-    $this->oUtilConn = $_SESSION['oUtilConn'] ?? null;
-    $this->enchere_id   = $_GET['enchere_id'] ?? null;
-    $this->oRequetesSQL = new RequetesSQL;
+    $this->oUtilConn         = $_SESSION['oUtilConn'] ?? null;
+    $this->enchere_id        = $_GET['enchere_id'] ?? null;
+    $this->catalogue_type    = $_GET['catalogue'] ?? null;
+    $this->filtres           = $_POST['filtres'] ?? null;
+    $this->oRequetesSQL      = new RequetesSQL;
   }
 
   /**
@@ -61,7 +65,8 @@ class Frontend extends Routeur
    */
   public function afficherAccueil()
   {
-    // $nouveautes = $this->oRequetesSQL->getTimbres('nouveautes');
+    $nouveautes = $this->oRequetesSQL->getEncheresMises('public-nouveaute');
+
     // $coupsCoeur = $this->oRequetesSQL->getTimbres('coupsCoeur');
 
     (new Vue)->generer(
@@ -71,7 +76,7 @@ class Frontend extends Routeur
         'titre'          => 'Accueil',
         'titreHB'        => 'La valeur sûre des enchères de timbres en ligne',
         'texteHB'        => 'Avec déjà plus de 100 000 timbres vendus, Stampee est la maison d\'enchères de timbres la plus populaire auprès des collectionneurs depuis 1949. Découvrez les collections uniques du lord Stampee et partez à la recherche de vos nouvelles acquisitions.',
-        // 'nouveautes'     => $nouveautes,
+        'nouveautes'     => $nouveautes,
         // 'coupsCoeur'     => $coupsCoeur,
       ],
       "gabarit-frontend"
@@ -85,21 +90,57 @@ class Frontend extends Routeur
    */
   public function afficherCatalogue()
   {
-    $catalogue = $this->oRequetesSQL->getEncheresTimbres('public');
+    // affichage filtres
+    $pays        = $this->oRequetesSQL->getPays();
+    $conditions  = $this->oRequetesSQL->getConditions();
+    $couleurs    = $this->oRequetesSQL->getCouleurs();
+    $tirages     = $this->oRequetesSQL->getTirages();
+
+    // reset des filtres au submit du bouton reset
+    if (isset($_POST['reset'])) $this->filtres = null;
+
+    // montage du tableau de filtres sans entrées vides
+    if ($this->filtres) {
+      $filtres = [];
+      foreach ($this->filtres as $key => $value) {
+        if (!empty($value)) {
+          $filtres[$key] = $value;
+        }
+      }
+    }
+
+    $catalogue = $this->oRequetesSQL->getEncheresMises($this->catalogue_type, $filtres ?? null);
+
+    switch ($this->catalogue_type) {
+      case 'public-actif':
+        $typeEnchere = "enchères en cours";
+        break;
+      case 'public-archive':
+        $typeEnchere = "enchères archivées";
+        break;
+      case 'public-futur':
+        $typeEnchere = "enchères à venir";
+        break;
+    }
 
     (new Vue)->generer(
       "vCatalogue",
       [
         'oUtilConn'          => $this->oUtilConn,
+        'pays'               => $pays,
+        'conditions'         => $conditions,
+        'couleurs'           => $couleurs,
+        'tirages'            => $tirages,
+        'filtres'            => $filtres ?? null,
         'titre'              => 'Catalogue',
-        'titreHB'            => 'Catalogue des enchères',
+        'titreHB'            => 'Catalogue des ' . $typeEnchere,
+        'typeEnchere'        => $typeEnchere,
         'texteHB'            => '',
         'catalogue'          => $catalogue,
       ],
       "gabarit-frontend"
     );
   }
-
 
 
   /**
@@ -128,5 +169,20 @@ class Frontend extends Routeur
       ],
       "gabarit-frontend"
     );
+  }
+
+  /**
+   * Miser sur une enchère
+   */
+  public function miser()
+  {
+    $oMise = new Mise($_POST);
+    $erreurs = $oMise->erreurs;
+    if (count($erreurs) > 0) {
+      $retour = $erreurs;
+    } else {
+      $retour = $this->oRequetesSQL->miser($_POST);
+    }
+    echo json_encode($retour);
   }
 }

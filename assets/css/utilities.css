@@ -25,6 +25,10 @@
 	max-width: 60vw;
 }
 
+.min-width50 {
+	min-width: 50vw;
+}
+
 .carrousel {
 	display: flex;
 	gap: var(--gap);

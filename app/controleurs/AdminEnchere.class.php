@@ -21,7 +21,7 @@ class AdminEnchere extends Admin
    */
   public function __construct()
   {
-    $this->timbre_id = $_GET['timbre_id'] ?? null;
+    $this->enchere_id = $_GET['enchere_id'] ?? null;
     $this->oRequetesSQL = new RequetesSQL;
   }
 
@@ -31,11 +31,11 @@ class AdminEnchere extends Admin
   public function listerEncheresTimbres()
   {
     if (self::$oUtilConn->utilisateur_profil_id === Utilisateur::PROFIL_ADMINISTRATEUR) {
-      $encheresTimbres = $this->oRequetesSQL->getEncheresTimbres('membre_admin');
-      $titre = 'Toutes les enchères de timbres';
+      $encheresMises = $this->oRequetesSQL->getEncheresMises('admin-enchere');
+      $titre = 'Toutes les enchères';
     } else {
-      $encheresTimbres = $this->oRequetesSQL->getEncheresTimbres('membre_owner');
-      $titre = 'Mes enchères de timbres';
+      $encheresMises = $this->oRequetesSQL->getEncheresMises('membre-owner');
+      $titre = 'Mes enchères';
     }
 
     (new Vue)->generer(
@@ -43,7 +43,7 @@ class AdminEnchere extends Admin
       [
         'oUtilConn'           => self::$oUtilConn,
         'titre'               => $titre,
-        'encheresTimbres'     => $encheresTimbres,
+        'encheresMises'       => $encheresMises,
         'classRetour'         => $this->classRetour,
         'messageRetourAction' => $this->messageRetourAction
       ],
@@ -151,8 +151,8 @@ class AdminEnchere extends Admin
    */
   public function modifierEnchereTimbre()
   {
-    if (!preg_match('/^\d+$/', $this->timbre_id))
-      throw new Exception("Numéro du timbre non renseigné pour une modification");
+    if (!preg_match('/^\d+$/', $this->enchere_id))
+      throw new Exception("Numéro de l'enchère non renseigné pour une modification");
 
     if (count($_POST) !== 0) {
 
@@ -191,17 +191,17 @@ class AdminEnchere extends Admin
         ]);
 
         if ($modifEnchere && $modifTimbre) {
-          $this->messageRetourAction = "Modification de l'enchère de timbre $this->timbre_id effectuée.";
+          $this->messageRetourAction = "Modification de l'enchère de timbre $this->enchere_id effectuée.";
         } else {
           $this->classRetour = "erreur";
-          $this->messageRetourAction = "Modification de l'enchère de timbre $this->timbre_id non effectuée. " . $modifEnchere . $modifTimbre;
+          $this->messageRetourAction = "Modification de l'enchère de timbre $this->enchere_id non effectuée. " . $modifEnchere . $modifTimbre;
         }
         $this->listerEncheresTimbres();
         exit;
       }
     } else {
-      $timbre = $this->oRequetesSQL->getTimbre($this->timbre_id, 'admin');
-      $enchere = $this->oRequetesSQL->getEnchere($this->timbre_id, 'admin');
+      $timbre = $this->oRequetesSQL->getTimbre($this->enchere_id, 'admin');
+      $enchere = $this->oRequetesSQL->getEnchere($this->enchere_id, 'admin');
       $erreursTimbre = [];
       $erreursEnchere = [];
     }
@@ -235,15 +235,15 @@ class AdminEnchere extends Admin
    */
   public function supprimerEnchereTimbre()
   {
-    if (!preg_match('/^\d+$/', $this->timbre_id))
+    if (!preg_match('/^\d+$/', $this->enchere_id))
       throw new Exception("Numéro de timbre incorrect pour une suppression.");
 
-    $retour = $this->oRequetesSQL->supprimerTimbre($this->timbre_id);
+    $retour = $this->oRequetesSQL->supprimerTimbre($this->enchere_id);
     if ($retour === true) {
-      $this->messageRetourAction = "Suppression du timbre numéro $this->timbre_id effectuée.";
+      $this->messageRetourAction = "Suppression du timbre numéro $this->enchere_id effectuée.";
     } else {
       $this->classRetour = "erreur";
-      $this->messageRetourAction = "Suppression du timbre numéro $this->timbre_id non effectuée. " . $retour;
+      $this->messageRetourAction = "Suppression du timbre numéro $this->enchere_id non effectuée. " . $retour;
     }
     $this->listerEncheresTimbres();
   }

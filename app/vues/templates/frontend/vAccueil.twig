@@ -12,8 +12,9 @@
 			</svg>
 		</a>
 	</h2>
+
 	<div class="carrousel">
-		{% for timbre in nouveautes %}
+		{% for enchere in nouveautes %}
 			<article class="stampcard">
 				<a aria-label="button-like" class="stampcard-button-like" href="#">
 					<svg class="svg-icon like-button" role="img" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
@@ -25,28 +26,35 @@
 					</svg>
 				</a>
 				<!-- image -->
-				<a href="#">
+				<a href="enchere?enchere_id={{ enchere.enchere_id }}">
 					<picture>
-						<img src="assets/img/{{ timbre.image_principale }}" alt={{ timbre.titre }}>
+						<img src="{{ enchere.image_nom_fichier }}" alt={{ enchere.timbre_titre }}>
 					</picture>
 				</a>
 				<div>
 					<!-- titre -->
 					<h3>
-						<a href="#">{{ timbre.titre }}</a>
+						<a href="enchere?enchere_id={{ enchere.enchere_id }}">{{ enchere.timbre_titre }}</a>
 					</h3>
 					<!-- metadonnees mises -->
 					<div class="stampcard-info-wrapper">
 						<div class="stampcard-info">
 							<span>Nombre de mises:
-								{{ timbre.nb_mises }}</span>
-							<span>Temps restant:
-								{{ timbre.temps_restant }}</span>
+								{{ enchere.nb_mise }}</span>
+							{% if enchere.heures_restant > 24 %}
+								<span>Date de fin:
+									{{ enchere.enchere_date_fin|date('d/m/Y') }}</span>
+							{% else %}
+								<span>Temps restant:
+									{{ enchere.heures_restant }}
+									heures</span>
+							{% endif %}
+
 						</div>
 					</div>
 					<!-- boutons enchérir -->
 					<footer>
-						<a class="stampcard-button-cta" href="#">Enchérir</a>
+						<a class="stampcard-button-cta" href="enchere?enchere_id={{ enchere.enchere_id }}">Enchérir</a>
 					</footer>
 				</div>
 			</article>
@@ -62,26 +70,26 @@
 		<div>
 			<h2 class="padding-bottom">Qui est lord Stampee ?</h2>
 			<p>Lord Stampee vient d’une famille de passionnés de philatélie depuis des générations. Sa
-																																				                            passion pour les timbres rares et précieux l'a amené à rassembler l'une des collections les
-																																				                            plus impressionnantes du monde.</p>
+																																																																                            passion pour les timbres rares et précieux l'a amené à rassembler l'une des collections les
+																																																																                            plus impressionnantes du monde.</p>
 			<p>Ses collections de timbres ont été les plus complètes connues pour l'époque classique
-																																				                            (timbres
-																																				                            émis avant 1900), avec une passion pour les émissions d'avant 1870. Elles ont notamment
-																																				                            concerné
-																																				                            les provinces canadiennes et la Confédération du Canada, la Suisse, la colonie du Cap,
-																																				                            Ceylan,
-																																				                            le Gambie, Maurice, l'Argentine et l'Uruguay. Pour l'histoire postale des États-Unis, sa
-																																				                            collection est une référence pour les affranchissements dans l'Ouest du pays.</p>
+																																																																                            (timbres
+																																																																                            émis avant 1900), avec une passion pour les émissions d'avant 1870. Elles ont notamment
+																																																																                            concerné
+																																																																                            les provinces canadiennes et la Confédération du Canada, la Suisse, la colonie du Cap,
+																																																																                            Ceylan,
+																																																																                            le Gambie, Maurice, l'Argentine et l'Uruguay. Pour l'histoire postale des États-Unis, sa
+																																																																                            collection est une référence pour les affranchissements dans l'Ouest du pays.</p>
 			<p>Membre active du Collectors Club of New York, Theodore Steinway et lui ont permis le
-																																				                            développement
-																																				                            de cette association. Juge international pendant trois décennies, il est le commissaire des
-																																				                            expositions philatéliques internationales de 1980. En mars 1985 à New York, Theodore
-																																				                            Steinway,
-																																				                            plusieurs philatélistes et lui fondent la Philatelic Foundation, institution éducative à but
-																																				                            non
-																																				                            lucratif qui se donne pour but des travaux d'expertise, de recherches et de publications
-																																				                            philatéliques. Ses collections et celles de sa fille ont été dispersés par la maison aux
-																																				                            enchères Harmer's entre 1968 et 1971, 1989 et 1992 et en 1997.</p>
+																																																																                            développement
+																																																																                            de cette association. Juge international pendant trois décennies, il est le commissaire des
+																																																																                            expositions philatéliques internationales de 1980. En mars 1985 à New York, Theodore
+																																																																                            Steinway,
+																																																																                            plusieurs philatélistes et lui fondent la Philatelic Foundation, institution éducative à but
+																																																																                            non
+																																																																                            lucratif qui se donne pour but des travaux d'expertise, de recherches et de publications
+																																																																                            philatéliques. Ses collections et celles de sa fille ont été dispersés par la maison aux
+																																																																                            enchères Harmer's entre 1968 et 1971, 1989 et 1992 et en 1997.</p>
 			<a href="#">En savoir plus sur Lord Stampee et ses collections<i class="fa-solid fa-arrow-right"></i>
 			</a>
 		</div>
@@ -168,8 +176,8 @@
 				<!-- metadonnes enchère -->
 				<aside>
 					<span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi enim laborum
-																																																						                                    expedita fugiat quam, esse ut? Molestiae voluptate adipisci, ullam, quidem nisi
-																																																						                                    minus aliquam quisquam neque rerum inventore explicabo deserunt...</span>
+																																																																																																                                    expedita fugiat quam, esse ut? Molestiae voluptate adipisci, ullam, quidem nisi
+																																																																																																                                    minus aliquam quisquam neque rerum inventore explicabo deserunt...</span>
 				</aside>
 				<!-- bouton Lire l'article -->
 				<footer>
@@ -185,8 +193,8 @@
 				</h3>
 				<aside>
 					<span>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Neque, quas, maiores
-																																																						                                    expedita libero eius facere, magnam dolore laudantium doloremque aspernatur fugiat
-																																																						                                    atque quaerat alias eveniet ex cum modi totam iusto?...</span>
+																																																																																																                                    expedita libero eius facere, magnam dolore laudantium doloremque aspernatur fugiat
+																																																																																																                                    atque quaerat alias eveniet ex cum modi totam iusto?...</span>
 				</aside>
 				<footer>
 					<a class="stampcard-button-cta" href="#">Lire l'article</a>
@@ -200,8 +208,8 @@
 				</h3>
 				<aside>
 					<span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem libero minima rem
-																																																						                                    dignissimos sapiente fuga, maiores illum distinctio, beatae architecto aspernatur
-																																																						                                    consectetur voluptatem id quia sit explicabo dicta delectus commodi!...</span>
+																																																																																																                                    dignissimos sapiente fuga, maiores illum distinctio, beatae architecto aspernatur
+																																																																																																                                    consectetur voluptatem id quia sit explicabo dicta delectus commodi!...</span>
 				</aside>
 				<footer>
 					<a class="stampcard-button-cta" href="#">Lire l'article</a>
@@ -215,8 +223,8 @@
 				</h3>
 				<aside>
 					<span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores amet voluptates,
-																																																						                                    quos accusamus fugit perspiciatis fugiat eaque. Nulla, eius quo quas cupiditate
-																																																						                                    accusamus doloribus officiis, cum laboriosam harum, praesentium rem!...</span>
+																																																																																																                                    quos accusamus fugit perspiciatis fugiat eaque. Nulla, eius quo quas cupiditate
+																																																																																																                                    accusamus doloribus officiis, cum laboriosam harum, praesentium rem!...</span>
 				</aside>
 				<footer>
 					<a class="stampcard-button-cta" href="#">Lire l'article</a>
@@ -235,8 +243,8 @@
 				</h3>
 				<aside>
 					<span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro, quam. Nam
-																																																						                                    laboriosam cum doloribus, quaerat provident velit magni, praesentium vel nihil
-																																																						                                    debitis aliquam nobis assumenda inventore et! Voluptas, quae eligendi.</span>
+																																																																																																                                    laboriosam cum doloribus, quaerat provident velit magni, praesentium vel nihil
+																																																																																																                                    debitis aliquam nobis assumenda inventore et! Voluptas, quae eligendi.</span>
 				</aside>
 				<footer>
 					<a class="stampcard-button-cta" href="#">Lire l'article</a>

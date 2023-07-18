@@ -1,3 +1,5 @@
+<script type="module" src="assets/js/miser.js"></script>
+
 <div class="container-card-detail">
 	<div
 		class="catalogue-header">
@@ -80,13 +82,27 @@
 				<li>Nombre de mises:
 					{{ enchere.nb_mise }}</li>
 				<li>Mise actuelle:
-					{{ enchere.mise_actuelle }}</li>
+					{{ enchere.mise_actuelle|number_format(2, '.', ',') }}$</li>
 				{% if enchere.enchere_coup_coeur %}
 					<li>Cette enchère est un coup de coeur du Lord ! Ne faites pas passez votre chance de l'acquérir, enchérissez vite !</li>
 				{% endif %}
 			</ul>
 
-			<a class="stampcard-button-cta" href="#">Enchérir</a>
+			{% if (oUtilConn is null) %}
+				<h3>Vous devez vous inscrire ou vous connecter pour pouvoir miser sur une enchère !</h3>
+			{% elseif oUtilConn.utilisateur_id is same as enchere.mise_utilisateur_id %}
+				<h3>Vous êtes présentement le membre remportant l'enchère !</h3>
+			{% else %}
+				<form name="frmMise" method="POST">
+					<span id="messageErreurMise"></span>
+
+					<input aria-label="miser" type="number" name="mise_prix" placeholder="Enchérissez au moins {{ enchere.mise_actuelle + 5|number_format(2, '.', ',') }}$" min="{{ enchere.mise_actuelle + 5|number_format(2, '.', ',') }}" value="">
+					<input type="hidden" name="mise_utilisateur_id" value={{ oUtilConn.utilisateur_id }}>
+					<input type="hidden" name="mise_enchere_id" value={{ enchere.enchere_id }}>
+
+					<input class="stampcard-button-cta" type="submit" value="Enchérir">
+				</form>
+			{% endif %}
 
 		</section>
 	</article>

@@ -44,7 +44,7 @@ VALUES (
 
 INSERT INTO
     `Tirage` (`tirage_id`, `tirage_nom`)
-VALUES (1, '0-100'), (2, '100-500'), (3, '500-1-00'), (4, '1000-5000');
+VALUES (1, '-100'), (2, '100-500'), (3, '500-1000'), (4, '1000-5000'), (5, '+5000');
 
 INSERT INTO
     `Condition` (

@@ -1,7 +1,7 @@
 <section>
 	<h2>{{ titre }}</h2>
 
-	<form class="g" method="POST" action="admin?entite=enchere&action=m&timbre_id={{  timbre.timbre_id }} " enctype="multipart/form-data">
+	<form class="g" method="POST" action="admin?entite=enchere&action=m&enchere_id={{  enchere.enchere_id }} " enctype="multipart/form-data">
 		<div>
 			<label>Titre</label>
 			<input name="timbre[timbre_titre]" value="{{ timbre.timbre_titre }}">
@@ -82,11 +82,11 @@
 
 		</div>
 		{# <div>
-																																	<label>Image principale</label>
-																																	<img src="{{ timbre.image_nom_fichier }}" alt="">
-																																	<input name="image_nom_fichier" type="file">
-																																	<span>&nbsp;{{ erreurs.image_nom_fichier }}</span>
-																																</div> #}
+																																			<label>Image principale</label>
+																																			<img src="{{ timbre.image_nom_fichier }}" alt="">
+																																			<input name="image_nom_fichier" type="file">
+																																			<span>&nbsp;{{ erreurs.image_nom_fichier }}</span>
+																																		</div> #}
 		<input type="submit" value="Envoyer">
 
 	</form>

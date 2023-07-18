@@ -5,124 +5,99 @@
 	<aside class="regular-rhythm aside-catalogue">
 		<h2 class="no-underline">Filtres</h2>
 		<form
-			class="filter">
-			<!-- filtre thématiques -->
-			<div class="filter-item" data-filter-name="themes">
-				<input type="checkbox" id="themes" checked>
-				<label for="themes" class="filter-name h4">Thématiques</label>
+			class="filter" method="POST">
+			<!-- filtre pays d'origine -->
+			<div class="filter-item">
+				<input type="checkbox" id="origine" {% if filtres["timbre_pays_id"] is null %} checked {% endif %}>
+				<label for="origine" class="filter-name h4">Pays d'origine</label>
 				<div class="filter-content">
-					<select>
-						<option value="">--choisir une thématique--</option>
-						<option value="rare">Timbres rares</option>
-						<option value="lord">Coup de coeur du lord</option>
-						<option value="royaute">Famille royale</option>
-						<option value="celebrites">Célébrités</option>
-						<option value="sports">Sports et Jeux Olympiques</option>
-						<option value="faune">Faune et flore</option>
+					<select aria-label="Filtres origine" name="filtres[timbre_pays_id]">
+						<option value="">--choisir un pays--</option>
+						{% for unPays in pays %}
+							<option value="{{ unPays.pays_id}}" {% if unPays.pays_id == filtres["timbre_pays_id"] %} selected {% endif %}>{{ unPays.pays_nom }}</option>
+						{% endfor %}
 					</select>
 				</div>
 			</div>
-			<!-- filtre origine -->
-			<div class="filter-item" data-filter-name="origine">
-				<input type="checkbox" id="origine" checked>
-				<label for="origine" class="filter-name h4">Origine</label>
-				<div class="filter-content">
-					<div class="filter-country-checkbox">
-						<input type="checkbox" id="RU" name="RU">
-						<label for="RU">Royaume-Uni</label>
-					</div>
-					<div class="filter-country-checkbox">
-						<input type="checkbox" id="EU" name="EU">
-						<label for="EU">États-Unis</label>
-					</div>
-					<div class="filter-country-checkbox">
-						<input type="checkbox" id="CA" name="CA">
-						<label for="CA">Canada</label>
-					</div>
-					<div class="filter-country-checkbox">
-						<input type="checkbox" id="AU" name="AU">
-						<label for="AU">Australie</label>
-					</div>
-					<div class="filter-country-checkbox">
-						<input type="checkbox" id="EUR" name="EUR">
-						<label for="EUR">Europe</label>
-					</div>
-					<div class="filter-country-checkbox">
-						<input type="checkbox" id="AME" name="AME">
-						<label for="AME">Amérique</label>
-					</div>
-					<div class="filter-country-checkbox">
-						<input type="checkbox" id="AFR" name="AFR">
-						<label for="AFR">Afrique</label>
-					</div>
-					<div class="filter-country-checkbox">
-						<input type="checkbox" id="ASI" name="ASI">
-						<label for="ASI">Asie</label>
-					</div>
-					<div class="filter-country-checkbox">
-						<input type="checkbox" id="OCE" name="OCE">
-						<label for="OCE">Océanie</label>
-					</div>
-					<div class="filter-country-checkbox">
-						<input type="checkbox" id="other" name="other">
-						<label for="other">Autres</label>
-					</div>
-				</div>
-			</div>
 			<!-- filtre publication -->
-			<div class="filter-item" data-filter-name="publication">
-				<input type="checkbox" id="annee" checked>
-				<label for="annee" class="filter-name h4">Date de publication</label>
+			<div class="filter-item">
+				<input type="checkbox" id="annee" {% if filtres["timbre_annee_publication"] is null %} checked {% endif %}>
+				<label for="annee" class="filter-name h4">Année de publication</label>
 				<div class="filter-content">
-					<select name="date-publication" aria-labelledby="annee">
-						<option value="">--choisir une date--</option>
-						<option value="max1900">avant 1900</option>
-						<option value="max1950">1900 - 1950</option>
-						<option value="max2000">1950 - 2000</option>
-						<option value="min2000">après 2000</option>
+					<select aria-label="Filtres annee" name="filtres[timbre_annee_publication]">
+						<option value="">--choisir une année--</option>
+						<option value="1900" {% if filtres["timbre_annee_publication"] == '1900' %} selected {% endif %}>avant 1900</option>
+						<option value="1950" {% if filtres["timbre_annee_publication"] == '1950' %} selected {% endif %}>1900 - 1950</option>
+						<option value="2000" {% if filtres["timbre_annee_publication"] == '2000' %} selected {% endif %}>1950 - 2000</option>
+						<option value="min2000" {% if filtres["timbre_annee_publication"] == 'min2000' %} selected {% endif %}>après 2000</option>
 					</select>
 				</div>
 			</div>
 			<!-- filtre date échéance -->
-			<div class="filter-item" data-filter-name="date">
-				<input type="checkbox" id="echeance" checked>
+			<div class="filter-item">
+				<input type="checkbox" id="echeance" {% if filtres["enchere_date_fin"] is null %} checked {% endif %}>
 				<label for="echeance" class="filter-name h4">Se termine avant</label>
-				<div class="filter-content"><input type="date" aria-label="date"></div>
+				<div class="filter-content"><input type="date" aria-label="date" name="filtres[enchere_date_fin]" value={{ filtres["enchere_date_fin"] }}></div>
 			</div>
 			<!-- filtre prix -->
-			<div class="filter-item" data-filter-name="prix">
-				<input type="checkbox" id="prix" checked>
+			<div class="filter-item">
+				<input type="checkbox" id="prix" {% if filtres["prix_mini"] is null and filtres["prix_maxi"] is null %} checked {% endif %}>
 				<label for="prix" class="filter-name h4">Fourchette de prix</label>
 				<div class="filter-content filter-price-wrapper">
 					<div class="filter-price-field">
 						<span>Min</span>
-						<input type="number" class="input-min" value="0" aria-label="prix-minimum">
+						<input type="number" class="input-min" value={{ filtres["prix_mini"] }} aria-label="prix-minimum" name="filtres[prix_mini]">
 					</div>
 					<div class="filter-price-field">
 						<span>Max</span>
-						<input type="number" class="input-max" value="10000" aria-label="prix maximum">
+						<input type="number" class="input-max" value={{ filtres["prix_maxi"] }} aria-label="prix maximum" name="filtres[prix_maxi]">
 					</div>
 				</div>
 			</div>
 			<!-- filtre condition -->
-			<div class="filter-item" data-filter-name="condition">
-				<input type="checkbox" id="condition" checked>
+			<div class="filter-item">
+				<input type="checkbox" id="condition" {% if filtres["timbre_condition_id"] is null %} checked {% endif %}>
 				<label for="condition" class="filter-name h4">Condition</label>
 				<div class="filter-content">
-					<select aria-label="Filtres condition">
+					<select aria-label="Filtres condition" name="filtres[timbre_condition_id]">
 						<option value="">--choisir une condition--</option>
-						<option value="Bonne">Parfaite</option>
-						<option value="Bonne">Excellente</option>
-						<option value="Moyenne">Bonne</option>
-						<option value="Moyenne">Moyenne</option>
-						<option value="Mauvaise">Mauvaise</option>
+						{% for condition in conditions %}
+							<option value="{{ condition.condition_id }}" {% if condition.condition_id == filtres["timbre_condition_id"] %} selected {% endif %}>{{ condition.condition_nom }}</option>
+						{% endfor %}
+					</select>
+				</div>
+			</div>
+			<!-- filtre couleur -->
+			<div class="filter-item">
+				<input type="checkbox" id="couleur" {% if filtres["timbre_couleur_id"] is null %} checked {% endif %}>
+				<label for="couleur" class="filter-name h4">Couleur dominante</label>
+				<div class="filter-content">
+					<select aria-label="Filtres couleur" name="filtres[timbre_couleur_id]">
+						<option value="">--choisir une couleur--</option>
+						{% for couleur in couleurs %}
+							<option value="{{ couleur.couleur_id }}" {% if couleur.couleur_id == filtres["timbre_couleur_id"] %} selected {% endif %}>{{ couleur.couleur_nom }}</option>
+						{% endfor %}
+					</select>
+				</div>
+			</div>
+			<!-- filtre tirage -->
+			<div class="filter-item">
+				<input type="checkbox" id="tirage" {% if filtres["timbre_tirage_id"] is null %} checked {% endif %}>
+				<label for="tirage" class="filter-name h4">Tirage</label>
+				<div class="filter-content">
+					<select aria-label="Filtres tirage" name="filtres[timbre_tirage_id]">
+						<option value="">--choisir un tirage--</option>
+						{% for tirage in tirages %}
+							<option value="{{ tirage.tirage_id }}" {% if tirage.tirage_id == filtres["timbre_tirage_id"] %} selected {% endif %}>{{ tirage.tirage_nom }}
+								exemplaires</option>
+						{% endfor %}
 					</select>
 				</div>
 			</div>
 			<!-- boutons recherche / reset -->
 			<footer class="regular-rhythm">
 				<button type="submit">Filtrer</button>
-				<button type="reset">Reset</button>
+				<button type="submit" name="reset">Reset</button>
 			</footer>
 		</form>
 	</aside>
@@ -132,12 +107,9 @@
 			<!-- fil d'ariane -->
 			<ul>
 				<li>
-					<a href="index.html">Accueil</a>
+					<a href=".">Accueil</a>
 				</li>
-				<li>
-					<a href="#">Enchères</a>
-				</li>
-				<li class="catalogue-header-ariane-active">Enchères en cours</li>
+				<li class="catalogue-header-ariane-active">{{ typeEnchere|capitalize }}</li>
 			</ul>
 			<!-- toggle vue -->
 			<button id="grid-list">Grille / Liste</button>
@@ -171,24 +143,47 @@
 						<!-- metadonnees mises -->
 						<div class="stampcard-info-wrapper">
 							<div class="stampcard-info">
-								<span>Nombre de mises:
-									{{ enchere.nb_mise }}</span>
-								{% if enchere.heures_restant > 24 %}
-									<span>Date de fin:
-										{{ enchere.enchere_date_fin|date('d/m/Y') }}</span>
-								{% elseif enchere.heures_restant > 0 %}
-									<span>Temps restant:
-										{{ enchere.heures_restant }}
-										heures</span>
-								{% else %}
-									<span>Enchère terminée</span>
+								{% if typeEnchere is not same as 'enchères à venir' %}
+									<span>Nombre de mises:
+										{{ enchere.nb_mise }}</span>
 								{% endif %}
-
+								{% if typeEnchere is same as 'enchères à venir' %}
+									<span>Date de début:
+										{{ enchere.enchere_date_debut|date('d/m/Y')}}</span>
+									<span>Heure de début:
+										{{ enchere.enchere_date_debut|date('H:i:s')}}</span>
+								{% else %}
+									{% if enchere.heures_restant > 24 %}
+										<span>Date de fin:
+											{{ enchere.enchere_date_fin|date('d/m/Y') }}</span>
+									{% elseif enchere.heures_restant > 0 %}
+										<span>Temps restant:
+											{{ enchere.heures_restant }}
+											heures</span>
+									{% else %}
+										<span>Enchère terminée</span>
+									{% endif %}
+									{% if (typeEnchere is same as 'enchères en cours' or typeEnchere is same as 'enchères') %}
+										{% if enchere.mise_actuelle %}
+											<span>Mise actuelle :
+												{{ enchere.mise_actuelle|number_format(2, '.', ',') }}$</span>
+										{% else %}
+											<span>Soyez le premier à enchérir !</span>
+										{% endif %}
+									{% endif %}
+								{% endif %}
 							</div>
 						</div>
 						<!-- boutons enchérir -->
 						<footer>
-							<a class="stampcard-button-cta" href="#">Enchérir</a>
+							<a class="stampcard-button-cta" href=" enchere?enchere_id={{ enchere.enchere_id }} ">
+								{% if typeEnchere is same as 'enchères en cours' %}
+									Enchérir
+									{{ enchere.mise_actuelle + 5|number_format(2, '.', ',') }}$
+								{% else %}
+									En savoir plus
+								{% endif %}
+							</a>
 						</footer>
 					</div>
 				</article>
