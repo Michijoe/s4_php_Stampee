@@ -69,9 +69,9 @@ class Routeur
       }
       // aucune route ne correspond à l'uri
       $this->debug_to_console($routeUri);
-      throw new Exception(self::ERROR_NOT_FOUND);
+      // throw new Exception(self::ERROR_NOT_FOUND);
     } catch (Error | Exception $e) {
-      $this->erreur($e);
+      // $this->erreur($e);
     }
   }
 
