@@ -27,7 +27,7 @@ class Routeur
     ["connecter",     "Frontend", "connecter"],
     ["creerCompte",   "Frontend", "creerCompte"],
     ["deconnecter",   "Frontend", "deconnecter"],
-    ["miser",         "Frontend", "miser"],
+    ["miser",         "Frontend", "miser"]
   ];
 
   protected $oRequetesSQL; // objet RequetesSQL utilisé par tous les contrôleurs
