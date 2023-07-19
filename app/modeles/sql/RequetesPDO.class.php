@@ -34,12 +34,15 @@ class RequetesPDO
     $this->debug_to_console("je suis a la ligne 34");
 
     $oPDOStatement = $sPDO->prepare($this->sql);
-    $this->debug_to_console("je suis a la ligne 37");
+    $this->debug_to_console($this->sql);
     $nomsParams = array_keys($params);
     $this->debug_to_console("je suis a la ligne 39");
     foreach ($nomsParams as $nomParam) $oPDOStatement->bindParam(':' . $nomParam, $params[$nomParam]);
     $this->debug_to_console("je suis a la ligne 41");
-    $oPDOStatement->execute();
+
+    $results = $oPDOStatement->execute();
+    $this->debug_to_console($results);
+
     $this->debug_to_console("je suis a la ligne 43");
     $result = $uneSeuleLigne ? $oPDOStatement->fetch(PDO::FETCH_ASSOC) : $oPDOStatement->fetchAll(PDO::FETCH_ASSOC);
     $this->debug_to_console("je suis a la fin de getligne");
