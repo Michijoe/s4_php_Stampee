@@ -269,14 +269,14 @@ class RequetesSQL extends RequetesPDO
     $this->debug_to_console("je suis ligne 264");
 
 
-    if ((str_contains($critere, 'admin'))) $this->sql .= " 
+    if ((strpos($critere, 'admin'))) $this->sql .= " 
      JOIN utilisateur u ON enchere_utilisateur_id = utilisateur_id";
 
     if ($critere === 'membre-owner') $this->sql .= " WHERE timbre_utilisateur_id = " . $_SESSION['oUtilConn']->utilisateur_id;
 
 
     // catalogue public montre les enchères validées
-    if (str_contains($critere, 'public')) {
+    if (strpos($critere, 'public')) {
 
       $this->sql .= " WHERE timbre_statut = '1'";
 
