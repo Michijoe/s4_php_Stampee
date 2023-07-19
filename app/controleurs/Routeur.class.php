@@ -72,9 +72,9 @@ class Routeur
           $this->debug_to_console($routeUri);
           $this->debug_to_console("j\'ai trouvé l\'essai ");
           $this->debug_to_console($routeUri);
+          exit;
           $oRouteClasse = new $routeClasse;
           $oRouteClasse->$routeMethode();
-          exit;
         }
       }
       // aucune route ne correspond à l'uri
