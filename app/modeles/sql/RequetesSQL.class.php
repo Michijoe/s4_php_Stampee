@@ -207,7 +207,7 @@ class RequetesSQL extends RequetesPDO
 
   public function getEncheresMises($critere = null, $champs = null)
   {
-    $this->debug_to_console($champs);
+    $this->debug_to_console($champs == null);
 
     $this->debug_to_console("je suis dans getenchere");
 
