@@ -205,7 +205,7 @@ class RequetesSQL extends RequetesPDO
     echo "<script>console.log('Debug Objects: " . $output . "' );</script>";
   }
 
-  public function getEncheresMises($critere = null, $champs = [])
+  public function getEncheresMises($critere = null, $champs = null)
   {
     $this->debug_to_console("je suis dans getenchere");
 
@@ -214,7 +214,6 @@ class RequetesSQL extends RequetesPDO
     $nouveaute = $oAujourdhui->modify('-7 day')->format('Y-m-d H:i:s');
 
     $this->debug_to_console("je suis apres date aujourdhui");
-
 
     $this->sql = "
        SELECT
@@ -361,6 +360,7 @@ class RequetesSQL extends RequetesPDO
 
     $this->debug_to_console("je suis ligne 357");
 
+    if ($champs == null) $champs = [];
     return $this->getLignes($champs);
   }
 
