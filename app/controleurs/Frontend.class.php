@@ -169,8 +169,8 @@ class Frontend extends Routeur
     $enchere = false;
     $timbre = false;
     if (!is_null($this->enchere_id)) {
-      $enchere = $this->oRequetesSQL->getEnchere($this->enchere_id);
-      $timbre = $this->oRequetesSQL->getTimbre($this->enchere_id);
+      // $enchere = $this->oRequetesSQL->getEnchere($this->enchere_id);
+      // $timbre = $this->oRequetesSQL->getTimbre($this->enchere_id);
     }
     if (!$enchere || !$timbre) throw new Exception("Enchère ou timbre inexistants.");
 
@@ -181,8 +181,8 @@ class Frontend extends Routeur
         'titre'        => 'Timbre',
         'titreHB'      => 'Fiche Timbre',
         'texteHB'      => '',
-        'enchere'      => $enchere,
-        'timbre'       => $timbre
+        // 'enchere'      => $enchere,
+        // 'timbre'       => $timbre
       ],
       "gabarit-frontend"
     );
