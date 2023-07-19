@@ -207,8 +207,6 @@ class RequetesSQL extends RequetesPDO
 
   public function getEncheresMises($critere = null, $champs = null)
   {
-    $this->debug_to_console($champs == null);
-
     $this->debug_to_console("je suis dans getenchere");
 
     $oAujourdhui = ENV === "DEV" ? new DateTime(MOCK_NOW) : new DateTime();
@@ -364,6 +362,9 @@ class RequetesSQL extends RequetesPDO
     $this->debug_to_console($champs);
 
     if ($champs == null) $champs = [];
+
+    $this->debug_to_console($champs);
+    $this->debug_to_console($champs == []);
     return $this->getLignes($champs);
   }
 
