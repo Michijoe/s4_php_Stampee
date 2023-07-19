@@ -15,8 +15,8 @@ require 'app/includes/chargementClasses.inc.php';
 session_start();
 
 debug_to_console("je suis avant router");
-debug_to_console(self::BASE_URI);
 
 (new Routeur)->router();
 
+debug_to_console(Routeur::BASE_URI);
 debug_to_console("je suis apres router");
