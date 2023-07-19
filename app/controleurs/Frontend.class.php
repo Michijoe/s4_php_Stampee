@@ -59,13 +59,29 @@ class Frontend extends Routeur
   }
 
 
+  function debug_to_console($data)
+  {
+    $output = $data;
+    if (is_array($output))
+      $output = implode(',', $output);
+
+    echo "<script>console.log('Debug Objects: " . $output . "' );</script>";
+  }
+
+
   /**
    * Afficher l'accueil
    * 
    */
   public function afficherAccueil()
   {
+
+    $this->debug_to_console("je suis dans accueil");
+
     $nouveautes = $this->oRequetesSQL->getEncheresMises('public-nouveaute');
+
+    $this->debug_to_console("je suis apres geteenchere");
+
 
     // $coupsCoeur = $this->oRequetesSQL->getTimbres('coupsCoeur');
 
