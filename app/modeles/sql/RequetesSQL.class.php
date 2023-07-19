@@ -205,7 +205,7 @@ class RequetesSQL extends RequetesPDO
     echo "<script>console.log('Debug Objects: " . $output . "' );</script>";
   }
 
-  public function getEncheresMises($critere = null, $champs = null)
+  public function getEncheresMises($critere = null, $champs = [])
   {
     $this->debug_to_console("je suis dans getenchere");
 
