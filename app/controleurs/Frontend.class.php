@@ -78,7 +78,7 @@ class Frontend extends Routeur
 
     $this->debug_to_console("je suis dans accueil");
 
-    $nouveautes = $this->oRequetesSQL->getEncheresMises('public-nouveaute');
+    $nouveautes = $this->oRequetesSQL->getEncheresMises('public-nouveaute', null);
 
     $this->debug_to_console("je suis apres geteenchere");
 
