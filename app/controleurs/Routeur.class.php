@@ -8,6 +8,15 @@
 class Routeur
 {
 
+  function debug_to_console($data)
+  {
+    $output = $data;
+    if (is_array($output))
+      $output = implode(',', $output);
+
+    echo "<script>console.log('Debug Objects: " . $output . "' );</script>";
+  }
+
   private $routes = [
     // uri,             classe,     méthode
     // ------------------------------------
@@ -58,6 +67,7 @@ class Routeur
         }
       }
       // aucune route ne correspond à l'uri
+      $this->debug_to_console($routeUri);
       throw new Exception(self::ERROR_NOT_FOUND);
     } catch (Error | Exception $e) {
       $this->erreur($e);
