@@ -176,6 +176,8 @@ class Frontend extends Routeur
     }
     // if (!$enchere || !$timbre) throw new Exception("Enchère ou timbre inexistants.");
 
+    exit;
+
     (new Vue)->generer(
       "vEnchere",
       [
