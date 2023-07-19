@@ -47,6 +47,7 @@ class Routeur
   public function router()
   {
     try {
+      $this->debug_to_console("je suis dans router");
 
       // contrôle de l'uri si l'action coïncide
 
