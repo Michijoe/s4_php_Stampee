@@ -244,6 +244,9 @@ class RequetesSQL extends RequetesPDO
     $this->debug_to_console("je suis ligne 244");
 
 
+    $bobo = str_contains('salut', 'salut');
+
+    $this->debug_to_console("je suis ligne TOTOTOTOT");
 
 
     if ((str_contains($critere, 'admin'))) $this->sql .=
