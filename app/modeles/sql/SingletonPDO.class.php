@@ -4,7 +4,7 @@ class SingletonPDO extends PDO
 {
   private static $instance = null;
 
-  const DB_SERVEUR  = 'localhost';
+  const DB_SERVEUR  = '127.0.0.1';
   const DB_NOM      = (ENV == "DEV") ?  'stampee' : 'e2296540';
   const DB_DSN      = 'mysql:host=' . self::DB_SERVEUR . ';dbname=' . self::DB_NOM . ';charset=utf8';
   const DB_LOGIN    = (ENV == "DEV") ?  'root' : 'e2296540';
