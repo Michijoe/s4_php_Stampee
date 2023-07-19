@@ -60,15 +60,19 @@ class Routeur
         $routeClasse  = $route[1];
         $routeMethode = $route[2];
 
+
+        $this->debug_to_console("je suis dans l'essai " . $routeUri);
+
         if ($routeUri ===  $uri) {
           // on exécute la méthode associée à l'uri
+          $this->debug_to_console($routeUri);
+          $this->debug_to_console("j'ai trouvé l'essai " . $routeUri);
           $oRouteClasse = new $routeClasse;
           $oRouteClasse->$routeMethode();
           exit;
         }
       }
       // aucune route ne correspond à l'uri
-      $this->debug_to_console($routeUri);
       // throw new Exception(self::ERROR_NOT_FOUND);
     } catch (Error | Exception $e) {
       // $this->erreur($e);
