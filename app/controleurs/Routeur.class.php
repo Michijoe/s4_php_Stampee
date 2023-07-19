@@ -46,40 +46,40 @@ class Routeur
    */
   public function router()
   {
-    try {
-      $this->debug_to_console("je suis dans router");
+    // try {
+    $this->debug_to_console("je suis dans router");
 
-      // contrôle de l'uri si l'action coïncide
+    // contrôle de l'uri si l'action coïncide
 
-      $uri =  $_SERVER['REQUEST_URI'];
-      if (strpos($uri, '?')) $uri = strstr($uri, '?', true);
+    $uri =  $_SERVER['REQUEST_URI'];
+    if (strpos($uri, '?')) $uri = strstr($uri, '?', true);
 
-      $this->debug_to_console("baseuri = ");
-      $this->debug_to_console(self::BASE_URI);
+    $this->debug_to_console("baseuri = ");
+    $this->debug_to_console(self::BASE_URI);
 
-      foreach ($this->routes as $route) {
+    foreach ($this->routes as $route) {
 
-        $routeUri     = self::BASE_URI . $route[0];
-        $routeClasse  = $route[1];
-        $routeMethode = $route[2];
+      $routeUri     = self::BASE_URI . $route[0];
+      $routeClasse  = $route[1];
+      $routeMethode = $route[2];
 
 
-        $this->debug_to_console("je suis dans l\'essai ");
+      $this->debug_to_console("je suis dans l\'essai ");
+      $this->debug_to_console($routeUri);
+
+      if ($routeUri ===  $uri) {
+        // on exécute la méthode associée à l'uri
         $this->debug_to_console($routeUri);
-
-        if ($routeUri ===  $uri) {
-          // on exécute la méthode associée à l'uri
-          $this->debug_to_console($routeUri);
-          $this->debug_to_console("j\'ai trouvé l\'essai ");
-          $this->debug_to_console($routeUri);
-          $oRouteClasse = new $routeClasse;
-          $oRouteClasse->$routeMethode();
-          exit;
-        }
+        $this->debug_to_console("j\'ai trouvé l\'essai ");
+        $this->debug_to_console($routeUri);
+        $oRouteClasse = new $routeClasse;
+        $oRouteClasse->$routeMethode();
+        exit;
       }
+      // }
       // aucune route ne correspond à l'uri
       // throw new Exception(self::ERROR_NOT_FOUND);
-    } catch (Error | Exception $e) {
+      // } catch (Error | Exception $e) {
       // $this->erreur($e);
     }
   }
