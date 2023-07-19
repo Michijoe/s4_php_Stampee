@@ -166,6 +166,8 @@ class Frontend extends Routeur
    */
   public function afficherEnchere()
   {
+    $this->debug_to_console("je suis dans afficherenchere");
+
     $enchere = false;
     $timbre = false;
     if (!is_null($this->enchere_id)) {
