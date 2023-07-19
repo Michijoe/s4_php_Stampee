@@ -361,7 +361,7 @@ class RequetesSQL extends RequetesPDO
 
     $this->debug_to_console("je suis ligne 357");
 
-    return $this->getLignes($champs ?? []);
+    return $this->getLignes($champs);
   }
 
 
