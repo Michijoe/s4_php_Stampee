@@ -213,6 +213,9 @@ class RequetesSQL extends RequetesPDO
     $aujourdhui = $oAujourdhui->format('Y-m-d H:i:s');
     $nouveaute = $oAujourdhui->modify('-7 day')->format('Y-m-d H:i:s');
 
+    $this->debug_to_console("je suis apres date aujourdhui");
+
+
     $this->sql = "
        SELECT
        e.enchere_id,
@@ -238,16 +241,28 @@ class RequetesSQL extends RequetesPDO
          LIMIT 1
        ) AS mise_actuelle_utilisateur_id";
 
+    $this->debug_to_console("je suis ligne 244");
+
+
     if ((str_contains($critere, 'admin'))) $this->sql .=
       ", u.utilisateur_prenom, u.utilisateur_nom";
 
+    $this->debug_to_console("je suis ligne 250");
+
+
     if ($critere === 'membre-miseur') $this->sql .= ", MAX(CASE WHEN m.mise_utilisateur_id = " . $_SESSION['oUtilConn']->utilisateur_id . " THEN m.mise_prix END) AS mise_max_utilisateur_actif";
+
+    $this->debug_to_console("je suis ligne 255");
+
 
     $this->sql .= " 
        FROM enchere e
        JOIN timbre t ON e.enchere_id = t.timbre_enchere_id
        JOIN image i ON i.image_timbre_id = t.timbre_id
        LEFT JOIN mise m ON e.enchere_id = m.mise_enchere_id";
+
+    $this->debug_to_console("je suis ligne 264");
+
 
     if ((str_contains($critere, 'admin'))) $this->sql .= " 
      JOIN utilisateur u ON enchere_utilisateur_id = utilisateur_id";
@@ -273,6 +288,8 @@ class RequetesSQL extends RequetesPDO
       else if ($critere === 'public-futur') $this->sql .= " AND TIMESTAMPDIFF(SECOND, '$aujourdhui', enchere_date_debut) > 0";
 
       // catalogue public des enchères coups de coeur montrent les enchères actives Coup de coeur du Lord
+
+      $this->debug_to_console("je suis ligne 292");
 
       // critères de recherche de l'utilisateur
       if ($champs) {
@@ -316,6 +333,8 @@ class RequetesSQL extends RequetesPDO
 
         if (isset($champs["recherche"])) $criteres .= " AND timbre_titre LIKE CONCAT('%',:recherche,'%')";
 
+        $this->debug_to_console("je suis ligne 336");
+
         $this->sql .= $criteres;
       }
     }
@@ -325,12 +344,17 @@ class RequetesSQL extends RequetesPDO
     if ($critere === 'membre-miseur'  || $critere === 'admin-mise') $this->sql .= " 
      HAVING nb_mise > 0";
 
+    $this->debug_to_console("je suis ligne 347");
+
+
     // mise pour l'utilisateur actif seulement
     if ($critere === 'membre-miseur') $this->sql .= " AND mise_max_utilisateur_actif > 0";
 
     $this->sql .= " ORDER BY e.enchere_date_fin ASC;";
 
     $this->debug_to_console("je suis apres getenchere");
+
+    $this->debug_to_console("je suis ligne 357");
 
     return $this->getLignes($champs ?? []);
   }
