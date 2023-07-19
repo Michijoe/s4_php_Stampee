@@ -244,8 +244,10 @@ class RequetesSQL extends RequetesPDO
     $this->debug_to_console("je suis ligne 244");
 
 
-    if ((str_contains($critere, 'admin'))) $this->sql .=
-      ", u.utilisateur_prenom, u.utilisateur_nom";
+
+
+    // if ((str_contains($critere, 'admin'))) $this->sql .=
+    //   ", u.utilisateur_prenom, u.utilisateur_nom";
 
     $this->debug_to_console("je suis ligne 250");
 
