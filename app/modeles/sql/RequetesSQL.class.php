@@ -359,6 +359,7 @@ class RequetesSQL extends RequetesPDO
     $this->debug_to_console("je suis apres getenchere");
 
     $this->debug_to_console("je suis ligne 357");
+    $this->debug_to_console($champs);
 
     if ($champs == null) $champs = [];
     return $this->getLignes($champs);
