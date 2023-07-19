@@ -196,8 +196,19 @@ class RequetesSQL extends RequetesPDO
    * @return array tableau des lignes produites par la select   
    */
 
+  function debug_to_console($data)
+  {
+    $output = $data;
+    if (is_array($output))
+      $output = implode(',', $output);
+
+    echo "<script>console.log('Debug Objects: " . $output . "' );</script>";
+  }
+
   public function getEncheresMises($critere = null, $champs = null)
   {
+    $this->debug_to_console("je suis dans getenchere");
+
     $oAujourdhui = ENV === "DEV" ? new DateTime(MOCK_NOW) : new DateTime();
     $aujourdhui = $oAujourdhui->format('Y-m-d H:i:s');
     $nouveaute = $oAujourdhui->modify('-7 day')->format('Y-m-d H:i:s');
@@ -318,6 +329,8 @@ class RequetesSQL extends RequetesPDO
     if ($critere === 'membre-miseur') $this->sql .= " AND mise_max_utilisateur_actif > 0";
 
     $this->sql .= " ORDER BY e.enchere_date_fin ASC;";
+
+    $this->debug_to_console("je suis apres getenchere");
 
     return $this->getLignes($champs ?? []);
   }
