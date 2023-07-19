@@ -70,7 +70,7 @@ class Routeur
         if ($routeUri ===  $uri) {
           // on exécute la méthode associée à l'uri
           $this->debug_to_console($routeUri);
-          $this->debug_to_console("j'ai trouvé l\'essai ");
+          $this->debug_to_console("j\'ai trouvé l\'essai ");
           $this->debug_to_console($routeUri);
           $oRouteClasse = new $routeClasse;
           $oRouteClasse->$routeMethode();
