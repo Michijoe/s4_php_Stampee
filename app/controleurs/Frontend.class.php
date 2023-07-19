@@ -172,7 +172,7 @@ class Frontend extends Routeur
       // $enchere = $this->oRequetesSQL->getEnchere($this->enchere_id);
       // $timbre = $this->oRequetesSQL->getTimbre($this->enchere_id);
     }
-    if (!$enchere || !$timbre) throw new Exception("Enchère ou timbre inexistants.");
+    // if (!$enchere || !$timbre) throw new Exception("Enchère ou timbre inexistants.");
 
     (new Vue)->generer(
       "vEnchere",
