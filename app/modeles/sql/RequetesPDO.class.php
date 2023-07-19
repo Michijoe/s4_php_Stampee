@@ -35,6 +35,7 @@ class RequetesPDO
 
     $oPDOStatement = $sPDO->prepare($this->sql);
     $this->debug_to_console($this->sql);
+
     $nomsParams = array_keys($params);
     $this->debug_to_console("je suis a la ligne 39");
     foreach ($nomsParams as $nomParam) $oPDOStatement->bindParam(':' . $nomParam, $params[$nomParam]);
