@@ -54,6 +54,9 @@ class Routeur
       $uri =  $_SERVER['REQUEST_URI'];
       if (strpos($uri, '?')) $uri = strstr($uri, '?', true);
 
+      $this->debug_to_console("baseuri = ");
+      $this->debug_to_console(self::BASE_URI);
+
       foreach ($this->routes as $route) {
 
         $routeUri     = self::BASE_URI . $route[0];
