@@ -78,7 +78,7 @@ class Frontend extends Routeur
 
     $this->debug_to_console("je suis dans accueil");
 
-    // $nouveautes = $this->oRequetesSQL->getEncheresMises('', 'public-nouveaute');
+    $nouveautes = $this->oRequetesSQL->getEncheresMises('', 'public-nouveaute');
 
     $this->debug_to_console("je suis apres geteenchere");
 
@@ -92,7 +92,7 @@ class Frontend extends Routeur
         'titre'          => 'Accueil',
         'titreHB'        => 'La valeur sûre des enchères de timbres en ligne',
         'texteHB'        => 'Avec déjà plus de 100 000 timbres vendus, Stampee est la maison d\'enchères de timbres la plus populaire auprès des collectionneurs depuis 1949. Découvrez les collections uniques du lord Stampee et partez à la recherche de vos nouvelles acquisitions.',
-        // 'nouveautes'     => $nouveautes,
+        'nouveautes'     => $nouveautes,
         // 'coupsCoeur'     => $coupsCoeur,
       ],
       "gabarit-frontend"
