@@ -17,7 +17,7 @@ class Timbre extends Entite
   protected $timbre_couleur_id;
   protected $timbre_certification;
   protected $timbre_statut;
-  protected $enchere_id;
+  protected $timbre_enchere_id;
 
   const ANNEE_PREMIER_TIMBRE = '1847';
 

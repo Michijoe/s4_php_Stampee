@@ -196,24 +196,11 @@ class RequetesSQL extends RequetesPDO
    * @return array tableau des lignes produites par la select   
    */
 
-  function debug_to_console($data)
-  {
-    $output = $data;
-    if (is_array($output))
-      $output = implode(',', $output);
-
-    echo "<script>console.log('Debug Objects: " . $output . "' );</script>";
-  }
-
   public function getEncheresMises($critere = null, $champs = null)
   {
-    $this->debug_to_console("je suis dans getenchere");
-
     $oAujourdhui = ENV === "DEV" ? new DateTime(MOCK_NOW) : new DateTime();
     $aujourdhui = $oAujourdhui->format('Y-m-d H:i:s');
     $nouveaute = $oAujourdhui->modify('-7 day')->format('Y-m-d H:i:s');
-
-    $this->debug_to_console("je suis apres date aujourdhui");
 
     $this->sql = "
        SELECT
@@ -225,6 +212,7 @@ class RequetesSQL extends RequetesPDO
        i.image_nom_fichier,
        COUNT(m.mise_id) AS nb_mise,
        TIMESTAMPDIFF(HOUR, '$aujourdhui', e.enchere_date_fin) AS heures_restant,
+       TIMESTAMPDIFF(HOUR, '$aujourdhui', e.enchere_date_debut) AS heures_avant_debut,
        (
          SELECT mise_prix
          FROM mise
@@ -240,24 +228,10 @@ class RequetesSQL extends RequetesPDO
          LIMIT 1
        ) AS mise_actuelle_utilisateur_id";
 
-    $this->debug_to_console("je suis ligne 244");
-
-
-    $bobo = strpos('salut', 'salut');
-
-    $this->debug_to_console("je suis ligne TOTOTOTOT");
-
-
-    if ((strpos($critere, 'admin'))) $this->sql .=
+    if ((str_contains($critere, 'admin'))) $this->sql .=
       ", u.utilisateur_prenom, u.utilisateur_nom";
 
-    $this->debug_to_console("je suis ligne 250");
-
-
     if ($critere === 'membre-miseur') $this->sql .= ", MAX(CASE WHEN m.mise_utilisateur_id = " . $_SESSION['oUtilConn']->utilisateur_id . " THEN m.mise_prix END) AS mise_max_utilisateur_actif";
-
-    $this->debug_to_console("je suis ligne 255");
-
 
     $this->sql .= " 
        FROM enchere e
@@ -265,17 +239,14 @@ class RequetesSQL extends RequetesPDO
        JOIN image i ON i.image_timbre_id = t.timbre_id
        LEFT JOIN mise m ON e.enchere_id = m.mise_enchere_id";
 
-    $this->debug_to_console("je suis ligne 264");
-
-
-    if ((strpos($critere, 'admin'))) $this->sql .= " 
+    if ((str_contains($critere, 'admin'))) $this->sql .= " 
      JOIN utilisateur u ON enchere_utilisateur_id = utilisateur_id";
 
     if ($critere === 'membre-owner') $this->sql .= " WHERE timbre_utilisateur_id = " . $_SESSION['oUtilConn']->utilisateur_id;
 
 
     // catalogue public montre les enchères validées
-    if (strpos($critere, 'public')) {
+    if (str_contains($critere, 'public')) {
 
       $this->sql .= " WHERE timbre_statut = '1'";
 
@@ -292,8 +263,7 @@ class RequetesSQL extends RequetesPDO
       else if ($critere === 'public-futur') $this->sql .= " AND TIMESTAMPDIFF(SECOND, '$aujourdhui', enchere_date_debut) > 0";
 
       // catalogue public des enchères coups de coeur montrent les enchères actives Coup de coeur du Lord
-
-      $this->debug_to_console("je suis ligne 292");
+      else if ($critere === 'public-coups-coeur') $this->sql .= " AND enchere_coup_coeur = 'oui' AND TIMESTAMPDIFF(SECOND, enchere_date_fin, '$aujourdhui') < 0";
 
       // critères de recherche de l'utilisateur
       if ($champs) {
@@ -337,8 +307,6 @@ class RequetesSQL extends RequetesPDO
 
         if (isset($champs["recherche"])) $criteres .= " AND timbre_titre LIKE CONCAT('%',:recherche,'%')";
 
-        $this->debug_to_console("je suis ligne 336");
-
         $this->sql .= $criteres;
       }
     }
@@ -348,37 +316,25 @@ class RequetesSQL extends RequetesPDO
     if ($critere === 'membre-miseur'  || $critere === 'admin-mise') $this->sql .= " 
      HAVING nb_mise > 0";
 
-    $this->debug_to_console("je suis ligne 347");
-
-
     // mise pour l'utilisateur actif seulement
     if ($critere === 'membre-miseur') $this->sql .= " AND mise_max_utilisateur_actif > 0";
 
     $this->sql .= " ORDER BY e.enchere_date_fin ASC;";
 
-    $this->debug_to_console("je suis apres getenchere");
-
-    $this->debug_to_console("je suis ligne 357");
-    $this->debug_to_console($champs);
-
-    if ($champs == null) $champs = [];
-
-    $this->debug_to_console($champs);
-    $this->debug_to_console($champs == []);
-    return $this->getLignes($champs);
+    return $this->getLignes($champs ?? []);
   }
 
 
   /**
    * Récupération d'un timbre :
-   * @param  int $timbre_id, clé du timbre
+   * @param  int $enchere_id, clé du timbre
    * @return array|false tableau associatif de la ligne produite par la select, false si aucune ligne   
    */
-  public function getTimbre($timbre_id)
+  public function getTimbre($enchere_id)
   {
-    $this->sql = "SELECT timbre_id, timbre_titre, timbre_description, timbre_annee_publication, condition_nom, timbre_dimensions, tirage_nom, couleur_nom, timbre_certification, image_nom_fichier, pays_nom FROM timbre INNER JOIN `image` ON timbre_id = image_timbre_id INNER JOIN `condition` ON timbre_condition_id = condition_id INNER JOIN couleur ON timbre_couleur_id = couleur_id INNER JOIN tirage ON timbre_tirage_id = tirage_id INNER JOIN pays ON timbre_pays_id = pays_id WHERE timbre_id = :timbre_id";
+    $this->sql = "SELECT DISTINCT timbre_id, timbre_titre, timbre_description, timbre_annee_publication, condition_nom, timbre_dimensions, tirage_nom, couleur_nom, timbre_certification, image_nom_fichier, pays_nom FROM timbre INNER JOIN `image` ON timbre_id = image_timbre_id INNER JOIN `condition` ON timbre_condition_id = condition_id INNER JOIN couleur ON timbre_couleur_id = couleur_id INNER JOIN tirage ON timbre_tirage_id = tirage_id INNER JOIN pays ON timbre_pays_id = pays_id INNER JOIN enchere WHERE timbre_enchere_id = :enchere_id";
 
-    return $this->getLignes(['timbre_id' => $timbre_id], RequetesPDO::UNE_SEULE_LIGNE);
+    return $this->getLignes(['enchere_id' => $enchere_id], RequetesPDO::UNE_SEULE_LIGNE);
   }
 
 
@@ -397,6 +353,7 @@ class RequetesSQL extends RequetesPDO
     enchere_date_debut, 
     enchere_date_fin,
     TIMESTAMPDIFF(HOUR, '$aujourdhui', enchere_date_fin) AS heures_restant,
+    TIMESTAMPDIFF(HOUR, '$aujourdhui', enchere_date_debut) AS heures_avant_debut,
     enchere_utilisateur_id, 
     enchere_prix_reserve, 
     enchere_coup_coeur, 
@@ -482,42 +439,22 @@ class RequetesSQL extends RequetesPDO
   }
 
   /**
-   * Modifier une enchère
+   * Modifier une enchère de timbre
    * @param array $champs tableau des champs de l'enchère de timbre 
    * @return boolean true si modification effectuée, false sinon
    */
-  public function modifierEnchere($champs)
+  public function modifierEnchereTimbre($champs)
   {
     try {
-      $this->debuterTransaction();
-
       $this->sql = '
       UPDATE enchere SET
       enchere_date_debut        = :enchere_date_debut,
       enchere_date_fin          = :enchere_date_fin,
       enchere_prix_reserve      = :enchere_prix_reserve,
-      enchere_coup_coeur        = :enchere_coup_coeur,
+      enchere_coup_coeur        = :enchere_coup_coeur
       WHERE enchere_id          = :enchere_id;
       ';
-      $retour = $this->CUDLigne($champs);
-
-      $this->validerTransaction();
-      return  $retour;
-    } catch (Exception $e) {
-      $this->annulerTransaction();
-      return $e->getMessage();
-    }
-  }
-
-  /**
-   * Modifier un timbre
-   * @param array $champs tableau des champs du timbre 
-   * @return int|string clé primaire de la ligne ajoutée, message d'erreur sinon
-   */
-  public function modifierTimbre($champs)
-  {
-    try {
-      $this->debuterTransaction();
+      $retourEnchere = $this->CUDLigne($champs["enchere"]);
 
       $this->sql = '
       UPDATE timbre SET
@@ -529,13 +466,12 @@ class RequetesSQL extends RequetesPDO
       timbre_dimensions          = :timbre_dimensions,
       timbre_tirage_id           = :timbre_tirage_id,
       timbre_couleur_id          = :timbre_couleur_id,
-      timbre_certification       = :timbre_certification,
+      timbre_certification       = :timbre_certification
       WHERE timbre_id            = :timbre_id;
       ';
-      $retour = $this->CUDLigne($champs);
+      $retourTimbre = $this->CUDLigne($champs["timbre"]);
 
-      $this->validerTransaction();
-      return $retour;
+      return  $retourEnchere || $retourTimbre;
     } catch (Exception $e) {
       $this->annulerTransaction();
       return $e->getMessage();
@@ -543,17 +479,17 @@ class RequetesSQL extends RequetesPDO
   }
 
   /**
-   * Supprimer un timbre
+   * Supprimer une enchère de timbre
    * @param int $timbre_id clé primaire
    * @return boolean|string true si suppression effectuée, message d'erreur sinon
    */
 
-  public function supprimerTimbre($timbre_id)
+  public function supprimerEnchereTimbre($timbre_id)
   {
     try {
       $this->debuterTransaction();
       $this->sql = '
-        DELETE timbre, enchere, image FROM timbre INNER JOIN enchere ON timbre_enchere_id = enchere_id INNER JOIN image ON image_timbre_id = timbre_id WHERE timbre_id = :timbre_id';
+        DELETE image, timbre, enchere FROM timbre INNER JOIN image ON image_timbre_id = timbre_id INNER JOIN enchere ON timbre_enchere_id = enchere_id  WHERE timbre_id = :timbre_id';
       if (!$this->CUDLigne(['timbre_id' => $timbre_id]))
         throw new Exception("");
       foreach (glob("medias/images/timbre-$timbre_id-*") as $fichier) {
@@ -573,16 +509,24 @@ class RequetesSQL extends RequetesPDO
   /* GESTION DES IMAGES ================= */
 
   /**
-   * Récupération des images d'un timbre
+   * Récupération de l'image d'un timbre
    * @param int $timbre_id
    * @return array|false tableau associatif de la ligne produite par la select, false si aucune ligne
    */
+  public function getImage($timbre_id)
+  {
+    $this->sql = "
+      SELECT image_nom_fichier
+      FROM image
+      WHERE image_timbre_id = :timbre_id";
+    return $this->getLignes(['timbre_id' => $timbre_id], RequetesPDO::UNE_SEULE_LIGNE);
+  }
 
 
   /**
    * Modifier l'image d'un timbre
    * @param int $timbre_id
-   * @return boolean true si téléversement, false sinon
+   * @return 
    */
   public function modifierTimbreImage($timbre_id)
   {

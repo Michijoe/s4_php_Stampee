@@ -48,3 +48,50 @@ Le membre a accès à la liste de toutes les enchères auquelles il a participé
 La liste contient toutes les enchères auquelles il a participé, qu'il les ait remportées ou non.
 
 L'administrateur verra toutes les mises de tous les utilisateurs.
+
+
+
+---
+
+# MDP
+## token github
+
+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
+
+## mdp phpmyadmin webdev
+
+iloIGa06rJ1ZYQq8gKTl
+
+# WEBDEV
+Changer le nom des tables en enlevant majuscule
+Changer fonction str_contains (marche pas sur php v7) = strpos mais ça ne fait pas ce que str_contains faisait... à creuser
+
+# TODO
+ajouter clic sur image timbre dans admin mes enchères
+ajouter couleur sur lien actif menu admin gauche
+
+---
+
+# GUIDE UTILISATEUR
+
+Enchère en cours = 
+- nb de mise
+- date de fin
+- mise actuelle
+- bouton enchérir
+
+Enchère à venir =
+- date de début
+- heure de début
+- bouton en savoir plus
+
+Enchère archivées = 
+- date de début
+- date de fin
+- mise finale
+- bouton en savoir plus
+
+
+Coups de coeur du lord = à venir et en cours
+Nouveautés = date de début dans les 10 derniers jours (vérifier 10 ou 7 ?)
+

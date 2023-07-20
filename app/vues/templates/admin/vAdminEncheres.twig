@@ -63,14 +63,14 @@
 						<th>
 							<a href="admin?entite=enchere&action=m&enchere_id={{ enchereMise.enchere_id }}">
 								modifier</a>
-							{# si pas d'enchere ni de mise sur le timbre on peut supprimer #}
-							<span class="confirmer" data-href="admin?entite=enchere&action=s&enchere_id={{ enchereMise.enchere_id }}">supprimer</span>
+							{% if enchereMise.nb_mise <= 0  %}
+								{# si pas de mise sur le timbre on peut supprimer #}
+								<span class="confirmer" data-href="admin?entite=enchere&action=s&enchere_id={{ enchereMise.enchere_id }}">supprimer</span>
+							{% endif %}
 						</th>
 					</tr>
-				{% endfor %}
+				</th>
 			</tbody>
-		</tbody>
-	</table>
-{% else %}
-	<p>Vous n'avez pas encore ajouté d'enchère !</p>
-{% endif %}</section>{{ include("admin/modaleSuppression.twig") }}
+		</tr>
+	{% endfor %}
+</tbody></tbody></table>{% else %}<p>Vous n'avez pas encore ajouté d'enchère !</p>{% endif %}</section>{{ include("admin/modaleSuppression.twig") }}

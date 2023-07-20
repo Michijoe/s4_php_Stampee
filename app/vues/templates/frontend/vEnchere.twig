@@ -1,4 +1,5 @@
 <script type="module" src="assets/js/miser.js"></script>
+<script type="module" src="assets/js/zoom.js"></script>
 
 <div class="container-card-detail">
 	<div
@@ -15,8 +16,11 @@
 		class="card-detail">
 		<!-- image -->
 		<div>
-			<picture>
-				<img src={{ timbre.image_nom_fichier }} alt="{{ timbre.timbre_titre }}">
+			<picture class="container">
+				<div id="zoom" class="magnify-wrapper">
+					<img src={{ timbre.image_nom_fichier }} alt="{{ timbre.timbre_titre }}" id="main-img"/>
+					<div id="large-img"></div>
+				</div>
 			</picture>
 			<a aria-label="button-like" class="card-detail-button-like" href="#">
 				<svg class="svg-icon like-button" role="img" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
@@ -69,29 +73,35 @@
 			<ul>
 				<li>Date de début d'enchère:
 					{{ enchere.enchere_date_debut|date('d/m/Y') }}</li>
-				{% if enchere.heures_restant > 24 %}
-					<li>Date de fin:
+				{% if enchere.heures_restant > 24 or enchere.heures_restant < 0 %}
+					<li>Date de fin d'enchère:
 						{{ enchere.enchere_date_fin|date('d/m/Y') }}</li>
 				{% elseif enchere.heures_restant > 0 %}
 					<li>Temps restant:
 						{{ enchere.heures_restant }}
 						heures</li>
-				{% else %}
-					<li>Enchère terminée</li>
 				{% endif %}
-				<li>Nombre de mises:
-					{{ enchere.nb_mise }}</li>
-				<li>Mise actuelle:
-					{{ enchere.mise_actuelle|number_format(2, '.', ',') }}$</li>
+				{% if enchere.heures_avant_debut <= 0 %}
+					<li>Nombre de mises:
+						{{ enchere.nb_mise }}</li>
+					<li>Mise
+						{{ enchere.heures_restant > 0 ? 'actuelle' : 'finale' }}:
+						{{ enchere.mise_actuelle|number_format(2, '.', ',') }}$</li>
+				{% endif %}
 				{% if enchere.enchere_coup_coeur %}
-					<li>Cette enchère est un coup de coeur du Lord ! Ne faites pas passez votre chance de l'acquérir, enchérissez vite !</li>
+					<li>Cette enchère est un coup de coeur du Lord Stampee !</li>
 				{% endif %}
 			</ul>
+
 
 			{% if (oUtilConn is null) %}
 				<h3>Vous devez vous inscrire ou vous connecter pour pouvoir miser sur une enchère !</h3>
 			{% elseif oUtilConn.utilisateur_id is same as enchere.mise_utilisateur_id %}
 				<h3>Vous êtes présentement le membre remportant l'enchère !</h3>
+			{% elseif enchere.heures_restant < 0 %}
+				<h3>Cette enchère est terminée !</h3>
+			{% elseif enchere.heures_avant_debut > 0 %}
+				<h3>Cette enchère n'a pas encore débutée !</h3>
 			{% else %}
 				<form name="frmMise" method="POST">
 					<span id="messageErreurMise"></span>

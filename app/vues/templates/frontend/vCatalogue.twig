@@ -142,17 +142,12 @@
 						</h3>
 						<!-- metadonnees mises -->
 						<div class="stampcard-info-wrapper">
-							<div class="stampcard-info">
-								{% if typeEnchere is not same as 'Enchères à venir' %}
+							<div
+								class="stampcard-info">
+								{# si l'enchère est en cours #}
+								{% if enchere.heures_avant_debut <= 0 and enchere.heures_restant > 0 %}
 									<span>Nombre de mises:
 										{{ enchere.nb_mise }}</span>
-								{% endif %}
-								{% if typeEnchere is same as 'Enchères à venir' %}
-									<span>Date de début:
-										{{ enchere.enchere_date_debut|date('d/m/Y')}}</span>
-									<span>Heure de début:
-										{{ enchere.enchere_date_debut|date('H:i:s')}}</span>
-								{% else %}
 									{% if enchere.heures_restant > 24 %}
 										<span>Date de fin:
 											{{ enchere.enchere_date_fin|date('d/m/Y') }}</span>
@@ -163,14 +158,26 @@
 									{% else %}
 										<span>Enchère terminée</span>
 									{% endif %}
-									{% if typeEnchere is same as 'Enchères en cours' %}
-										{% if enchere.mise_actuelle %}
-											<span>Mise actuelle :
-												{{ enchere.mise_actuelle|number_format(2, '.', ',') }}$</span>
-										{% else %}
-											<span>Soyez le premier à enchérir !</span>
-										{% endif %}
+									{% if enchere.mise_actuelle %}
+										<span>Mise actuelle :
+											{{ enchere.mise_actuelle|number_format(2, '.', ',') }}$</span>
+									{% else %}
+										<span>Soyez le premier à enchérir !</span>
 									{% endif %}
+									{# si l'enchère est à venir #}
+								{% elseif enchere.heures_restant > 0 %}
+									<span>Date de début:
+										{{ enchere.enchere_date_debut|date('d/m/Y')}}</span>
+									<span>Heure de début:
+										{{ enchere.enchere_date_debut|date('H:i:s')}}</span>
+								{% else %}
+									{# si l'enchère est terminée #}
+									<span>Date de début:
+										{{ enchere.enchere_date_debut|date('d/m/Y')}}</span>
+									<span>Date de fin:
+										{{ enchere.enchere_date_fin|date('d/m/Y')}}</span>
+									<span>Mise finale:
+										{{ enchere.mise_actuelle|number_format(2, '.', ',') }}$</span>
 								{% endif %}
 							</div>
 						</div>

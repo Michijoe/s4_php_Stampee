@@ -59,31 +59,14 @@ class Frontend extends Routeur
   }
 
 
-  function debug_to_console($data)
-  {
-    $output = $data;
-    if (is_array($output))
-      $output = implode(',', $output);
-
-    echo "<script>console.log('Debug Objects: " . $output . "' );</script>";
-  }
-
-
   /**
    * Afficher l'accueil
    * 
    */
   public function afficherAccueil()
   {
-
-    $this->debug_to_console("je suis dans accueil");
-
-    $nouveautes = $this->oRequetesSQL->getEncheresMises('public-nouveaute', null);
-
-    $this->debug_to_console("je suis apres geteenchere");
-
-
-    // $coupsCoeur = $this->oRequetesSQL->getTimbres('coupsCoeur');
+    $nouveautes = $this->oRequetesSQL->getEncheresMises('public-nouveaute');
+    $coupsCoeur = $this->oRequetesSQL->getEncheresMises('public-coups-coeur');
 
     (new Vue)->generer(
       "vAccueil",
@@ -93,7 +76,7 @@ class Frontend extends Routeur
         'titreHB'        => 'La valeur sûre des enchères de timbres en ligne',
         'texteHB'        => 'Avec déjà plus de 100 000 timbres vendus, Stampee est la maison d\'enchères de timbres la plus populaire auprès des collectionneurs depuis 1949. Découvrez les collections uniques du lord Stampee et partez à la recherche de vos nouvelles acquisitions.',
         'nouveautes'     => $nouveautes,
-        // 'coupsCoeur'     => $coupsCoeur,
+        'coupsCoeur'     => $coupsCoeur,
       ],
       "gabarit-frontend"
     );
@@ -166,17 +149,13 @@ class Frontend extends Routeur
    */
   public function afficherEnchere()
   {
-    $this->debug_to_console("je suis dans afficherenchere");
-
     $enchere = false;
     $timbre = false;
     if (!is_null($this->enchere_id)) {
-      // $enchere = $this->oRequetesSQL->getEnchere($this->enchere_id);
-      // $timbre = $this->oRequetesSQL->getTimbre($this->enchere_id);
+      $enchere = $this->oRequetesSQL->getEnchere($this->enchere_id);
+      $timbre = $this->oRequetesSQL->getTimbre($this->enchere_id);
     }
-    // if (!$enchere || !$timbre) throw new Exception("Enchère ou timbre inexistants.");
-
-    exit;
+    if (!$enchere || !$timbre) throw new Exception("Enchère ou timbre inexistants.");
 
     (new Vue)->generer(
       "vEnchere",
@@ -185,8 +164,8 @@ class Frontend extends Routeur
         'titre'        => 'Timbre',
         'titreHB'      => 'Fiche Timbre',
         'texteHB'      => '',
-        // 'enchere'      => $enchere,
-        // 'timbre'       => $timbre
+        'enchere'      => $enchere,
+        'timbre'       => $timbre
       ],
       "gabarit-frontend"
     );

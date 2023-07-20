@@ -7,6 +7,7 @@
  */
 class Routeur
 {
+
   private $routes = [
     // uri,             classe,     méthode
     // ------------------------------------
@@ -17,13 +18,12 @@ class Routeur
     ["connecter",     "Frontend", "connecter"],
     ["creerCompte",   "Frontend", "creerCompte"],
     ["deconnecter",   "Frontend", "deconnecter"],
-    ["miser",         "Frontend", "miser"]
+    ["miser",         "Frontend", "miser"],
   ];
 
   protected $oRequetesSQL; // objet RequetesSQL utilisé par tous les contrôleurs
 
-  const BASE_URI = (ENV == "DEV") ? '/S4/Stampee/' : '/stampee/';
-  // const BASE_URI = '/S4/Stampee/'; // dossier racine du site par rapport au dossier racine d'Apache 
+  const BASE_URI = '/S4/Stampee/'; // dossier racine du site par rapport au dossier racine d'Apache 
   // const BASE_URI = '/'; // pour le PHP Server de Visual Studio Code
 
   const ERROR_FORBIDDEN = "HTTP 403";

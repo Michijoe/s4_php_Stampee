@@ -16,16 +16,16 @@ USE `stampee` ;
 
 -- ---
 
--- Table 'timbre'
+-- Table 'Timbre'
 
 --
 
 -- ---
 
-DROP TABLE IF EXISTS `timbre`;
+DROP TABLE IF EXISTS `Timbre`;
 
 CREATE TABLE
-    `timbre` (
+    `Timbre` (
         `timbre_id` INTEGER(10) NOT NULL AUTO_INCREMENT,
         `timbre_titre` VARCHAR(255) NOT NULL,
         `timbre_description` VARCHAR(500) NULL,
@@ -44,16 +44,16 @@ CREATE TABLE
 
 -- ---
 
--- Table 'enchere'
+-- Table 'Enchere'
 
 --
 
 -- ---
 
-DROP TABLE IF EXISTS `enchere`;
+DROP TABLE IF EXISTS `Enchere`;
 
 CREATE TABLE
-    `enchere` (
+    `Enchere` (
         `enchere_id` INTEGER(10) NOT NULL AUTO_INCREMENT,
         `enchere_date_debut` DATETIME NOT NULL,
         `enchere_date_fin` DATETIME NOT NULL,
@@ -65,33 +65,33 @@ CREATE TABLE
 
 -- ---
 
--- Table 'pays'
+-- Table 'Pays'
 
--- pays d''origine du timbre
+-- Pays d''origine du timbre
 
 -- ---
 
-DROP TABLE IF EXISTS `pays`;
+DROP TABLE IF EXISTS `Pays`;
 
 CREATE TABLE
-    `pays` (
+    `Pays` (
         `pays_id` TINYINT(3) NOT NULL AUTO_INCREMENT,
         `pays_nom` VARCHAR(255) NOT NULL,
         PRIMARY KEY (`pays_id`)
-    ) COMMENT 'pays d''origine du timbre';
+    ) COMMENT 'Pays d''origine du timbre';
 
 -- ---
 
--- Table 'image'
+-- Table 'Image'
 
 --
 
 -- ---
 
-DROP TABLE IF EXISTS `image`;
+DROP TABLE IF EXISTS `Image`;
 
 CREATE TABLE
-    `image` (
+    `Image` (
         `image_id` INTEGER(10) NOT NULL AUTO_INCREMENT,
         `image_timbre_id` INTEGER(10) NOT NULL,
         `image_nom_fichier` VARCHAR(255) NOT NULL,
@@ -105,16 +105,16 @@ CREATE TABLE
 
 -- ---
 
--- Table 'mise'
+-- Table 'Mise'
 
 --
 
 -- ---
 
-DROP TABLE IF EXISTS `mise`;
+DROP TABLE IF EXISTS `Mise`;
 
 CREATE TABLE
-    `mise` (
+    `Mise` (
         `mise_id` INTEGER(10) NOT NULL AUTO_INCREMENT,
         `mise_prix` DECIMAL NOT NULL,
         `mise_utilisateur_id` INTEGER(10) NOT NULL,
@@ -124,16 +124,16 @@ CREATE TABLE
 
 -- ---
 
--- Table 'utilisateur'
+-- Table 'Utilisateur'
 
 --
 
 -- ---
 
-DROP TABLE IF EXISTS `utilisateur`;
+DROP TABLE IF EXISTS `Utilisateur`;
 
 CREATE TABLE
-    `utilisateur` (
+    `Utilisateur` (
         `utilisateur_id` INTEGER(10) NOT NULL AUTO_INCREMENT,
         `utilisateur_nom` VARCHAR(255) NOT NULL,
         `utilisateur_prenom` VARCHAR(255) NOT NULL,
@@ -147,16 +147,16 @@ CREATE TABLE
 
 -- ---
 
--- Table 'favoris'
+-- Table 'Favoris'
 
 --
 
 -- ---
 
-DROP TABLE IF EXISTS `favoris`;
+DROP TABLE IF EXISTS `Favoris`;
 
 CREATE TABLE
-    `favoris` (
+    `Favoris` (
         `favoris_id` INTEGER(10) NOT NULL AUTO_INCREMENT,
         `favoris_utilisateur_id` INTEGER(10) NOT NULL,
         `favoris_enchere_id` INTEGER(10) NOT NULL,
@@ -165,16 +165,16 @@ CREATE TABLE
 
 -- ---
 
--- Table 'commentaire'
+-- Table 'Commentaire'
 
 --
 
 -- ---
 
-DROP TABLE IF EXISTS `commentaire`;
+DROP TABLE IF EXISTS `Commentaire`;
 
 CREATE TABLE
-    `commentaire` (
+    `Commentaire` (
         `commentaire_id` INTEGER(10) NOT NULL AUTO_INCREMENT,
         `commentaire_texte` VARCHAR(500) NOT NULL,
         `commentaire_date_ajout` DATETIME NOT NULL,
@@ -185,16 +185,16 @@ CREATE TABLE
 
 -- ---
 
--- Table 'condition'
+-- Table 'Condition'
 
 --
 
 -- ---
 
-DROP TABLE IF EXISTS `condition`;
+DROP TABLE IF EXISTS `Condition`;
 
 CREATE TABLE
-    `condition` (
+    `Condition` (
         `condition_id` TINYINT(3) NOT NULL AUTO_INCREMENT,
         `condition_nom` VARCHAR(50) NOT NULL,
         PRIMARY KEY (`condition_id`)
@@ -202,16 +202,16 @@ CREATE TABLE
 
 -- ---
 
--- Table 'tirage'
+-- Table 'Tirage'
 
 --
 
 -- ---
 
-DROP TABLE IF EXISTS `tirage`;
+DROP TABLE IF EXISTS `Tirage`;
 
 CREATE TABLE
-    `tirage` (
+    `Tirage` (
         `tirage_id` TINYINT(3) NOT NULL AUTO_INCREMENT,
         `tirage_nom` VARCHAR(50) NOT NULL,
         PRIMARY KEY (`tirage_id`)
@@ -219,16 +219,16 @@ CREATE TABLE
 
 -- ---
 
--- Table 'couleur'
+-- Table 'Couleur'
 
 --
 
 -- ---
 
-DROP TABLE IF EXISTS `couleur`;
+DROP TABLE IF EXISTS `Couleur`;
 
 CREATE TABLE
-    `couleur` (
+    `Couleur` (
         `couleur_id` TINYINT(3) NOT NULL AUTO_INCREMENT,
         `couleur_nom` VARCHAR(50) NOT NULL,
         PRIMARY KEY (`couleur_id`)
@@ -236,16 +236,16 @@ CREATE TABLE
 
 -- ---
 
--- Table 'profil'
+-- Table 'Profil'
 
 --
 
 -- ---
 
-DROP TABLE IF EXISTS `profil`;
+DROP TABLE IF EXISTS `Profil`;
 
 CREATE TABLE
-    `profil` (
+    `Profil` (
         `profil_id` INTEGER(10) NOT NULL AUTO_INCREMENT,
         `profil_nom` VARCHAR(50) NOT NULL,
         PRIMARY KEY (`profil_id`)
@@ -257,65 +257,65 @@ CREATE TABLE
 
 -- ---
 
-ALTER TABLE `timbre`
+ALTER TABLE `Timbre`
 ADD
-    FOREIGN KEY (timbre_condition_id) REFERENCES `condition` (`condition_id`);
+    FOREIGN KEY (timbre_condition_id) REFERENCES `Condition` (`condition_id`);
 
-ALTER TABLE `timbre`
+ALTER TABLE `Timbre`
 ADD
-    FOREIGN KEY (timbre_pays_id) REFERENCES `pays` (`pays_id`);
+    FOREIGN KEY (timbre_pays_id) REFERENCES `Pays` (`pays_id`);
 
-ALTER TABLE `timbre`
+ALTER TABLE `Timbre`
 ADD
-    FOREIGN KEY (timbre_tirage_id) REFERENCES `tirage` (`tirage_id`);
+    FOREIGN KEY (timbre_tirage_id) REFERENCES `Tirage` (`tirage_id`);
 
-ALTER TABLE `timbre`
+ALTER TABLE `Timbre`
 ADD
-    FOREIGN KEY (timbre_couleur_id) REFERENCES `couleur` (`couleur_id`);
+    FOREIGN KEY (timbre_couleur_id) REFERENCES `Couleur` (`couleur_id`);
 
-ALTER TABLE `timbre`
+ALTER TABLE `Timbre`
 ADD
-    FOREIGN KEY (timbre_utilisateur_id) REFERENCES `utilisateur` (`utilisateur_id`);
+    FOREIGN KEY (timbre_utilisateur_id) REFERENCES `Utilisateur` (`utilisateur_id`);
 
-ALTER TABLE `timbre`
+ALTER TABLE `Timbre`
 ADD
-    FOREIGN KEY (timbre_enchere_id) REFERENCES `enchere` (`enchere_id`);
+    FOREIGN KEY (timbre_enchere_id) REFERENCES `Enchere` (`enchere_id`);
 
-ALTER TABLE `enchere`
+ALTER TABLE `Enchere`
 ADD
-    FOREIGN KEY (enchere_utilisateur_id) REFERENCES `utilisateur` (`utilisateur_id`);
+    FOREIGN KEY (enchere_utilisateur_id) REFERENCES `Utilisateur` (`utilisateur_id`);
 
-ALTER TABLE `image`
+ALTER TABLE `Image`
 ADD
-    FOREIGN KEY (image_timbre_id) REFERENCES `timbre` (`timbre_id`);
+    FOREIGN KEY (image_timbre_id) REFERENCES `Timbre` (`timbre_id`);
 
-ALTER TABLE `mise`
+ALTER TABLE `Mise`
 ADD
-    FOREIGN KEY (mise_utilisateur_id) REFERENCES `utilisateur` (`utilisateur_id`);
+    FOREIGN KEY (mise_utilisateur_id) REFERENCES `Utilisateur` (`utilisateur_id`);
 
-ALTER TABLE `mise`
+ALTER TABLE `Mise`
 ADD
-    FOREIGN KEY (mise_enchere_id) REFERENCES `enchere` (`enchere_id`);
+    FOREIGN KEY (mise_enchere_id) REFERENCES `Enchere` (`enchere_id`);
 
-ALTER TABLE `utilisateur`
+ALTER TABLE `Utilisateur`
 ADD
-    FOREIGN KEY (utilisateur_profil_id) REFERENCES `profil` (`profil_id`);
+    FOREIGN KEY (utilisateur_profil_id) REFERENCES `Profil` (`profil_id`);
 
-ALTER TABLE `favoris`
+ALTER TABLE `Favoris`
 ADD
-    FOREIGN KEY (favoris_utilisateur_id) REFERENCES `utilisateur` (`utilisateur_id`);
+    FOREIGN KEY (favoris_utilisateur_id) REFERENCES `Utilisateur` (`utilisateur_id`);
 
-ALTER TABLE `favoris`
+ALTER TABLE `Favoris`
 ADD
-    FOREIGN KEY (favoris_enchere_id) REFERENCES `enchere` (`enchere_id`);
+    FOREIGN KEY (favoris_enchere_id) REFERENCES `Enchere` (`enchere_id`);
 
-ALTER TABLE `commentaire`
+ALTER TABLE `Commentaire`
 ADD
-    FOREIGN KEY (commentaire_utilisateur_id) REFERENCES `utilisateur` (`utilisateur_id`);
+    FOREIGN KEY (commentaire_utilisateur_id) REFERENCES `Utilisateur` (`utilisateur_id`);
 
-ALTER TABLE `commentaire`
+ALTER TABLE `Commentaire`
 ADD
-    FOREIGN KEY (commentaire_enchere_id) REFERENCES `enchere` (`enchere_id`);
+    FOREIGN KEY (commentaire_enchere_id) REFERENCES `Enchere` (`enchere_id`);
 
 -- ---
 
@@ -323,29 +323,29 @@ ADD
 
 -- ---
 
--- ALTER TABLE `timbre` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `Timbre` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- ALTER TABLE `enchere` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `Enchere` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- ALTER TABLE `pays` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `Pays` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- ALTER TABLE `image` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `Image` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- ALTER TABLE `mise` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `Mise` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- ALTER TABLE `utilisateur` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `Utilisateur` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- ALTER TABLE `favoris` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `Favoris` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- ALTER TABLE `commentaire` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `Commentaire` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- ALTER TABLE `condition` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `Condition` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- ALTER TABLE `tirage` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `Tirage` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- ALTER TABLE `couleur` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `Couleur` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
--- ALTER TABLE `profil` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `Profil` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ---
 
@@ -353,50 +353,50 @@ ADD
 
 -- ---
 
--- INSERT INTO `timbre` (`timbre_id`,`timbre_titre`,`timbre_description`,`timbre_annee_publication`,`timbre_condition_id`,`timbre_pays_id`,`timbre_dimensions`,`timbre_tirage_id`,`timbre_couleur_id`,`timbre_certification`,`timbre_statut`,`timbre_utilisateur_id`,`timbre_enchere_id`) VALUES
+-- INSERT INTO `Timbre` (`timbre_id`,`timbre_titre`,`timbre_description`,`timbre_annee_publication`,`timbre_condition_id`,`timbre_pays_id`,`timbre_dimensions`,`timbre_tirage_id`,`timbre_couleur_id`,`timbre_certification`,`timbre_statut`,`timbre_utilisateur_id`,`timbre_enchere_id`) VALUES
 
 -- ('','','','','','','','','','','','','');
 
--- INSERT INTO `enchere` (`enchere_id`,`enchere_date_debut`,`enchere_date_fin`,`enchere_utilisateur_id`,`enchere_prix_reserve`,`enchere_coup_coeur`) VALUES
+-- INSERT INTO `Enchere` (`enchere_id`,`enchere_date_debut`,`enchere_date_fin`,`enchere_utilisateur_id`,`enchere_prix_reserve`,`enchere_coup_coeur`) VALUES
 
 -- ('','','','','','');
 
--- INSERT INTO `pays` (`pays_id`,`pays_nom`) VALUES
+-- INSERT INTO `Pays` (`pays_id`,`pays_nom`) VALUES
 
 -- ('','');
 
--- INSERT INTO `image` (`image_id`,`image_timbre_id`,`image_nom_fichier`,`image_principale`) VALUES
+-- INSERT INTO `Image` (`image_id`,`image_timbre_id`,`image_nom_fichier`,`image_principale`) VALUES
 
 -- ('','','','');
 
--- INSERT INTO `mise` (`mise_id`,`mise_prix`,`mise_utilisateur_id`,`mise_enchere_id`) VALUES
+-- INSERT INTO `Mise` (`mise_id`,`mise_prix`,`mise_utilisateur_id`,`mise_enchere_id`) VALUES
 
 -- ('','','','');
 
--- INSERT INTO `utilisateur` (`utilisateur_id`,`utilisateur_nom`,`utilisateur_prenom`,`utilisateur_courriel`,`utilisateur_mdp`,`utilisateur_renouveler_mdp`,`utilisateur_profil_id`) VALUES
+-- INSERT INTO `Utilisateur` (`utilisateur_id`,`utilisateur_nom`,`utilisateur_prenom`,`utilisateur_courriel`,`utilisateur_mdp`,`utilisateur_renouveler_mdp`,`utilisateur_profil_id`) VALUES
 
 -- ('','','','','','','');
 
--- INSERT INTO `favoris` (`favoris_id`,`favoris_utilisateur_id`,`favoris_enchere_id`) VALUES
+-- INSERT INTO `Favoris` (`favoris_id`,`favoris_utilisateur_id`,`favoris_enchere_id`) VALUES
 
 -- ('','','');
 
--- INSERT INTO `commentaire` (`commentaire_id`,`commentaire_texte`,`commentaire_date_ajout`,`commentaire_utilisateur_id`,`commentaire_enchere_id`) VALUES
+-- INSERT INTO `Commentaire` (`commentaire_id`,`commentaire_texte`,`commentaire_date_ajout`,`commentaire_utilisateur_id`,`commentaire_enchere_id`) VALUES
 
 -- ('','','','','');
 
--- INSERT INTO `condition` (`condition_id`,`condition_nom`) VALUES
+-- INSERT INTO `Condition` (`condition_id`,`condition_nom`) VALUES
 
 -- ('','');
 
--- INSERT INTO `tirage` (`tirage_id`,`tirage_nom`) VALUES
+-- INSERT INTO `Tirage` (`tirage_id`,`tirage_nom`) VALUES
 
 -- ('','');
 
--- INSERT INTO `couleur` (`couleur_id`,`couleur_nom`) VALUES
+-- INSERT INTO `Couleur` (`couleur_id`,`couleur_nom`) VALUES
 
 -- ('','');
 
--- INSERT INTO `profil` (`profil_id`,`profil_nom`) VALUES
+-- INSERT INTO `Profil` (`profil_id`,`profil_nom`) VALUES
 
 -- ('','');

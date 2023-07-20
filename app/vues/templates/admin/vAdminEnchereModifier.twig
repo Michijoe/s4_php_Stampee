@@ -81,13 +81,13 @@
 			<input type="hidden" name="enchere[enchere_id]" value="{{ enchere.enchere_id }}">
 
 		</div>
-		{# <div>
-																																			<label>Image principale</label>
-																																			<img src="{{ timbre.image_nom_fichier }}" alt="">
-																																			<input name="image_nom_fichier" type="file">
-																																			<span>&nbsp;{{ erreurs.image_nom_fichier }}</span>
-																																		</div> #}
-		<input type="submit" value="Envoyer">
+		<div>
+			<label>Image principale</label>
+			<img src="{{ image.image_nom_fichier }}" alt="">
+			<input name="image_nom_fichier" type="file">
+			<span>&nbsp;{{ erreursImage.image_nom_fichier }}</span>
+		</div>
 
+		<input type="submit" value="Envoyer">
 	</form>
 </section>

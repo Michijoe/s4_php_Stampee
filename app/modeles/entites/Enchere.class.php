@@ -88,8 +88,8 @@ class Enchere extends Entite
     {
         unset($this->erreurs['enchere_coup_coeur']);
         if (
-            $enchere_coup_coeur != 'Oui' &&
-            $enchere_coup_coeur != 'Non'
+            $enchere_coup_coeur != 'oui' &&
+            $enchere_coup_coeur != 'non'
         ) {
             $this->erreurs['enchere_coup_coeur'] = 'Entrée incorrecte.';
         }
