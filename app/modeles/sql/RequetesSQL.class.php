@@ -361,9 +361,9 @@ class RequetesSQL extends RequetesPDO
     MAX(mise_prix) AS mise_actuelle,
     mise_utilisateur_id
     FROM 
-        Enchere
+        enchere
     LEFT JOIN 
-        Mise ON mise_enchere_id = enchere_id
+        mise ON mise_enchere_id = enchere_id
     WHERE 
         enchere_id = :enchere_id
     GROUP BY 
