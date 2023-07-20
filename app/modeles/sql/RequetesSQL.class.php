@@ -228,7 +228,7 @@ class RequetesSQL extends RequetesPDO
          LIMIT 1
        ) AS mise_actuelle_utilisateur_id";
 
-    if ((strpos($critere, 'admin'))) $this->sql .=
+    if ((strpos($critere, 'admin')) !== false) $this->sql .=
       ", u.utilisateur_prenom, u.utilisateur_nom";
 
     if ($critere === 'membre-miseur') $this->sql .= ", MAX(CASE WHEN m.mise_utilisateur_id = " . $_SESSION['oUtilConn']->utilisateur_id . " THEN m.mise_prix END) AS mise_max_utilisateur_actif";
@@ -239,14 +239,14 @@ class RequetesSQL extends RequetesPDO
        JOIN image i ON i.image_timbre_id = t.timbre_id
        LEFT JOIN mise m ON e.enchere_id = m.mise_enchere_id";
 
-    if ((strpos($critere, 'admin'))) $this->sql .= " 
+    if ((strpos($critere, 'admin')) !== false) $this->sql .= " 
      JOIN utilisateur u ON enchere_utilisateur_id = utilisateur_id";
 
     if ($critere === 'membre-owner') $this->sql .= " WHERE timbre_utilisateur_id = " . $_SESSION['oUtilConn']->utilisateur_id;
 
 
     // catalogue public montre les enchères validées
-    if (strpos($critere, 'public')) {
+    if ((strpos($critere, 'public')) !== false) {
 
       $this->sql .= " WHERE timbre_statut = '1'";
 
