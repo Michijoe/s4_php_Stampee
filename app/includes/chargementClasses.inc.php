@@ -7,7 +7,6 @@
  */
 function chargerClasse($classe)
 {
-
   $dossiers = array('modeles/sql/', 'modeles/entites/', 'vues/', 'controleurs/', 'core/');
 
   foreach ($dossiers as $dossier) {

@@ -9,6 +9,7 @@ class Tirage extends Entite
     protected $tirage_id;
     protected $tirage_nom;
 
+
     /**
      * Mutateur de la propriété tirage_id 
      * @param int $tirage_id
@@ -24,6 +25,7 @@ class Tirage extends Entite
         $this->tirage_id = $tirage_id;
         return $this;
     }
+
 
     /**
      * Mutateur de la propriété tirage_nom

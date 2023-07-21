@@ -4,14 +4,31 @@
     grid-template-columns: 1fr 2fr 1fr;
 }
 
-.card-detail ul {
-    padding-bottom: var(--spacing-double);
-}
-.card-detail li {
-    display: block;
+.card-detail table {
+    border-collapse: collapse;
+    font-size: 0.9em;
+    width: 100%;
+    border-radius: 5px 5px 0 0;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    margin-bottom: 1.5rem;
 }
 
-.card-detail-button-like {
-	position: absolute;
-	border-radius: 50%;
+.card-detail table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.card-detail-bid-button {
+    padding: 10px;
+    background-color: var(--color-golden);
+    border-radius: 8px;
+    text-align: center;
+    margin-top: 0.5rem;
+    cursor: pointer;
+    font-weight: bold;
+    border: none;
+}
+.card-detail-bid-button:hover {
+    background-color: var(--color-red);
+    color: white;
 }

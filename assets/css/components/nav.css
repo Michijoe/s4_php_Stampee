@@ -50,12 +50,16 @@
 .nav-main-dropdown-content {
 	position: absolute; 
 	top: 100%;
+	right: -15px;
 	width: max-content;
-	max-width: 22ch;
 	font-size: 1.3rem;
 	text-transform: none;
 	padding: 15px;
 	background-color: white;
+}
+.nav-main-dropdown-content > a {
+	display: block;
+	text-align: right;
 }
 
 .nav-main a:hover {

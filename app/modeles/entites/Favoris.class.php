@@ -46,6 +46,7 @@ class Favoris extends Entite
         return $this;
     }
 
+
     /**
      * Mutateur de la propriété favoris_utilisateur_id
      * @param string $favoris_utilisateur_id
@@ -62,6 +63,7 @@ class Favoris extends Entite
         return $this;
     }
 
+
     /**
      * Mutateur de la propriété favoris_id_enchere_id
      * @param string $favoris_id_enchere_id
@@ -77,6 +79,7 @@ class Favoris extends Entite
         $this->favoris_id_enchere_id = $favoris_id_enchere_id;
         return $this;
     }
+
 
     /**
      * Mutateur de la propriété favoris_etat

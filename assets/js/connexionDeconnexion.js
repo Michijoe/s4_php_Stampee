@@ -1,14 +1,12 @@
 let eUtilisateur = document.getElementById('utilisateur');
 let eConnecter = document.getElementById('connecter');
 let eCreerCompte = document.getElementById('creerCompte');
-// let eDeconnecter = document.getElementById('deconnecter');
 let eModaleConnexion = document.getElementById('modaleConnexion');
 
 let eMessageErreurConnexion = document.getElementById('messageErreurConnexion');
 
 eConnecter.onclick = afficherFenetreModale;
 frmConnexion.onsubmit = traiterFormulaire;
-// eDeconnecter.onclick = deconnecter;
 
 /**
  * Affichage de la fenêtre modale au clic sur le lien Connecter

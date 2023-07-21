@@ -1,13 +1,13 @@
 INSERT INTO
-    `Profil` (`profil_id`, `profil_nom`)
+    `profil` (`profil_id`, `profil_nom`)
 VALUES (1, 'Administrateur'), (2, 'Membre');
 
 INSERT INTO
-    `Pays` (`pays_id`, `pays_nom`)
+    `pays` (`pays_id`, `pays_nom`)
 VALUES (1, 'Royaume-Uni'), (2, 'États-Unis'), (3, 'Canada'), (4, 'Australie'), (5, 'Europe'), (6, 'Amériques'), (7, 'Afrique'), (8, 'Asie'), (9, 'Océanie'), (10, 'Autres');
 
 INSERT INTO
-    `Utilisateur` (
+    `utilisateur` (
         `utilisateur_id`,
         `utilisateur_nom`,
         `utilisateur_prenom`,
@@ -43,22 +43,22 @@ VALUES (
     );
 
 INSERT INTO
-    `Tirage` (`tirage_id`, `tirage_nom`)
+    `tirage` (`tirage_id`, `tirage_nom`)
 VALUES (1, '-100'), (2, '100-500'), (3, '500-1000'), (4, '1000-5000'), (5, '+5000');
 
 INSERT INTO
-    `Condition` (
+    `condition` (
         `condition_id`,
         `condition_nom`
     )
 VALUES (1, 'Endommagée'), (2, 'Moyenne'), (3, 'Bonne'), (4, 'Excellente'), (5, 'Parfaite');
 
 INSERT INTO
-    `Couleur` (`couleur_id`, `couleur_nom`)
+    `couleur` (`couleur_id`, `couleur_nom`)
 VALUES (1, 'Rouge'), (2, 'Jaune'), (3, 'Bleu'), (4, 'Vert'), (5, 'Autre');
 
 INSERT INTO
-    `Enchere` (
+    `enchere` (
         `enchere_id`,
         `enchere_date_debut`,
         `enchere_date_fin`,
@@ -72,144 +72,144 @@ VALUES (
         '2023-08-14 20:00:00',
         1,
         '15',
-        'Non'
+        'non'
     ), (
         2,
         '2023-06-10 08:00:00',
         '2023-08-10 20:00:00',
         1,
         '50',
-        'Oui'
+        'oui'
     ), (
         3,
         '2023-09-14 08:00:00',
         '2023-10-14 08:00:00',
         2,
         '100',
-        'Non'
+        'non'
     ), (
         4,
         '2023-06-14 08:00:00',
         '2023-10-14 08:00:00',
         2,
         '80',
-        'Non'
+        'non'
     ), (
         5,
         '2023-10-12 12:00:00',
         '2023-12-12 12:00:00',
         1,
         '200',
-        'Oui'
+        'oui'
     ), (
         6,
         '2023-06-12 12:00:00',
         '2023-07-12 12:00:00',
         2,
         '400',
-        'Oui'
+        'oui'
     ), (
         7,
         '2023-06-01 12:00:00',
         '2023-07-01 12:00:00',
         1,
         '120',
-        'Non'
+        'non'
     ), (
         8,
         '2023-05-15 12:00:00',
         '2023-07-15 12:00:00',
         2,
         '15',
-        'Oui'
+        'oui'
     ), (
         9,
         '2023-07-03 12:00:00',
         '2023-09-03 12:00:00',
         1,
         '45',
-        'Non'
+        'non'
     ), (
         10,
         '2023-06-20 12:00:00',
         '2023-09-20 12:00:00',
         2,
         '75',
-        'Non'
+        'non'
     ), (
         11,
         '2023-02-12 12:00:00',
         '2023-04-12 12:00:00',
         1,
         '250',
-        'Oui'
+        'oui'
     ), (
         12,
         '2023-10-12 12:00:00',
         '2023-12-12 12:00:00',
         2,
         '400',
-        'Oui'
+        'oui'
     ), (
         13,
         '2024-01-01 12:00:00',
         '2024-01-12 12:00:00',
         1,
         '40',
-        'Oui'
+        'oui'
     ), (
         14,
         '2023-07-01 12:00:00',
         '2023-07-30 12:00:00',
         2,
         '60',
-        'Non'
+        'non'
     ), (
         15,
         '2023-06-01 12:00:00',
         '2023-06-30 12:00:00',
         1,
         '100',
-        'Non'
+        'non'
     ), (
         16,
         '2023-05-01 12:00:00',
         '2023-05-28 12:00:00',
         2,
         '90',
-        'Oui'
+        'oui'
     ), (
         17,
         '2023-07-01 12:00:00',
         '2023-08-01 12:00:00',
         1,
         '320',
-        'Oui'
+        'oui'
     ), (
         18,
         '2023-07-02 12:00:00',
         '2023-08-02 12:00:00',
         1,
         '110',
-        'Non'
+        'non'
     ), (
         19,
         '2023-07-01 12:00:00',
         '2023-07-15 12:00:00',
         2,
         '125',
-        'Oui'
+        'oui'
     ), (
         20,
         '2023-07-10 12:00:00',
         '2023-07-24 12:00:00',
         2,
         '30',
-        'Oui'
+        'oui'
     );
 
 INSERT INTO
-    `Timbre` (
+    `timbre` (
         `timbre_id`,
         `timbre_titre`,
         `timbre_description`,
@@ -507,7 +507,7 @@ VALUES (
     );
 
 INSERT INTO
-    `Image` (
+    `image` (
         `image_id`,
         `image_timbre_id`,
         `image_nom_fichier`,

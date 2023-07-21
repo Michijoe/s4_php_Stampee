@@ -25,7 +25,7 @@ class RequetesSQL extends RequetesPDO
 
   /**
    * Récupération d'un utilisateur
-   * @param int $utilisateur_id, clé du utilisateur  
+   * @param int $utilisateur_id, clé primaire de l'utilisateur  
    * @return array|false tableau associatif de la ligne produite par la select, false si aucune ligne
    */
   public function getUtilisateur($utilisateur_id)
@@ -66,7 +66,7 @@ class RequetesSQL extends RequetesPDO
   }
 
   /**
-   * Ajouter un utilisateur
+   * Ajouter un utilisateur à partir de l'espace admin
    * @param array $champs tableau des champs de l'utilisateur 
    * @return int|string clé primaire de la ligne ajoutée, message d'erreur sinon
    */
@@ -111,7 +111,6 @@ class RequetesSQL extends RequetesPDO
       utilisateur_profil_id      = "' . Utilisateur::PROFIL_MEMBRE . '"';
     return $this->CUDLigne($champs);
   }
-
 
   /**
    * Modifier un utilisateur
@@ -182,17 +181,17 @@ class RequetesSQL extends RequetesPDO
   }
 
 
-  /* GESTION DES ENCHERES DE TIMBRES ================= */
+  /* GESTION DES ENCHERES DE TIMBRES
+    =============================== */
 
   /**
    * Récupération de toutes les enchères de timbres avec les informations des mises :
-   * - pour les membres (admin-mise | admin-enchere | membre_owner | membre-miseur)
-   * - pour le catalogue des enchères actives (public)
-   * - pour le catalogue des enchères archivées
-   * - pour le catalogue complet de toutes les enchères
-   * - pour la strip des nouveautés (public-nouveaute)
-   * - pour la strip des coups de coeur du Lord
-   * @param  string $critere = 'admin-mise' |'admin-enchere | 'membre_owner' | 'membre-miseur' | 'public'
+   * - pour les membres ($critère = admin-mise | admin-enchere | membre_owner | membre-miseur)
+   * - pour les catalogues d' enchères ($critère = public-actif | public-archive | public-futur)
+   * - pour les carrousels à l'accueil ($critere = public-nouveaute | public-coups-coeur)
+   * - pour l'affichage des filtres et de la recherche ($champs)
+   * @param  string $critere = 'admin-mise' |'admin-enchere | 'membre_owner' | 'membre-miseur' | 'public-actif' | 'public-archive' | 'public-futur'
+   * @param array $champs = filtres sélectionnés ou recherche fait par l'utilisateur
    * @return array tableau des lignes produites par la select   
    */
 
@@ -202,6 +201,7 @@ class RequetesSQL extends RequetesPDO
     $aujourdhui = $oAujourdhui->format('Y-m-d H:i:s');
     $nouveaute = $oAujourdhui->modify('-7 day')->format('Y-m-d H:i:s');
 
+    // SELECT dans tous les cas
     $this->sql = "
        SELECT
        e.enchere_id,
@@ -228,6 +228,7 @@ class RequetesSQL extends RequetesPDO
          LIMIT 1
        ) AS mise_actuelle_utilisateur_id";
 
+    // SELECT quand l'utilisateur est connecté
     if (isset($_SESSION['oUtilConn']->utilisateur_id)) $this->sql .=
       "(
         SELECT SUM(utilisateur_id=" . $_SESSION['oUtilConn']->utilisateur_id . " )
@@ -235,46 +236,49 @@ class RequetesSQL extends RequetesPDO
         WHERE favoris_enchere_id = e.enchere_id
       ) AS favoris_etat";
 
+    // SELECT pour l'espace admin ou l'espace membre
     if (strpos($critere, 'admin') !== false) $this->sql .=
       ", u.utilisateur_prenom, u.utilisateur_nom";
 
+    // SELECT pour l'espace membre
     if ($critere === 'membre-miseur') $this->sql .= ", MAX(CASE WHEN m.mise_utilisateur_id = " . $_SESSION['oUtilConn']->utilisateur_id . " THEN m.mise_prix END) AS mise_max_utilisateur_actif";
 
+    // JOIN pour tous les cas
     $this->sql .= " 
        FROM enchere e
        JOIN timbre t ON e.enchere_id = t.timbre_enchere_id
        JOIN image i ON i.image_timbre_id = t.timbre_id
        LEFT JOIN mise m ON e.enchere_id = m.mise_enchere_id";
 
+    // JOIN pour l'espace admin ou l'espace membre
     if (strpos($critere, 'admin') !== false) $this->sql .= " 
      JOIN utilisateur u ON enchere_utilisateur_id = utilisateur_id";
 
+    // CONDITION pour l'espace membre
     if ($critere === 'membre-owner') $this->sql .= " WHERE timbre_utilisateur_id = " . $_SESSION['oUtilConn']->utilisateur_id;
 
-
-    // catalogue public montre les enchères validées
+    // CONDITION pour les catalogues d'enchères et pour les carrousels dans l'accueil
     if (strpos($critere, 'public') !== false) {
 
       $this->sql .= " WHERE timbre_statut = '1'";
 
-      // catalogue public des enchères actives montrent les enchères ayant débutées et pas encore finies
+      // le catalogue des enchères actives montrent les enchères ayant débutées et pas encore finies
       if ($critere === 'public-actif') $this->sql .= " AND TIMESTAMPDIFF(SECOND, enchere_date_fin, '$aujourdhui') <= 0 AND TIMESTAMPDIFF(SECOND, '$aujourdhui', enchere_date_debut) < 0";
 
-      // catalogue public des nouveautés montrent les enchères ayant débutées depuis moins d'1 semaine
+      // le catalogue des nouveautés montrent les enchères ayant débutées depuis moins d'1 semaine
       else if ($critere === 'public-nouveaute') $this->sql .= " AND TIMESTAMPDIFF(SECOND, enchere_date_fin, '$aujourdhui') <= 0 AND TIMESTAMPDIFF(SECOND, '$aujourdhui', enchere_date_debut) < 0 AND TIMESTAMPDIFF(DAY, '$nouveaute', enchere_date_debut) > 0";
 
-      // catalogue public des enchères archivées motnrent les enchères dont la date de fin est dépassée
+      // le catalogue des enchères archivées montrent les enchères dont la date de fin est dépassée
       else if ($critere === 'public-archive') $this->sql .= " AND TIMESTAMPDIFF(SECOND, enchere_date_fin, '$aujourdhui') > 0";
 
-      // catalogue public des enchères futures montrent les enchères dont la date de début n'a pas commencé
+      // le catalogue des enchères futures montrent les enchères dont la date de début n'a pas commencé
       else if ($critere === 'public-futur') $this->sql .= " AND TIMESTAMPDIFF(SECOND, '$aujourdhui', enchere_date_debut) > 0";
 
-      // catalogue public des enchères coups de coeur montrent les enchères actives Coup de coeur du Lord
+      // le catalogue des enchères coups de coeur montrent les enchères actives Coup de coeur du Lord
       else if ($critere === 'public-coups-coeur') $this->sql .= " AND enchere_coup_coeur = 'oui' AND TIMESTAMPDIFF(SECOND, enchere_date_fin, '$aujourdhui') < 0";
 
-      // critères de recherche de l'utilisateur
+      // SELECTION pour les filtres et la recherche
       if ($champs) {
-
         $criteres = "";
         if (isset($champs["timbre_pays_id"])) $criteres .= " AND timbre_pays_id = :timbre_pays_id";
         if (isset($champs["timbre_annee_publication"])) {
@@ -314,19 +318,21 @@ class RequetesSQL extends RequetesPDO
 
         if (isset($champs["recherche"])) $criteres .= " AND timbre_titre LIKE CONCAT('%',:recherche,'%')";
         if (isset($champs["timbre_certification"])) $criteres .= " AND timbre_certification = :timbre_certification";
-
         $this->sql .= $criteres;
       }
     }
 
+    // GROUP BY pour tous les cas
     $this->sql .= " GROUP BY e.enchere_id, t.timbre_titre, t.timbre_statut, e.enchere_date_fin, e.enchere_date_debut, i.image_nom_fichier";
 
+    // SELECTION pour l'espace membre ou l'espace admin
     if ($critere === 'membre-miseur'  || $critere === 'admin-mise') $this->sql .= " 
      HAVING nb_mise > 0";
 
-    // mise pour l'utilisateur actif seulement
+    // SELECTION pour l'espace membre
     if ($critere === 'membre-miseur') $this->sql .= " AND mise_max_utilisateur_actif > 0";
 
+    // ORDER BY pour tous les cas
     $this->sql .= " ORDER BY e.enchere_date_fin ASC;";
 
     return $this->getLignes($champs ?? []);
@@ -334,8 +340,8 @@ class RequetesSQL extends RequetesPDO
 
 
   /**
-   * Récupération d'un timbre :
-   * @param  int $enchere_id, clé du timbre
+   * Récupération du timbre relié à une enchère :
+   * @param  int $enchere_id, clé primaire d'une enchère
    * @return array|false tableau associatif de la ligne produite par la select, false si aucune ligne   
    */
   public function getTimbre($enchere_id)
@@ -348,7 +354,7 @@ class RequetesSQL extends RequetesPDO
 
   /**
    * Récupération d'une enchère :
-   * @param  int $timbre_id, clé du timbre
+   * @param  int $enchere_id, clé primaire d'une enchère
    * @return array|false tableau associatif de la ligne produite par la select, false si aucune ligne   
    */
   public function getEnchere($enchere_id)
@@ -514,11 +520,12 @@ class RequetesSQL extends RequetesPDO
 
 
 
-  /* GESTION DES IMAGES ================= */
+  /* GESTION DES IMAGES 
+    ==================== */
 
   /**
    * Récupération de l'image d'un timbre
-   * @param int $timbre_id
+   * @param int $timbre_id, clé primaire d'un timbre
    * @return array|false tableau associatif de la ligne produite par la select, false si aucune ligne
    */
   public function getImage($timbre_id)
@@ -533,8 +540,8 @@ class RequetesSQL extends RequetesPDO
 
   /**
    * Modifier l'image d'un timbre
-   * @param int $timbre_id
-   * @return 
+   * @param int $timbre_id, clé primaire d'un timbre
+   * @return int|string clé primaire de la ligne ajoutée, message d'erreur sinon
    */
   public function modifierTimbreImage($timbre_id)
   {
@@ -570,7 +577,8 @@ class RequetesSQL extends RequetesPDO
   }
 
 
-  /* GESTION DES MISES ================= */
+  /* GESTION DES MISES 
+    =================== */
 
   /**
    * Ajouter une mise
@@ -580,9 +588,6 @@ class RequetesSQL extends RequetesPDO
 
   public function miser($champs)
   {
-    // $miseActuelle = $this->getMiseActuelle($champs['mise_enchere_id']);
-    // if ($miseActuelle > $champs['mise_prix'])
-    //   throw new Exception("Veuillez entrer une mise supérieure au prix actuel de l'enchère.");
     $this->sql = '
       INSERT INTO mise SET
       mise_prix            = :mise_prix,

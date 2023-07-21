@@ -1,7 +1,4 @@
 .admin {
-  /* display: flex;
-  flex-wrap: wrap;
-  gap: var(--spacing-double); */
   padding: 0 5vw;
 }
 
@@ -84,10 +81,6 @@ table th,
 table td {
   padding: 10px;
   text-align: left;
-}
-
-table tbody tr {
-  border-bottom: 1px solid var(--color-royal-blue);
 }
 
 table tbody tr:nth-of-type(even) {

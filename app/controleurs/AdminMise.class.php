@@ -6,10 +6,10 @@
 
 class AdminMise extends Admin
 {
-
     protected $methodes = [
         'l' => ['nom' => 'listerMises',  'droits' => [Utilisateur::PROFIL_ADMINISTRATEUR, Utilisateur::PROFIL_MEMBRE]]
     ];
+
 
     /**
      * Constructeur qui initialise des propriétés à partir du query string
@@ -20,6 +20,7 @@ class AdminMise extends Admin
     {
         $this->oRequetesSQL = new RequetesSQL;
     }
+
 
     /**
      * Lister les encheres des timbres

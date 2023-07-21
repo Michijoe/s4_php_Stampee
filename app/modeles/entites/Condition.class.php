@@ -9,6 +9,7 @@ class Condition extends Entite
     protected $condition_id;
     protected $condition_nom;
 
+
     /**
      * Mutateur de la propriété condition_id 
      * @param int $condition_id
@@ -24,6 +25,7 @@ class Condition extends Entite
         $this->condition_id = $condition_id;
         return $this;
     }
+
 
     /**
      * Mutateur de la propriété condition_nom

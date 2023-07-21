@@ -9,6 +9,7 @@ class Pays extends Entite
   protected $pays_id;
   protected $pays_nom;
 
+
   /**
    * Mutateur de la propriété pays_id 
    * @param int $pays_id
@@ -24,6 +25,7 @@ class Pays extends Entite
     $this->pays_id = $pays_id;
     return $this;
   }
+
 
   /**
    * Mutateur de la propriété pays_nom

@@ -51,6 +51,7 @@ class Utilisateur extends Entite
     return $this->erreurs;
   }
 
+
   /**
    * Mutateur de la propriété utilisateur_id 
    * @param int $utilisateur_id
@@ -66,6 +67,7 @@ class Utilisateur extends Entite
     $this->utilisateur_id = $utilisateur_id;
     return $this;
   }
+
 
   /**
    * Mutateur de la propriété utilisateur_nom 
@@ -84,6 +86,7 @@ class Utilisateur extends Entite
     return $this;
   }
 
+
   /**
    * Mutateur de la propriété utilisateur_prenom 
    * @param string $utilisateur_prenom
@@ -101,6 +104,7 @@ class Utilisateur extends Entite
     return $this;
   }
 
+
   /**
    * Mutateur de la propriété utilisateur_courriel
    * @param string $utilisateur_courriel
@@ -117,6 +121,7 @@ class Utilisateur extends Entite
     return $this;
   }
 
+
   /**
    * Mutateur de la propriété utilisateur_mdp
    * @param string $utilisateur_mdp
@@ -128,6 +133,7 @@ class Utilisateur extends Entite
     return $this;
   }
 
+
   /**
    * Mutateur de la propriété utilisateur_renouveler_mdp
    * @param string $utilisateur_renouveler_mdp
@@ -138,6 +144,7 @@ class Utilisateur extends Entite
     $this->utilisateur_renouveler_mdp = $utilisateur_renouveler_mdp;
     return $this;
   }
+
 
   /**
    * Mutateur de la propriété utilisateur_profil_id
@@ -154,6 +161,7 @@ class Utilisateur extends Entite
     $this->utilisateur_profil_id = $utilisateur_profil_id;
     return $this;
   }
+
 
   /**
    * Mutateur de la propriété nouveau_mdp
@@ -174,6 +182,7 @@ class Utilisateur extends Entite
     return $this;
   }
 
+
   /**
    * Mutateur de la propriété nouveau_mdp_bis
    * @param string $nouveau_mdp_bis
@@ -189,6 +198,7 @@ class Utilisateur extends Entite
     return $this;
   }
 
+
   /**
    * Controler l'existence du courriel 
    */
@@ -202,6 +212,7 @@ class Utilisateur extends Entite
       if ($retour) $this->erreurs['utilisateur_courriel'] = self::ERR_COURRIEL_EXISTANT;
     }
   }
+
 
   /**
    * Génération d'un mot de passe aléatoire dans la propriété utilisateur_mdp

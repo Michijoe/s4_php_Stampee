@@ -7,11 +7,11 @@
 
 class Frontend extends Routeur
 {
-
   private $oUtilConn;
   private $enchere_id;
   private $catalogue_type;
   private $filtres;
+
 
   /**
    * Constructeur qui initialise des propriétés à partir du query string
@@ -27,6 +27,7 @@ class Frontend extends Routeur
     $this->oRequetesSQL         = new RequetesSQL;
   }
 
+
   /**
    * Connecter un utilisateur
    */
@@ -38,6 +39,7 @@ class Frontend extends Routeur
     }
     echo json_encode($utilisateur);
   }
+
 
   /**
    * Créer un compte utilisateur
@@ -86,7 +88,6 @@ class Frontend extends Routeur
 
   /**
    * Afficher le catalogue complet, des enchères actives ou des enchères archivées
-   * 
    */
   public function afficherCatalogue()
   {
@@ -146,17 +147,14 @@ class Frontend extends Routeur
 
   /**
    * Afficher la fiche d'une enchere
-   * 
    */
   public function afficherEnchere()
   {
     $enchere = false;
     $timbre = false;
-    // $favoris = false;
     if (!is_null($this->enchere_id)) {
       $enchere = $this->oRequetesSQL->getEnchere($this->enchere_id);
       $timbre = $this->oRequetesSQL->getTimbre($this->enchere_id);
-      // $favoris = $this->oRequetesSQL->getFavoris($this->enchere_id);
     }
     if (!$enchere || !$timbre) throw new Exception("Enchère ou timbre inexistants.");
 
@@ -169,11 +167,11 @@ class Frontend extends Routeur
         'texteHB'      => '',
         'enchere'      => $enchere,
         'timbre'       => $timbre,
-        // 'favoris'      => $favoris
       ],
       "gabarit-frontend"
     );
   }
+
 
   /**
    * Miser sur une enchère
@@ -186,24 +184,6 @@ class Frontend extends Routeur
       $retour = $erreurs;
     } else {
       $retour = $this->oRequetesSQL->miser($_POST);
-    }
-    echo json_encode($retour);
-  }
-
-  /**
-   * Mettre une enchère dans ses favoris ou la retirer
-   */
-  public function aimer()
-  {
-    $etat = $_POST['favoris_etat'];
-    $champs = [];
-    $champs['favoris_utilisateur_id'] = $_POST["favoris_utilisateur_id"];
-    $champs['favoris_enchere_id'] = $_POST["favoris_enchere_id"];
-
-    if ($etat === 'non') {
-      $retour = $this->oRequetesSQL->aimer($champs);
-    } elseif ($etat === 'oui') {
-      $retour = $this->oRequetesSQL->desaimer($champs);
     }
     echo json_encode($retour);
   }

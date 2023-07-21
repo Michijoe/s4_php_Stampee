@@ -12,6 +12,7 @@ class Enchere extends Entite
     protected $enchere_prix_reserve;
     protected $enchere_coup_coeur;
 
+
     /**
      * Mutateur de la propriété enchere_id 
      * @param int $enchere_id
@@ -46,6 +47,7 @@ class Enchere extends Entite
         return $this;
     }
 
+
     /**
      * Mutateur de la propriété enchere_date_fin
      * @param string $enchere_date_fin
@@ -63,6 +65,7 @@ class Enchere extends Entite
         return $this;
     }
 
+
     /**
      * Mutateur de la propriété enchere_prix_reserve 
      * @param int $enchere_prix_reserve
@@ -78,6 +81,7 @@ class Enchere extends Entite
         $this->enchere_prix_reserve = $enchere_prix_reserve;
         return $this;
     }
+
 
     /**
      * Mutateur de la propriété enchere_coup_coeur

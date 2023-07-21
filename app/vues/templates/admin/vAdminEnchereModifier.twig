@@ -75,8 +75,8 @@
 
 			<label>Coup de coeur du lord</label>
 			<select name="enchere[enchere_coup_coeur]">
-				<option value="oui" {{ enchere.enchere_coup_coeur == 'Oui' ? 'selected' : '' }}>Oui</option>
-				<option value="non" {{ enchere.enchere_coup_coeur == 'Non' ? 'selected' : '' }}>Non</option>
+				<option value="oui" {{ enchere.enchere_coup_coeur == 'oui' ? 'selected' : '' }}>oui</option>
+				<option value="non" {{ enchere.enchere_coup_coeur == 'non' ? 'selected' : '' }}>non</option>
 			</select>
 			<input type="hidden" name="enchere[enchere_id]" value="{{ enchere.enchere_id }}">
 

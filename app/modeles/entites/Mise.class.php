@@ -46,6 +46,7 @@ class Mise extends Entite
         return $this;
     }
 
+
     /**
      * Mutateur de la propriété mise_prix 
      * @param string $mise_prix
@@ -63,6 +64,7 @@ class Mise extends Entite
         return $this;
     }
 
+
     /**
      * Mutateur de la propriété mise_utilisateur_id
      * @param string $mise_utilisateur_id
@@ -78,6 +80,7 @@ class Mise extends Entite
         $this->mise_utilisateur_id = $mise_utilisateur_id;
         return $this;
     }
+
 
     /**
      * Mutateur de la propriété mise_enchere_id

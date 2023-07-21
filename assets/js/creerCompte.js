@@ -1,7 +1,6 @@
 let eUtilisateur = document.getElementById('utilisateur');
 let eConnecter = document.getElementById('connecter');
 let eCreerCompte = document.getElementById('creerCompte');
-// let eDeconnecter = document.getElementById('deconnecter');
 let eModaleCreerCompte = document.getElementById('modaleCreerCompte');
 
 let eMessageErreurCreerCompte = document.getElementById('messageErreurCreerCompte');

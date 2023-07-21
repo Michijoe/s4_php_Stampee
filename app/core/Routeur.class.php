@@ -7,7 +7,6 @@
  */
 class Routeur
 {
-
   private $routes = [
     // uri,             classe,     méthode
     // ------------------------------------
@@ -30,6 +29,7 @@ class Routeur
   const ERROR_FORBIDDEN = "HTTP 403";
   const ERROR_NOT_FOUND = "HTTP 404";
 
+
   /**
    * Valider l'URI
    * et instancier la méthode du contrôleur correspondante
@@ -40,12 +40,10 @@ class Routeur
     try {
 
       // contrôle de l'uri si l'action coïncide
-
       $uri =  $_SERVER['REQUEST_URI'];
       if (strpos($uri, '?')) $uri = strstr($uri, '?', true);
 
       foreach ($this->routes as $route) {
-
         $routeUri     = self::BASE_URI . $route[0];
         $routeClasse  = $route[1];
         $routeMethode = $route[2];
@@ -63,6 +61,7 @@ class Routeur
       $this->erreur($e);
     }
   }
+
 
   /**
    * Méthode qui envoie un compte-rendu d'erreur

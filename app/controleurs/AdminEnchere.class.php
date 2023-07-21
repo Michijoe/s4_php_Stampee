@@ -6,13 +6,13 @@
 
 class AdminEnchere extends Admin
 {
-
   protected $methodes = [
     'l' => ['nom' => 'listerEncheresTimbres',   'droits' => [Utilisateur::PROFIL_ADMINISTRATEUR, Utilisateur::PROFIL_MEMBRE]],
     'a' => ['nom' => 'ajouterEnchereTimbre',   'droits' => [Utilisateur::PROFIL_ADMINISTRATEUR, Utilisateur::PROFIL_MEMBRE]],
     'm' => ['nom' => 'modifierEnchereTimbre',  'droits' => [Utilisateur::PROFIL_ADMINISTRATEUR, Utilisateur::PROFIL_MEMBRE]],
     's' => ['nom' => 'supprimerEnchereTimbre', 'droits' => [Utilisateur::PROFIL_ADMINISTRATEUR, Utilisateur::PROFIL_MEMBRE]]
   ];
+
 
   /**
    * Constructeur qui initialise des propriétés à partir du query string
@@ -24,6 +24,7 @@ class AdminEnchere extends Admin
     $this->enchere_id = $_GET['enchere_id'] ?? null;
     $this->oRequetesSQL = new RequetesSQL;
   }
+
 
   /**
    * Lister les encheres des timbres
@@ -148,9 +149,8 @@ class AdminEnchere extends Admin
   }
 
 
-
   /**
-   * Modifier un timbre
+   * Modifier une enchère de timbre
    */
   public function modifierEnchereTimbre()
   {
@@ -171,7 +171,7 @@ class AdminEnchere extends Admin
       $erreursEnchere = $oEnchere->erreurs;
       $erreursTimbre = $oTimbre->erreurs;
 
-      // on valide qu'il n'y a pas d'erreur dans enchere ET timbre avant d'insérer dans la bd
+      // on valide qu'il n'y a pas d'erreur dans enchere ET timbre avant de modifier la bd
       if (count($erreursEnchere) === 0 && count($erreursTimbre) === 0) {
 
         $retour = $this->oRequetesSQL->modifierEnchereTimbre(
@@ -240,8 +240,9 @@ class AdminEnchere extends Admin
     );
   }
 
+
   /**
-   * Supprimer un timbre
+   * Supprimer une enchère de timbre
    */
   public function supprimerEnchereTimbre()
   {

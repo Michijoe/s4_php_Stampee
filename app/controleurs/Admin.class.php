@@ -57,7 +57,6 @@ class Admin extends Routeur
    */
   public function gererAction()
   {
-
     if (isset($this->methodes[self::$action])) {
       $methode = $this->methodes[self::$action]['nom'];
       if (isset($this->methodes[self::$action]['droits'])) {

@@ -9,6 +9,7 @@ class Profil extends Entite
     protected $profil_id;
     protected $profil_nom;
 
+
     /**
      * Mutateur de la propriété profil_id 
      * @param int $profil_id
@@ -24,6 +25,7 @@ class Profil extends Entite
         $this->profil_id = $profil_id;
         return $this;
     }
+
 
     /**
      * Mutateur de la propriété profil_nom

@@ -25,6 +25,7 @@ class Timbre extends Entite
   const STATUT_VISIBLE   = 1;
   const STATUT_ARCHIVE   = 2;
 
+
   /**
    * Mutateur de la propriété timbre_id 
    * @param int $timbre_id
@@ -40,6 +41,7 @@ class Timbre extends Entite
     $this->timbre_id = $timbre_id;
     return $this;
   }
+
 
   /**
    * Mutateur de la propriété timbre_titre 
@@ -58,6 +60,7 @@ class Timbre extends Entite
     return $this;
   }
 
+
   /**
    * Mutateur de la propriété timbre_description
    * @param string $timbre_description
@@ -69,6 +72,7 @@ class Timbre extends Entite
     $this->timbre_description = $timbre_description;
     return $this;
   }
+
 
   /**
    * Mutateur de la propriété timbre_annee_publication 
@@ -89,6 +93,7 @@ class Timbre extends Entite
     return $this;
   }
 
+
   /**
    * Mutateur de la propriété timbre_condition
    * @param int $timbre_condition
@@ -104,6 +109,7 @@ class Timbre extends Entite
     $this->timbre_condition_id = $timbre_condition_id;
     return $this;
   }
+
 
   /**
    * Mutateur de la propriété timbre_pays_id 
@@ -121,6 +127,7 @@ class Timbre extends Entite
     return $this;
   }
 
+
   /**
    * Mutateur de la propriété timbre_dimensions
    * @param string $timbre_dimensions
@@ -132,6 +139,7 @@ class Timbre extends Entite
     $this->timbre_dimensions = $timbre_dimensions;
     return $this;
   }
+
 
   /**
    * Mutateur de la propriété timbre_tirage
@@ -149,6 +157,7 @@ class Timbre extends Entite
     return $this;
   }
 
+
   /**
    * Mutateur de la propriété timbre_couleur_dominante
    * @param int $timbre_couleur_dominante
@@ -164,6 +173,7 @@ class Timbre extends Entite
     $this->timbre_couleur_id = $timbre_couleur_id;
     return $this;
   }
+
 
   /**
    * Mutateur de la propriété timbre_certification
@@ -195,6 +205,7 @@ class Timbre extends Entite
     $this->timbre_statut = $timbre_statut;
     return $this;
   }
+
 
   /**
    * Mutateur de la propriété timbre_enchere_id 

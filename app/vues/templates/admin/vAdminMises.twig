@@ -59,6 +59,8 @@
 						<td data-colonne="Résultat / Action">
 							{% if enchereMise.mise_actuelle_utilisateur_id is same as oUtilConn.utilisateur_id %}
 								<span>Vous remportez l'enchère</span>
+							{% elseif enchereMise.heures_restant <= 0 %}
+								<span>Cette enchère est terminée</span>
 							{% else %}
 								<a href="enchere?enchere_id={{ enchereMise.enchere_id }}">Enchérir</a>
 							{% endif %}

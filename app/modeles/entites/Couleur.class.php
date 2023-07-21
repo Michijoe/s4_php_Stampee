@@ -9,6 +9,7 @@ class Couleur extends Entite
     protected $couleur_id;
     protected $couleur_nom;
 
+
     /**
      * Mutateur de la propriété couleur_id 
      * @param int $couleur_id
@@ -24,6 +25,7 @@ class Couleur extends Entite
         $this->couleur_id = $couleur_id;
         return $this;
     }
+
 
     /**
      * Mutateur de la propriété couleur_nom
