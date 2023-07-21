@@ -125,7 +125,8 @@ class AdminUtilisateur extends Admin
         'utilisateurs'        => isset($utilisateurs) ? $utilisateurs : $utilisateur,
         'profils'             => $profils,
         'classRetour'         => $this->classRetour,
-        'messageRetourAction' => $this->messageRetourAction
+        'messageRetourAction' => $this->messageRetourAction,
+        'entite'              => self::$entite
       ],
       'gabarit-admin'
     );

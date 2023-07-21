@@ -101,15 +101,15 @@
 						{{ oUtilConn.utilisateur_nom }}
 					</h3>
 				</div>
-				<ul class="h4">
+				<ul class='h4'>
 					<li>
-						<a href="admin?entite=enchere">{{ oUtilConn.utilisateur_profil_id == constant('Utilisateur::PROFIL_ADMINISTRATEUR') ? 'Enchères' : 'Mes enchères' }}</a>
+						<a href="admin?entite=enchere" class={{ entite == 'enchere' ? 'actif' : '' }}>{{ oUtilConn.utilisateur_profil_id == constant('Utilisateur::PROFIL_ADMINISTRATEUR') ? 'Enchères' : 'Mes enchères' }}</a>
 					</li>
 					<li>
-						<a href="admin?entite=mise">{{ oUtilConn.utilisateur_profil_id == constant('Utilisateur::PROFIL_ADMINISTRATEUR') ? 'Mises' : 'Mes mises' }}</a>
+						<a href="admin?entite=mise" class={{ entite == 'mise' ? 'actif' : '' }}>{{ oUtilConn.utilisateur_profil_id == constant('Utilisateur::PROFIL_ADMINISTRATEUR') ? 'Mises' : 'Mes mises' }}</a>
 					</li>
 					<li>
-						<a href="admin?entite=utilisateur">{{ oUtilConn.utilisateur_profil_id == constant('Utilisateur::PROFIL_ADMINISTRATEUR') ? 'Utilisateurs' : 'Mon compte' }}</a>
+						<a href="admin?entite=utilisateur" class={{ entite == 'utilisateur' ? 'actif' : '' }}>{{ oUtilConn.utilisateur_profil_id == constant('Utilisateur::PROFIL_ADMINISTRATEUR') ? 'Utilisateurs' : 'Mon compte' }}</a>
 					</li>
 					<li>
 						<a href="admin?entite=utilisateur&action=d">Déconnecter</a>
@@ -130,9 +130,9 @@
 				<div class="footer-main-content">
 					<h3>À propos</h3>
 					<p class="no-padding-bottom">Lord Stampee vient d’une famille de passionnés de philatélie depuis des
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																														                    générations. Sa passion pour
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																														                    les timbres rares et précieux l'a amené à rassembler l'une des collections les plus impressionnantes
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																														                    du monde.</p>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																				                    générations. Sa passion pour
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																				                    les timbres rares et précieux l'a amené à rassembler l'une des collections les plus impressionnantes
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																				                    du monde.</p>
 					<a href="#">En savoir plus</a>
 				</div>
 				<div class="footer-main-content">

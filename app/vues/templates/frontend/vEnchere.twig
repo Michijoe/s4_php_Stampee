@@ -6,104 +6,106 @@
 		class="catalogue-header">
 		<!-- fil d'ariane -->
 		<ul>
-			<li><a href="#">Retour</a></li>
-		</ul>
-	</div>
-	<!-- Fiche timbre -->
-	{# carte timbre #}
-	<h3>{{ timbre.timbre_titre }}</h3>
-	<article
-		class="card-detail">
-		<!-- image -->
-		<div>
-			<picture class="container">
-				<div id="zoom" class="magnify-wrapper">
-					<img src={{ timbre.image_nom_fichier }} alt="{{ timbre.timbre_titre }}" id="main-img"/>
-					<div id="large-img"></div>
-				</div>
-			</picture>
+			<li>
+				<span class="catalogue-header-retour" onclick="history.back()">Retour</span>
+			</li>
 		</div>
-		<table>
-			<tbody>
-				<tr>
-					<th scope="row">Description</th>
-					<td>{{ timbre.timbre_description }}</td>
-				</tr>
-				<tr>
-					<th scope="row">Année de publication</th>
-					<td>{{ timbre.timbre_annee_publication }}</td>
-				</tr>
-				<tr>
-					<th scope="row">Condition</th>
-					<td>{{ timbre.condition_nom }}</td>
-				</tr>
-				<tr>
-					<th scope="row">Pays de provenance</th>
-					<td>{{ timbre.pays_nom }}</td>
-				</tr>
-				<tr>
-					<th scope="row">Dimensions</th>
-					<td>{{ timbre.timbre_dimensions }}</td>
-				</tr>
-				<tr>
-					<th scope="row">Tirage</th>
-					<td>{{ timbre.tirage_nom }}</td>
-				</tr>
-				<tr>
-					<th scope="row">Couleur dominante</th>
-					<td>{{ timbre.couleur_nom }}</td>
-				</tr>
-				<tr>
-					<th scope="row">Certification</th>
-					<td>{{ timbre.timbre_certification }}</td>
-				</tr>
-			</tbody>
-		</table>
-		<section>
-			<ul>
-				<li>Date de début d'enchère:
-					{{ enchere.enchere_date_debut|date('d/m/Y') }}</li>
-				{% if enchere.heures_restant > 24 or enchere.heures_restant < 0 %}
-					<li>Date de fin d'enchère:
-						{{ enchere.enchere_date_fin|date('d/m/Y') }}</li>
-				{% elseif enchere.heures_restant > 0 %}
-					<li>Temps restant:
-						{{ enchere.heures_restant }}
-						heures</li>
+		<!-- Fiche timbre -->
+		{# carte timbre #}
+		<h3>{{ timbre.timbre_titre }}</h3>
+		<article
+			class="card-detail">
+			<!-- image -->
+			<div>
+				<picture class="container">
+					<div id="zoom" class="magnify-wrapper">
+						<img src={{ timbre.image_nom_fichier }} alt="{{ timbre.timbre_titre }}" id="main-img"/>
+						<div id="large-img"></div>
+					</div>
+				</picture>
+			</div>
+			<table>
+				<tbody>
+					<tr>
+						<th scope="row">Description</th>
+						<td>{{ timbre.timbre_description }}</td>
+					</tr>
+					<tr>
+						<th scope="row">Année de publication</th>
+						<td>{{ timbre.timbre_annee_publication }}</td>
+					</tr>
+					<tr>
+						<th scope="row">Condition</th>
+						<td>{{ timbre.condition_nom }}</td>
+					</tr>
+					<tr>
+						<th scope="row">Pays de provenance</th>
+						<td>{{ timbre.pays_nom }}</td>
+					</tr>
+					<tr>
+						<th scope="row">Dimensions</th>
+						<td>{{ timbre.timbre_dimensions }}</td>
+					</tr>
+					<tr>
+						<th scope="row">Tirage</th>
+						<td>{{ timbre.tirage_nom }}</td>
+					</tr>
+					<tr>
+						<th scope="row">Couleur dominante</th>
+						<td>{{ timbre.couleur_nom }}</td>
+					</tr>
+					<tr>
+						<th scope="row">Certification</th>
+						<td>{{ timbre.timbre_certification }}</td>
+					</tr>
+				</tbody>
+			</table>
+			<section>
+				<ul>
+					<li>Date de début d'enchère:
+						{{ enchere.enchere_date_debut|date('d/m/Y') }}</li>
+					{% if enchere.heures_restant > 24 or enchere.heures_restant < 0 %}
+						<li>Date de fin d'enchère:
+							{{ enchere.enchere_date_fin|date('d/m/Y') }}</li>
+					{% elseif enchere.heures_restant > 0 %}
+						<li>Temps restant:
+							{{ enchere.heures_restant }}
+							heures</li>
+					{% endif %}
+					{% if enchere.heures_avant_debut <= 0 %}
+						<li>Nombre de mises:
+							{{ enchere.nb_mise }}</li>
+						<li>Mise
+							{{ enchere.heures_restant > 0 ? 'actuelle' : 'finale' }}:
+							{{ enchere.mise_actuelle|number_format(2, '.', ',') }}$</li>
+					{% endif %}
+					{% if enchere.enchere_coup_coeur %}
+						<li>Cette enchère est un coup de coeur du Lord Stampee !</li>
+					{% endif %}
+				</ul>
+
+
+				{% if (oUtilConn is null) %}
+					<h3>Vous devez vous inscrire ou vous connecter pour pouvoir miser sur une enchère !</h3>
+				{% elseif oUtilConn.utilisateur_id is same as enchere.mise_utilisateur_id %}
+					<h3>Vous êtes présentement le membre remportant l'enchère !</h3>
+				{% elseif enchere.heures_restant < 0 %}
+					<h3>Cette enchère est terminée !</h3>
+				{% elseif enchere.heures_avant_debut > 0 %}
+					<h3>Cette enchère n'a pas encore débutée !</h3>
+				{% else %}
+					<form name="frmMise" method="POST">
+						<span id="messageErreurMise"></span>
+
+						<input aria-label="miser" type="number" name="mise_prix" placeholder="Enchérissez au moins {{ enchere.mise_actuelle + 5|number_format(2, '.', ',') }}$" min="{{ enchere.mise_actuelle + 5|number_format(2, '.', ',') }}" value="">
+						<input type="hidden" name="mise_utilisateur_id" value={{ oUtilConn.utilisateur_id }}>
+						<input type="hidden" name="mise_enchere_id" value={{ enchere.enchere_id }}>
+
+						<input class="stampcard-button-cta" type="submit" value="Enchérir">
+					</form>
 				{% endif %}
-				{% if enchere.heures_avant_debut <= 0 %}
-					<li>Nombre de mises:
-						{{ enchere.nb_mise }}</li>
-					<li>Mise
-						{{ enchere.heures_restant > 0 ? 'actuelle' : 'finale' }}:
-						{{ enchere.mise_actuelle|number_format(2, '.', ',') }}$</li>
-				{% endif %}
-				{% if enchere.enchere_coup_coeur %}
-					<li>Cette enchère est un coup de coeur du Lord Stampee !</li>
-				{% endif %}
-			</ul>
 
-
-			{% if (oUtilConn is null) %}
-				<h3>Vous devez vous inscrire ou vous connecter pour pouvoir miser sur une enchère !</h3>
-			{% elseif oUtilConn.utilisateur_id is same as enchere.mise_utilisateur_id %}
-				<h3>Vous êtes présentement le membre remportant l'enchère !</h3>
-			{% elseif enchere.heures_restant < 0 %}
-				<h3>Cette enchère est terminée !</h3>
-			{% elseif enchere.heures_avant_debut > 0 %}
-				<h3>Cette enchère n'a pas encore débutée !</h3>
-			{% else %}
-				<form name="frmMise" method="POST">
-					<span id="messageErreurMise"></span>
-
-					<input aria-label="miser" type="number" name="mise_prix" placeholder="Enchérissez au moins {{ enchere.mise_actuelle + 5|number_format(2, '.', ',') }}$" min="{{ enchere.mise_actuelle + 5|number_format(2, '.', ',') }}" value="">
-					<input type="hidden" name="mise_utilisateur_id" value={{ oUtilConn.utilisateur_id }}>
-					<input type="hidden" name="mise_enchere_id" value={{ enchere.enchere_id }}>
-
-					<input class="stampcard-button-cta" type="submit" value="Enchérir">
-				</form>
-			{% endif %}
-
-		</section>
-	</article>
-</div></div>
+			</section>
+		</article>
+	</div>
+</div>

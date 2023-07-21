@@ -45,7 +45,8 @@ class AdminEnchere extends Admin
         'titre'               => $titre,
         'encheresMises'       => $encheresMises,
         'classRetour'         => $this->classRetour,
-        'messageRetourAction' => $this->messageRetourAction
+        'messageRetourAction' => $this->messageRetourAction,
+        'entite'              => self::$entite
       ],
       'gabarit-admin'
     );
@@ -58,7 +59,6 @@ class AdminEnchere extends Admin
   public function ajouterEnchereTimbre()
   {
     if (count($_POST) !== 0) {
-
       // ajout de l'enchère, du timbre et de l'image
       $enchere = $_POST['enchere'];
       $timbre = $_POST['timbre'];
@@ -105,6 +105,7 @@ class AdminEnchere extends Admin
         $image_id = $this->oRequetesSQL->modifierTimbreImage($timbre_id);
 
         if (preg_match('/^[1-9]\d*$/', $enchere_id) && preg_match('/^[1-9]\d*$/', $timbre_id) && preg_match('/^[1-9]\d*$/', $image_id)) {
+
           $this->messageRetourAction = "Ajout de l'enchère numéro $enchere_id effectué.";
         } else {
           $this->classRetour = "erreur";
@@ -126,6 +127,8 @@ class AdminEnchere extends Admin
     $tirages = $this->oRequetesSQL->getTirages();
     $couleurs = $this->oRequetesSQL->getCouleurs();
 
+    var_dump($_GET['entite']);
+
     (new Vue)->generer(
       'vAdminEnchereAjouter',
       [
@@ -140,7 +143,7 @@ class AdminEnchere extends Admin
         'couleurs'       => $couleurs,
         'erreursTimbre'  => $erreursTimbre,
         'erreursEnchere' => $erreursEnchere,
-        'erreursImage'   => $erreursImage
+        'erreursImage'   => $erreursImage,
       ],
       'gabarit-admin'
     );

@@ -36,7 +36,11 @@
 						{% if oUtilConn.utilisateur_profil_id is same as constant('Utilisateur::PROFIL_ADMINISTRATEUR') %}
 							<td data-colonne="Id">{{ enchereMise.enchere_id }}</td>
 						{% endif %}
-						<td data-colonne="Image"><img src="{{ enchereMise.image_nom_fichier }}" alt=""></td>
+						<td data-colonne="Image">
+							<a href="enchere?enchere_id={{ enchereMise.enchere_id }}">
+								<picture><img src={{ enchereMise.image_nom_fichier }} alt="{{ enchere.timbre_titre }}"></picture>
+							</a>
+						</td>
 						<td data-colonne="Titre">{{ enchereMise.timbre_titre }}</td>
 						<td data-colonne="Statut">
 							{% if     enchereMise.timbre_statut == constant('Timbre::STATUT_INVISIBLE') %}

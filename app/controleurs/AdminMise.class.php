@@ -41,7 +41,8 @@ class AdminMise extends Admin
                 'titre'               => $titre,
                 'encheresMises'       => $encheresMises,
                 'classRetour'         => $this->classRetour,
-                'messageRetourAction' => $this->messageRetourAction
+                'messageRetourAction' => $this->messageRetourAction,
+                'entite'              => self::$entite
             ],
             'gabarit-admin'
         );

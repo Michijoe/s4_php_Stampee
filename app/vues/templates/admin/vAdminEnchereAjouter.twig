@@ -19,7 +19,7 @@
 		<select name="timbre[timbre_condition_id]">
 			<option value="">Sélectionnez une condition</option>
 			{% for condition in conditions %}
-				<option value="{{ condition.condition_id }}" {{ timbre.condition_nom == condition.condition_nom ? 'selected' : '' }}>{{ condition.condition_nom }}</option>
+				<option value="{{ condition.condition_id }}" {{ timbre.timbre_condition_id == condition.condition_id ? 'selected' : '' }}>{{ condition.condition_nom }}</option>
 			{% endfor %}
 		</select>
 		<span>{{ erreursTimbre.timbre_condition_id }}</span>
@@ -28,7 +28,7 @@
 		<select name="timbre[timbre_pays_id]">
 			<option value="">Sélectionnez un pays</option>
 			{% for unPays in pays %}
-				<option value="{{ unPays.pays_id }}" {{ timbre.pays_nom == unPays.pays_nom ? 'selected' : '' }}>{{ unPays.pays_nom }}</option>
+				<option value="{{ unPays.pays_id }}" {{ timbre.timbre_pays_id == unPays.pays_id ? 'selected' : '' }}>{{ unPays.pays_nom }}</option>
 			{% endfor %}
 		</select>
 		<span>{{ erreursTimbre.timbre_pays_id }}</span>
@@ -41,7 +41,7 @@
 		<select name="timbre[timbre_tirage_id]">
 			<option value="">Sélectionnez un type de tirage</option>
 			{% for tirage in tirages %}
-				<option value="{{ tirage.tirage_id }}" {{ timbre.tirage_nom == tirage.tirage_nom ? 'selected' : '' }}>{{ tirage.tirage_nom }}</option>
+				<option value="{{ tirage.tirage_id }}" {{ timbre.timbre_tirage_id == tirage.tirage_id ? 'selected' : '' }}>{{ tirage.tirage_nom }}</option>
 			{% endfor %}
 		</select>
 		<span>{{ erreursTimbre.timbre_tirage_id }}</span>
@@ -50,15 +50,15 @@
 		<select name="timbre[timbre_couleur_id]">
 			<option value="">Sélectionnez une couleur dominante</option>
 			{% for couleur in couleurs %}
-				<option value="{{ couleur.couleur_id }}" {{ timbre.couleur_nom == couleur.couleur_nom ? 'selected' : '' }}>{{ couleur.couleur_nom }}</option>
+				<option value="{{ couleur.couleur_id }}" {{ timbre.timbre_couleur_id == couleur.couleur_id ? 'selected' : '' }}>{{ couleur.couleur_nom }}</option>
 			{% endfor %}
 		</select>
 		<span>{{ erreursTimbre.timbre_couleur_id }}</span>
 
 		<label>Certification*</label>
 		<select name="timbre[timbre_certification]">
-			<option value="non" {{ timbre.timbre_certification == 'non' ? 'selected' : '' }}>Non</option>
-			<option value="oui" {{ timbre.timbre_certification == 'oui' ? 'selected' : '' }}>Oui</option>
+			<option value="non" {{ timbre.timbre_certification == 'non' ? 'selected' : '' }}>non</option>
+			<option value="oui" {{ timbre.timbre_certification == 'oui' ? 'selected' : '' }}>oui</option>
 		</select>
 		<span>{{ erreursTimbre.timbre_certification }}</span>
 
@@ -77,12 +77,12 @@
 		{% if oUtilConn.utilisateur_profil_id is same as constant('Utilisateur::PROFIL_ADMINISTRATEUR') %}
 			<label>Coups de coeur du lord*</label>
 			<select name="enchere[enchere_coup_coeur]">
-				<option value="Non" {{ enchere_coup_coeur == 'Non' ? 'selected' : '' }}>Non</option>
-				<option value="Oui" {{ enchere_coup_coeur == 'Oui' ? 'selected' : '' }}>Oui</option>
+				<option value="non" {{ enchere_coup_coeur == 'non' ? 'selected' : '' }}>non</option>
+				<option value="oui" {{ enchere_coup_coeur == 'oui' ? 'selected' : '' }}>oui</option>
 			</select>
 		{% else %}
 			<select class="cache" name="enchere[enchere_coup_coeur]">
-				<option value="Non" selected>Non</option>
+				<option value="non" selected>non</option>
 			</select>
 		{% endif %}
 

@@ -67,10 +67,11 @@ Changer le nom des tables en enlevant majuscule
 
 
 # TODO
-ajouter clic sur image timbre dans admin mes enchères
-ajouter couleur sur lien actif menu admin gauche
-ajouter enchere qui débutent dans les 10 derniers jours pour avoir des timbres dans la strip nouveautés quand connecté avec webdev et la date du jour
+faire marcher webdev
+réparer menu déroulant actualités et à propos
 modif bd sql et ajout données en enlevant les minuscules des tables
+guide utilisateur
+commenter les fonctions
 
 ---
 

@@ -20,3 +20,9 @@
 .catalogue-header a:hover {
 	font-weight: bold;
 }
+
+.catalogue-header-retour:hover {
+	cursor: pointer;
+	color: var(--color-red);
+	font-weight: bold;
+}

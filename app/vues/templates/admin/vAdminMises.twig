@@ -25,7 +25,7 @@
 					{% else %}
 						<th>Votre mise max</th>
 					{% endif %}
-					<th>Action</th>
+					<th>Résultat / Action</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -60,7 +60,7 @@
 							{% if enchereMise.mise_actuelle_utilisateur_id is same as oUtilConn.utilisateur_id %}
 								<span>Vous remportez l'enchère</span>
 							{% else %}
-								<a href="enchere?enchere_id={{ enchere.enchere_id }}">Enchérir</a>
+								<a href="enchere?enchere_id={{ enchereMise.enchere_id }}">Enchérir</a>
 							{% endif %}
 						</td>
 					</tr>

@@ -15,7 +15,7 @@
     width: 100px;
     height: 100px;
     box-shadow: 0 5px 10px -2px rgba(0, 0, 0, 0.3);
-    scale: 1.5;
+    scale: 2;
     pointer-events: none;
     position: absolute;
     border: 4px solid #efefef;

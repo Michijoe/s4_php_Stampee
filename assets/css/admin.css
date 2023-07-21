@@ -6,14 +6,14 @@
 }
 
 .admin main {
-  margin-bottom: var(--spacing-thin);
+  margin-bottom: var(--spacing-double);
 }
 .messageRetourAction {
   margin-bottom: 10px;
 }
 .admin aside {
   display: flex;
-  padding: var(--spacing-double) 0;
+  padding: var(--gap) 0;
   justify-content: space-between;
 }
 .admin section {
@@ -23,7 +23,7 @@
   flex-basis: 20ch;
 }
 .admin ul {
-  border-bottom: 1px solid;
+  border-bottom: 2px dotted;
   text-align: right;
   width: max-content;
 }
@@ -39,6 +39,10 @@ tbody a:hover, tbody span:hover, .admin li a:hover {
 .admin-form{
   max-width: 50%;
   margin: auto;
+}
+.admin .actif {
+  color: var(--color-red);
+  font-weight: bold;
 }
 
 /* BOUTONS */
@@ -63,8 +67,7 @@ tbody a:hover, tbody span:hover, .admin li a:hover {
 table {
   border-collapse: collapse;
   font-size: 0.9em;
-  min-width: 400px;
-  max-width: 100%;
+  width: 100%;
   border-radius: 5px 5px 0 0;
   overflow: hidden;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);

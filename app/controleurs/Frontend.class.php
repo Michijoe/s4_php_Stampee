@@ -52,6 +52,7 @@ class Frontend extends Routeur
       $retour = $this->oRequetesSQL->creerCompteUtilisateur($_POST);
       if (!is_array($retour) && preg_match('/^[1-9]\d*$/', $retour)) {
         $oUtilisateur->utilisateur_profil_id = Utilisateur::PROFIL_MEMBRE;
+        $oUtilisateur->utilisateur_id = $retour;
         $_SESSION['oUtilConn'] = $oUtilisateur;
       }
     }
