@@ -127,8 +127,6 @@ class AdminEnchere extends Admin
     $tirages = $this->oRequetesSQL->getTirages();
     $couleurs = $this->oRequetesSQL->getCouleurs();
 
-    var_dump($_GET['entite']);
-
     (new Vue)->generer(
       'vAdminEnchereAjouter',
       [
