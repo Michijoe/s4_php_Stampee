@@ -34,11 +34,11 @@
 				{% for enchereMise in encheresMises %}
 					<tr>
 						{% if oUtilConn.utilisateur_profil_id is same as constant('Utilisateur::PROFIL_ADMINISTRATEUR') %}
-							<th>{{ enchereMise.enchere_id }}</th>
+							<td data-colonne="Id">{{ enchereMise.enchere_id }}</td>
 						{% endif %}
-						<th><img src="{{ enchereMise.image_nom_fichier }}" alt=""></th>
-						<th>{{ enchereMise.timbre_titre }}</th>
-						<th>
+						<td data-colonne="Image"><img src="{{ enchereMise.image_nom_fichier }}" alt=""></td>
+						<td data-colonne="Titre">{{ enchereMise.timbre_titre }}</td>
+						<td data-colonne="Statut">
 							{% if     enchereMise.timbre_statut == constant('Timbre::STATUT_INVISIBLE') %}
 								Non approuvé
 							{% elseif enchereMise.timbre_statut == constant('Timbre::STATUT_VISIBLE') %}
@@ -46,31 +46,35 @@
 							{% elseif enchereMise.timbre_statut == constant('Timbre::STATUT_ARCHIVE') %}
 								Archivé
 							{% endif %}
-						</th>
+						</td>
 						{% if oUtilConn.utilisateur_profil_id is same as constant('Utilisateur::PROFIL_ADMINISTRATEUR') %}
-							<th>{{ enchereMise.utilisateur_prenom }}
+							<td data-colonne="Créé par">{{ enchereMise.utilisateur_prenom }}
 								{{ enchereMise.utilisateur_nom }}
-							</th>
+							</td>
 						{% endif %}
-						<th>{{ enchereMise.enchere_date_debut }}</th>
-						<th>{{ enchereMise.enchere_date_fin }}</th>
-						<th>{{ enchereMise.nb_mise }}</th>
-						{% if enchereMise.mise_actuelle %}
-							<th>{{ enchereMise.mise_actuelle }}$</th>
-						{% else %}
-							<th>-</th>
-						{% endif %}
-						<th>
+						<td data-colonne="Date de début">{{ enchereMise.enchere_date_debut }}</td>
+						<td data-colonne="Date de fin">{{ enchereMise.enchere_date_fin }}</td>
+						<td data-colonne="Nombre de mise">{{ enchereMise.nb_mise }}</td>
+						<td data-colonne="Mise actuelle">
+							{% if enchereMise.mise_actuelle %}
+								{{ enchereMise.mise_actuelle }}$
+								{% else %}-
+							{% endif %}
+						</td>
+						<td data-colonne="Actions">
 							<a href="admin?entite=enchere&action=m&enchere_id={{ enchereMise.enchere_id }}">
-								modifier</a>
+								Modifier</a>
 							{% if enchereMise.nb_mise <= 0  %}
 								{# si pas de mise sur le timbre on peut supprimer #}
-								<span class="confirmer" data-href="admin?entite=enchere&action=s&enchere_id={{ enchereMise.enchere_id }}">supprimer</span>
+								<span class="confirmer" data-href="admin?entite=enchere&action=s&enchere_id={{ enchereMise.enchere_id }}">| Supprimer</span>
 							{% endif %}
-						</th>
+						</td>
 					</tr>
-				</th>
+				{% endfor %}
 			</tbody>
-		</tr>
-	{% endfor %}
-</tbody></tbody></table>{% else %}<p>Vous n'avez pas encore ajouté d'enchère !</p>{% endif %}</section>{{ include("admin/modaleSuppression.twig") }}
+		</table>
+	{% else %}
+		<p>Vous n'avez pas encore ajouté d'enchère !</p>
+	{% endif %}
+	{{ include("admin/modaleSuppression.twig") }}
+</section>

@@ -116,6 +116,7 @@ class AdminEnchere extends Admin
     } else {
       $timbre = [];
       $enchere = [];
+      $image = [];
       $erreursTimbre = [];
       $erreursEnchere = [];
       $erreursImage = [];

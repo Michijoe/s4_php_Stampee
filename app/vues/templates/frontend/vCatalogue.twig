@@ -94,6 +94,18 @@
 					</select>
 				</div>
 			</div>
+			<!-- filtre certification -->
+			<div class="filter-item">
+				<input type="checkbox" id="certification" {% if filtres["timbre_certification"] is null %} checked {% endif %}>
+				<label for="certification" class="filter-name h4">Certification</label>
+				<div class="filter-content">
+					<select aria-label="Filtres certification" name="filtres[timbre_certification]">
+						<option value="">--choisir la certification--</option>
+						<option value="oui" {% if filtres["timbre_certification"] is same as 'oui' %} selected {% endif %}>Oui</option>
+						<option value="non" {% if filtres["timbre_certification"] is same as 'non' %} selected {% endif %}>Non</option>
+					</select>
+				</div>
+			</div>
 			<!-- boutons recherche / reset -->
 			<footer class="regular-rhythm">
 				<button type="submit">Filtrer</button>
@@ -119,16 +131,8 @@
 		<div class="grid">
 			{% for enchere in catalogue %}
 				{# carte timbre #}
-				<article class="stampcard">
-					<a aria-label="button-like" class="stampcard-button-like" href="#">
-						<svg class="svg-icon like-button" role="img" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
-							<title>Like Button</title>
-							<desc>Like Button</desc>
-							<g fill="none">
-								<path class="like-button-path" stroke="#000" stroke-width="1.5px" stroke-linecap="round" stroke-linejoin="round" d="M12,9.05,10.88,7.93a3.16,3.16,0,0,0-4.48,0h0a3.17,3.17,0,0,0,0,4.47L12,18l5.6-5.6a3.17,3.17,0,0,0,0-4.47h0a3.16,3.16,0,0,0-4.48,0Z"/>
-							</g>
-						</svg>
-					</a>
+				<article
+					class="stampcard">
 					<!-- image -->
 					<a href="enchere?enchere_id={{ enchere.enchere_id }}">
 						<picture>

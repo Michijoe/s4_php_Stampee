@@ -1,4 +1,4 @@
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 935px) {
 	nav {
 		justify-content: center;
 	}
@@ -20,7 +20,7 @@
 		position: absolute;
 		top: 8rem;
 		margin-top: -5px;
-		transform: translateY(-620px);
+		transform: translateY(-890px);
 		transition: transform 260ms ease-in-out;
 		background-color: white;
 		z-index: 1;
@@ -29,7 +29,7 @@
     }
 
 	.nav-top {
-		border-top: 1px solid #eee;
+		border-bottom: 1px solid #eee;
 		display: flex;
 		justify-content: center;
 	}
@@ -48,10 +48,13 @@
         justify-content: center;
         padding: 0.5em 0;
         width: 100%;
-		border-top: 1px solid #eee;
+		border-bottom: 1px solid #eee;
     }
 
 	.nav-main-dropdown {
+		position: initial;
+	}
+	.nav-main-dropdown:hover .nav-main-dropdown-content {
 		position: initial;
 	}
 
@@ -60,10 +63,68 @@
 		max-width: 100%;
 		font-size: inherit;
 		padding: 0;
-		position: initial;
 	}
 
-	.nav-main-dropdown:not(:hover) > .nav-main-dropdown-content {
-		opacity: 1;
+	/* ADMIN */
+
+	.admin aside {
+		flex-direction: column;
+		text-align: center;
+	}
+
+	.admin-bienvenue {
+		flex-basis: 0;
+		padding-bottom: var(--spacing-thin);
+	}
+
+	.admin ul {
+		border: 0;
+		margin: auto;
+	}
+
+	.admin li {
+		padding: var(--spacing-thin);
+		border-bottom: 1px solid;
+		display: block;
+		text-align: center;
+	}
+
+	.admin section {
+		padding-left: 0;
+		margin-bottom: var(--spacing-thin);
+	}
+
+	.admin-form{
+		max-width: 80%;
+	  }
+
+	/* TABLE */
+	table, thead, tbody, th, td, tr { 
+		display: block; 
+	}
+
+	thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+	
+	tr { border: 1px solid #ccc; }
+	
+	td { 
+		border: none;
+		border-bottom: 1px solid #eee; 
+		position: relative;
+		padding: 5px 0 5px 40% !important; 
+	}
+
+	td:before { 
+		position: absolute;
+		left: 6px;
+		width: 45%; 
+		padding-right: 10px; 
+		white-space: nowrap;
+		content: attr(data-colonne);
+		font-weight: 800;
 	}
 }

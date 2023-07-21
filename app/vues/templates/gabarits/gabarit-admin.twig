@@ -18,7 +18,7 @@
 		<link rel="stylesheet" href="assets/css/components/herobanner.css">
 		<link rel="stylesheet" href="assets/css/admin.css">
 		<link rel="stylesheet" href="assets/css/modale.css">
-		<link rel="stylesheet" href="assets/css/media-query.css" media="screen and (max-width: 900px)">
+		<link rel="stylesheet" href="assets/css/media-query.css" media="screen and (max-width: 935px)">
 		<title>Stampee |
 			{{ titre }}</title>
 		<script type="module" src="assets/js/connexionDeconnexion.js"></script>
@@ -93,11 +93,14 @@
 			</div>
 		</header>
 		<div class="admin">
-			<aside>Bienvenue,
-				<h3>
-					{{ oUtilConn.utilisateur_prenom }}
-					{{ oUtilConn.utilisateur_nom }}
-				</h3>
+			<aside>
+				<div class="admin-bienvenue">
+					Bienvenue,
+					<h3>
+						{{ oUtilConn.utilisateur_prenom }}
+						{{ oUtilConn.utilisateur_nom }}
+					</h3>
+				</div>
 				<ul class="h4">
 					<li>
 						<a href="admin?entite=enchere">{{ oUtilConn.utilisateur_profil_id == constant('Utilisateur::PROFIL_ADMINISTRATEUR') ? 'Enchères' : 'Mes enchères' }}</a>
@@ -106,17 +109,8 @@
 						<a href="admin?entite=mise">{{ oUtilConn.utilisateur_profil_id == constant('Utilisateur::PROFIL_ADMINISTRATEUR') ? 'Mises' : 'Mes mises' }}</a>
 					</li>
 					<li>
-						<a href="admin?entite=like">{{ oUtilConn.utilisateur_profil_id == constant('Utilisateur::PROFIL_ADMINISTRATEUR') ? 'Favoris' : 'Mes favoris' }}</a>
-					</li>
-					<li><hr></li>
-					<li>
 						<a href="admin?entite=utilisateur">{{ oUtilConn.utilisateur_profil_id == constant('Utilisateur::PROFIL_ADMINISTRATEUR') ? 'Utilisateurs' : 'Mon compte' }}</a>
 					</li>
-					{% if oUtilConn.utilisateur_profil_id == constant('Utilisateur::PROFIL_ADMINISTRATEUR') %}
-						<li>
-							<a href="admin?entite=pays">Pays</a>
-						</li>
-					{% endif %}
 					<li>
 						<a href="admin?entite=utilisateur&action=d">Déconnecter</a>
 					</li>
@@ -136,9 +130,9 @@
 				<div class="footer-main-content">
 					<h3>À propos</h3>
 					<p class="no-padding-bottom">Lord Stampee vient d’une famille de passionnés de philatélie depuis des
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																										                    générations. Sa passion pour
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																										                    les timbres rares et précieux l'a amené à rassembler l'une des collections les plus impressionnantes
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																										                    du monde.</p>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																														                    générations. Sa passion pour
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																														                    les timbres rares et précieux l'a amené à rassembler l'une des collections les plus impressionnantes
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																														                    du monde.</p>
 					<a href="#">En savoir plus</a>
 				</div>
 				<div class="footer-main-content">

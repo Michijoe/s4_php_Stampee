@@ -228,7 +228,14 @@ class RequetesSQL extends RequetesPDO
          LIMIT 1
        ) AS mise_actuelle_utilisateur_id";
 
-    if ((strpos($critere, 'admin')) !== false) $this->sql .=
+    if (isset($_SESSION['oUtilConn']->utilisateur_id)) $this->sql .=
+      "(
+        SELECT SUM(utilisateur_id=" . $_SESSION['oUtilConn']->utilisateur_id . " )
+        FROM favoris 
+        WHERE favoris_enchere_id = e.enchere_id
+      ) AS favoris_etat";
+
+    if (strpos($critere, 'admin') !== false) $this->sql .=
       ", u.utilisateur_prenom, u.utilisateur_nom";
 
     if ($critere === 'membre-miseur') $this->sql .= ", MAX(CASE WHEN m.mise_utilisateur_id = " . $_SESSION['oUtilConn']->utilisateur_id . " THEN m.mise_prix END) AS mise_max_utilisateur_actif";
@@ -239,14 +246,14 @@ class RequetesSQL extends RequetesPDO
        JOIN image i ON i.image_timbre_id = t.timbre_id
        LEFT JOIN mise m ON e.enchere_id = m.mise_enchere_id";
 
-    if ((strpos($critere, 'admin')) !== false) $this->sql .= " 
+    if (strpos($critere, 'admin') !== false) $this->sql .= " 
      JOIN utilisateur u ON enchere_utilisateur_id = utilisateur_id";
 
     if ($critere === 'membre-owner') $this->sql .= " WHERE timbre_utilisateur_id = " . $_SESSION['oUtilConn']->utilisateur_id;
 
 
     // catalogue public montre les enchères validées
-    if ((strpos($critere, 'public')) !== false) {
+    if (strpos($critere, 'public') !== false) {
 
       $this->sql .= " WHERE timbre_statut = '1'";
 
@@ -306,6 +313,7 @@ class RequetesSQL extends RequetesPDO
         if (isset($champs["timbre_tirage_id"])) $criteres .= " AND timbre_tirage_id = :timbre_tirage_id";
 
         if (isset($champs["recherche"])) $criteres .= " AND timbre_titre LIKE CONCAT('%',:recherche,'%')";
+        if (isset($champs["timbre_certification"])) $criteres .= " AND timbre_certification = :timbre_certification";
 
         $this->sql .= $criteres;
       }
@@ -361,9 +369,9 @@ class RequetesSQL extends RequetesPDO
     MAX(mise_prix) AS mise_actuelle,
     mise_utilisateur_id
     FROM 
-        enchere
+        Enchere
     LEFT JOIN 
-        mise ON mise_enchere_id = enchere_id
+        Mise ON mise_enchere_id = enchere_id
     WHERE 
         enchere_id = :enchere_id
     GROUP BY 
@@ -561,13 +569,6 @@ class RequetesSQL extends RequetesPDO
     }
   }
 
-  /**
-   * Supprimer une image
-   * @param int $image_id clé primaire
-   * @return boolean|string true si suppression effectuée, message d'erreur sinon
-   */
-
-
 
   /* GESTION DES MISES ================= */
 
@@ -624,102 +625,6 @@ class RequetesSQL extends RequetesPDO
     return $this->getLignes(['pays_id' => $pays_id], RequetesPDO::UNE_SEULE_LIGNE);
   }
 
-  /**
-   * Ajouter un pays
-   * @param array $champs tableau des champs du pays 
-   * @return int|string clé primaire de la ligne ajoutée, message d'erreur sinon
-   */
-  public function ajouterPays($champs)
-  {
-    $this->sql = '
-      INSERT INTO pays SET
-      pays_id  = :pays_id,
-      pays_nom = :pays_nom
-      ON DUPLICATE KEY UPDATE pays_id = :pays_id';
-    return $this->CUDLigne($champs);
-  }
-
-  /**
-   * Modifier un pays
-   * @param array $champs tableau des champs du genre
-   * @return boolean|string true si modifié, message d'erreur sinon
-   */
-  public function modifierPays($champs)
-  {
-    $this->sql = '
-      UPDATE pays SET
-      pays_nom = :pays_nom
-      WHERE pays_id = :pays_id';
-    return $this->CUDLigne($champs);
-  }
-
-  /**
-   * Supprimer un pays
-   * @param int $pays_id clé primaire
-   * @return boolean|string true si suppression effectuée, message d'erreur sinon
-   */
-  public function supprimerPays($pays_id)
-  {
-    $this->sql = '
-      DELETE FROM pays WHERE pays_id = :pays_id
-      AND pays_id NOT IN (SELECT DISTINCT timbre_pays_id FROM timbre)';
-    return $this->CUDLigne(['pays_id' => $pays_id]);
-  }
-
-
-
-  /* GESTION DES LIKES ================= */
-
-  /**
-   * Récupération des likes d'une enchere
-   * @param int $enchere_id
-   * @return array|false tableau associatif de la ligne produite par la select, false si aucune ligne
-   */
-
-
-  /**
-   * Ajouter un like
-   * @param array $champs tableau des champs d'un like 
-   * @return int|string clé primaire de la ligne ajoutée, message d'erreur sinon
-   */
-
-
-  /**
-   * Supprimer un like
-   * @param int $enchere_id clé primaire
-   * @return boolean|string true si suppression effectuée, message d'erreur sinon
-   */
-
-
-
-  /* GESTION DES COMMENTAIRES ================= */
-
-  /**
-   * Récupération des commentaires d'une enchere
-   * @param int $enchere_id
-   * @return array|false tableau associatif de la ligne produite par la select, false si aucune ligne
-   */
-
-
-  /**
-   * Ajouter un commentaire
-   * @param array $champs tableau des champs d'un commentaire 
-   * @return int|string clé primaire de la ligne ajoutée, message d'erreur sinon
-   */
-
-
-  /**
-   * Modifier un commentaire
-   * @param array $champs tableau des champs d'un commentaire
-   * @return boolean|string true si modifié, message d'erreur sinon
-   */
-
-
-  /**
-   * Supprimer un commentaire
-   * @param int $commentaire_id clé primaire
-   * @return boolean|string true si suppression effectuée, message d'erreur sinon
-   */
 
 
   /* GESTION DES PROFILS 
@@ -753,19 +658,6 @@ class RequetesSQL extends RequetesPDO
     return $this->getLignes(['profil_id' => $profil_id], RequetesPDO::UNE_SEULE_LIGNE);
   }
 
-  /**
-   * Ajouter un profil
-   * @param array $champs tableau des champs du profil 
-   * @return int|string clé primaire de la ligne ajoutée, message d'erreur sinon
-   */
-
-  /**
-   * Supprimer un profil
-   * @param int $profil_id clé primaire
-   * @return boolean|string true si suppression effectuée, message d'erreur sinon
-   */
-
-
 
   /* GESTION DES CONDITIONS 
      ================== */
@@ -797,25 +689,6 @@ class RequetesSQL extends RequetesPDO
       WHERE condition_id = :condition_id";
     return $this->getLignes(['condition_id' => $condition_id], RequetesPDO::UNE_SEULE_LIGNE);
   }
-
-  /**
-   * Ajouter une condition
-   * @param array $champs tableau des champs du pays 
-   * @return int|string clé primaire de la ligne ajoutée, message d'erreur sinon
-   */
-
-  /**
-   * Modifier une condition
-   * @param array $champs tableau des champs du genre
-   * @return boolean|string true si modifié, message d'erreur sinon
-   */
-
-  /**
-   * Supprimer une condition
-   * @param int $condition_id clé primaire
-   * @return boolean|string true si suppression effectuée, message d'erreur sinon
-   */
-
 
 
   /* GESTION DES COULEURS 
@@ -849,23 +722,6 @@ class RequetesSQL extends RequetesPDO
     return $this->getLignes(['couleur_id' => $couleur_id], RequetesPDO::UNE_SEULE_LIGNE);
   }
 
-  /**
-   * Ajouter une couleur
-   * @param array $champs tableau des champs du pays 
-   * @return int|string clé primaire de la ligne ajoutée, message d'erreur sinon
-   */
-
-  /**
-   * Modifier une couleur
-   * @param array $champs tableau des champs du genre
-   * @return boolean|string true si modifié, message d'erreur sinon
-   */
-
-  /**
-   * Supprimer une couleur
-   * @param int $condition_id clé primaire
-   * @return boolean|string true si suppression effectuée, message d'erreur sinon
-   */
 
   /* GESTION DES TIRAGES 
      ================== */
@@ -897,22 +753,4 @@ class RequetesSQL extends RequetesPDO
       WHERE tirage_id = :tirage_id";
     return $this->getLignes(['tirage_id' => $tirage_id], RequetesPDO::UNE_SEULE_LIGNE);
   }
-
-  /**
-   * Ajouter un tirage
-   * @param array $champs tableau des champs du pays 
-   * @return int|string clé primaire de la ligne ajoutée, message d'erreur sinon
-   */
-
-  /**
-   * Modifier un tirage
-   * @param array $champs tableau des champs du genre
-   * @return boolean|string true si modifié, message d'erreur sinon
-   */
-
-  /**
-   * Supprimer un tirage
-   * @param int $condition_id clé primaire
-   * @return boolean|string true si suppression effectuée, message d'erreur sinon
-   */
 }

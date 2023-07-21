@@ -64,11 +64,13 @@ iloIGa06rJ1ZYQq8gKTl
 
 # WEBDEV
 Changer le nom des tables en enlevant majuscule
-Changer fonction str_contains (marche pas sur php v7) = strpos mais ça ne fait pas ce que str_contains faisait... à creuser
+
 
 # TODO
 ajouter clic sur image timbre dans admin mes enchères
 ajouter couleur sur lien actif menu admin gauche
+ajouter enchere qui débutent dans les 10 derniers jours pour avoir des timbres dans la strip nouveautés quand connecté avec webdev et la date du jour
+modif bd sql et ajout données en enlevant les minuscules des tables
 
 ---
 

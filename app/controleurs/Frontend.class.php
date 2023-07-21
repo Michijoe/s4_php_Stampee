@@ -151,9 +151,11 @@ class Frontend extends Routeur
   {
     $enchere = false;
     $timbre = false;
+    // $favoris = false;
     if (!is_null($this->enchere_id)) {
       $enchere = $this->oRequetesSQL->getEnchere($this->enchere_id);
       $timbre = $this->oRequetesSQL->getTimbre($this->enchere_id);
+      // $favoris = $this->oRequetesSQL->getFavoris($this->enchere_id);
     }
     if (!$enchere || !$timbre) throw new Exception("Enchère ou timbre inexistants.");
 
@@ -165,7 +167,8 @@ class Frontend extends Routeur
         'titreHB'      => 'Fiche Timbre',
         'texteHB'      => '',
         'enchere'      => $enchere,
-        'timbre'       => $timbre
+        'timbre'       => $timbre,
+        // 'favoris'      => $favoris
       ],
       "gabarit-frontend"
     );
@@ -182,6 +185,24 @@ class Frontend extends Routeur
       $retour = $erreurs;
     } else {
       $retour = $this->oRequetesSQL->miser($_POST);
+    }
+    echo json_encode($retour);
+  }
+
+  /**
+   * Mettre une enchère dans ses favoris ou la retirer
+   */
+  public function aimer()
+  {
+    $etat = $_POST['favoris_etat'];
+    $champs = [];
+    $champs['favoris_utilisateur_id'] = $_POST["favoris_utilisateur_id"];
+    $champs['favoris_enchere_id'] = $_POST["favoris_enchere_id"];
+
+    if ($etat === 'non') {
+      $retour = $this->oRequetesSQL->aimer($champs);
+    } elseif ($etat === 'oui') {
+      $retour = $this->oRequetesSQL->desaimer($champs);
     }
     echo json_encode($retour);
   }

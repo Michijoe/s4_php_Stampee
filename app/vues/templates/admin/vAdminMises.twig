@@ -32,37 +32,37 @@
 				{% for enchereMise in encheresMises %}
 					<tr>
 						{% if oUtilConn.utilisateur_profil_id is same as constant('Utilisateur::PROFIL_ADMINISTRATEUR') %}
-							<th>{{ enchereMise.enchere_id }}</th>
+							<td data-colonne="Id">{{ enchereMise.enchere_id }}</td>
 						{% endif %}
 
-						<th>
+						<td data-colonne="Image">
 							<a href="enchere?enchere_id={{ enchereMise.enchere_id }}">
 								<picture><img src={{ enchereMise.image_nom_fichier }} alt="{{ enchere.timbre_titre }}"></picture>
 							</a>
-						</th>
-						<th>{{ enchereMise.timbre_titre }}</th>
-						<th>{{ enchereMise.enchere_date_debut }}</th>
-						<th>{{ enchereMise.enchere_date_fin }}</th>
-						<th>{{ enchereMise.nb_mise }}</th>
-						<th>{{ enchereMise.mise_actuelle }}$</th>
+						</td>
+						<td data-colonne="Titre">{{ enchereMise.timbre_titre }}</td>
+						<td data-colonne="Date de début">{{ enchereMise.enchere_date_debut }}</td>
+						<td data-colonne="Date de fin">{{ enchereMise.enchere_date_fin }}</td>
+						<td data-colonne="Nombre de mise">{{ enchereMise.nb_mise }}</td>
+						<td data-colonne="Mise actuelle">{{ enchereMise.mise_actuelle }}$</td>
 						{% if oUtilConn.utilisateur_profil_id is same as constant('Utilisateur::PROFIL_ADMINISTRATEUR') %}
-							<th>{{ enchereMise.mise_actuelle_utilisateur_id }}</th>
+							<td data-colonne="Id utilisateur gagnant">{{ enchereMise.mise_actuelle_utilisateur_id }}</td>
 						{% else %}
-							<th>
+							<td data-colonne="Votre enchère max">
 								{% if enchereMise.mise_max_utilisateur_actif %}
 									{{ enchereMise.mise_max_utilisateur_actif }}$
 								{% else %}
 									-
 								{% endif %}
-							</th>
+							</td>
 						{% endif %}
-						<th>
+						<td data-colonne="Résultat / Action">
 							{% if enchereMise.mise_actuelle_utilisateur_id is same as oUtilConn.utilisateur_id %}
 								<span>Vous remportez l'enchère</span>
 							{% else %}
 								<a href="enchere?enchere_id={{ enchere.enchere_id }}">Enchérir</a>
 							{% endif %}
-						</th>
+						</td>
 					</tr>
 				{% endfor %}
 			</tbody>

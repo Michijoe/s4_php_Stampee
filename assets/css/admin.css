@@ -1,33 +1,44 @@
 .admin {
-  display: flex;
+  /* display: flex;
   flex-wrap: wrap;
-  gap: var(--spacing-double);
+  gap: var(--spacing-double); */
   padding: 0 5vw;
+}
+
+.admin main {
+  margin-bottom: var(--spacing-thin);
 }
 .messageRetourAction {
   margin-bottom: 10px;
 }
 .admin aside {
-  flex-grow: 0;
-  flex-basis: 15ch;
+  display: flex;
   padding: var(--spacing-double) 0;
+  justify-content: space-between;
 }
-.admin > main {
-  flex-grow: 5;
-  flex-basis: 80ch;
+.admin section {
+  padding: 0;
+}
+.admin-bienvenue {
+  flex-basis: 20ch;
 }
 .admin ul {
-  padding-top: var(--gap);
+  border-bottom: 1px solid;
+  text-align: right;
+  width: max-content;
 }
 .admin li {
-  display: block;
-  padding-top: var(--spacing-thin);
+  padding: 30px;
 }
 .confirmer {
   cursor: pointer;
 }
 tbody a:hover, tbody span:hover, .admin li a:hover {
   color: var(--color-red);
+}
+.admin-form{
+  max-width: 50%;
+  margin: auto;
 }
 
 /* BOUTONS */
@@ -52,7 +63,8 @@ tbody a:hover, tbody span:hover, .admin li a:hover {
 table {
   border-collapse: collapse;
   font-size: 0.9em;
-  min-width: 100%;
+  min-width: 400px;
+  max-width: 100%;
   border-radius: 5px 5px 0 0;
   overflow: hidden;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
@@ -67,7 +79,7 @@ table thead tr {
 
 table th,
 table td {
-  padding: var(--spacing-thin);
+  padding: 10px;
   text-align: left;
 }
 

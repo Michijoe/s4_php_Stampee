@@ -24,23 +24,23 @@
 			<tbody>
 				{% for utilisateur in utilisateurs %}
 					<tr>
-						<th>{{ utilisateur.utilisateur_id }}</th>
-						<th>{{ utilisateur.utilisateur_prenom }},
-							{{ utilisateur.utilisateur_nom }}</th>
-						<th>{{ utilisateur.utilisateur_courriel }}</th>
-						<th>
+						<td data-colonne="Id">{{ utilisateur.utilisateur_id }}</td>
+						<td data-colonne="Nom">{{ utilisateur.utilisateur_prenom }},
+							{{ utilisateur.utilisateur_nom }}</td>
+						<td data-colonne="Courriel">{{ utilisateur.utilisateur_courriel }}</td>
+						<td data-colonne="Profil">
 							{% for profil in profils %}
 								{% if utilisateur.utilisateur_profil_id == profil.profil_id %}
 									{{ profil.profil_nom }}
 								{% endif %}
 							{% endfor %}
-						</th>
-						<th>
+						</td>
+						<td data-colonne="Actions">
 							<a href="admin?entite=utilisateur&action=m&utilisateur_id={{ utilisateur.utilisateur_id }}">modifier</a>
 							{# si pas d'enchere ni de mise sur le timbre on peut supprimer #}
 							<span class="confirmer" data-href="admin?entite=utilisateur&action=s&utilisateur_id={{ utilisateur.utilisateur_id }}">supprimer</span>
 							<a href="admin?entite=utilisateur&action=generer_mdp&utilisateur_id={{ utilisateur.utilisateur_id }}">générer mdp</a>
-						</th>
+						</td>
 					</tr>
 				{% endfor %}
 			</tbody>
@@ -56,12 +56,12 @@
 			</thead>
 			<tbody>
 				<tr>
-					<th>{{ utilisateurs.utilisateur_prenom }},
-						{{ utilisateurs.utilisateur_nom }}</th>
-					<th>{{ utilisateurs.utilisateur_courriel }}</th>
-					<th>
+					<td data-colonne="Nom">{{ utilisateurs.utilisateur_prenom }},
+						{{ utilisateurs.utilisateur_nom }}</td>
+					<td data-colonne="Courriel">{{ utilisateurs.utilisateur_courriel }}</td>
+					<td data-colonne="Actions">
 						<a href="admin?entite=utilisateur&action=m&utilisateur_id={{ utilisateurs.utilisateur_id }}">modifier</a>
-					</th>
+					</td>
 				</tr>
 			</tbody>
 		</table>
