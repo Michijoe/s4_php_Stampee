@@ -287,7 +287,7 @@ ADD
 
 ALTER TABLE `image`
 ADD
-    FOREIGN KEY (image_timbre_id) REFERENCES `timbre` (`timbre_id`);
+    FOREIGN KEY (image_timbre_id) REFERENCES `timbre` (`timbre_id`) ON DELETE CASCADE;
 
 ALTER TABLE `mise`
 ADD
