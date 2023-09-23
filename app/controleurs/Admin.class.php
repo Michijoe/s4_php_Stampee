@@ -48,7 +48,8 @@ class Admin extends Routeur
         throw new Exception("L'entité " . self::$entite . " n'existe pas.");
       }
     } else {
-      (new AdminUtilisateur)->connecter();
+      $accueil = new Frontend();
+      $accueil->afficherAccueil();
     }
   }
 
@@ -62,7 +63,7 @@ class Admin extends Routeur
       if (isset($this->methodes[self::$action]['droits'])) {
         $droits = $this->methodes[self::$action]['droits'];
         foreach ($droits as $droit) {
-          if ($droit === self::$oUtilConn->utilisateur_profil_id) {
+          if ($droit == self::$oUtilConn->utilisateur_profil_id) {
             $this->$methode();
             exit;
           }

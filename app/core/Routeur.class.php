@@ -23,8 +23,7 @@ class Routeur
 
   protected $oRequetesSQL; // objet RequetesSQL utilisé par tous les contrôleurs
 
-  const BASE_URI = (ENV == "DEV") ? '/S4/Stampee/' : '/stampee/';
-  // const BASE_URI = '/'; // pour le PHP Server de Visual Studio Code
+  const BASE_URI = (ENV === "PROD") ? '/' : '/S4/Stampee/';
 
   const ERROR_FORBIDDEN = "HTTP 403";
   const ERROR_NOT_FOUND = "HTTP 404";

@@ -27,7 +27,7 @@ class AdminMise extends Admin
      */
     public function listerMises()
     {
-        if (self::$oUtilConn->utilisateur_profil_id === Utilisateur::PROFIL_ADMINISTRATEUR) {
+        if (self::$oUtilConn->utilisateur_profil_id == Utilisateur::PROFIL_ADMINISTRATEUR) {
             $encheresMises = $this->oRequetesSQL->getEncheresMises('admin-mise');
             $titre = 'Toutes les mises';
         } else {

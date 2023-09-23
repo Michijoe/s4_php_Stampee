@@ -96,7 +96,6 @@ class AdminUtilisateur extends Admin
   public function deconnecter()
   {
     unset($_SESSION['oUtilConn']);
-    // parent::gererEntite();
     $accueil = new Frontend();
     $accueil->afficherAccueil();
   }
@@ -107,7 +106,7 @@ class AdminUtilisateur extends Admin
   public function listerUtilisateurs()
   {
     $utilisateur_id = self::$oUtilConn->utilisateur_id;
-    if (self::$oUtilConn->utilisateur_profil_id === Utilisateur::PROFIL_ADMINISTRATEUR) {
+    if (self::$oUtilConn->utilisateur_profil_id == Utilisateur::PROFIL_ADMINISTRATEUR) {
       $utilisateurs = $this->oRequetesSQL->getUtilisateurs();
       $titre = 'Gestion des utilisateurs';
     } else {

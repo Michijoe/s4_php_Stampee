@@ -31,7 +31,7 @@ class AdminEnchere extends Admin
    */
   public function listerEncheresTimbres()
   {
-    if (self::$oUtilConn->utilisateur_profil_id === Utilisateur::PROFIL_ADMINISTRATEUR) {
+    if (self::$oUtilConn->utilisateur_profil_id == Utilisateur::PROFIL_ADMINISTRATEUR) {
       $encheresMises = $this->oRequetesSQL->getEncheresMises('admin-enchere');
       $titre = 'Toutes les enchères';
     } else {
