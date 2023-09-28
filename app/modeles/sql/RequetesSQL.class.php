@@ -197,7 +197,7 @@ class RequetesSQL extends RequetesPDO
 
   public function getEncheresMises($critere = null, $champs = null)
   {
-    $oAujourdhui = ENV === "DEV" ? new DateTime(MOCK_NOW) : new DateTime();
+    $oAujourdhui = new DateTime(MOCK_NOW);
     $aujourdhui = $oAujourdhui->format('Y-m-d H:i:s');
     $nouveaute = $oAujourdhui->modify('-7 day')->format('Y-m-d H:i:s');
 
@@ -359,7 +359,7 @@ class RequetesSQL extends RequetesPDO
    */
   public function getEnchere($enchere_id)
   {
-    $oAujourdhui = ENV === "DEV" ? new DateTime(MOCK_NOW) : new DateTime();
+    $oAujourdhui = new DateTime(MOCK_NOW);
     $aujourdhui = $oAujourdhui->format('Y-m-d H:i:s');
 
     $this->sql = "SELECT 
